@@ -131,7 +131,14 @@ public class LegeditHelper {
 	
 	public static void putProperty(String property, Object value)
 	{
-		applicationProps.put(property, value);
+		if (value == null)
+		{
+			applicationProps.remove(property);
+		}
+		else
+		{
+			applicationProps.put(property, value);
+		}
 		saveProperties();
 	}
 	

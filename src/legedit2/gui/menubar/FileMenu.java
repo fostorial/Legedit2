@@ -21,6 +21,8 @@ public class FileMenu extends JMenu implements ActionListener {
 	
 	private static final long serialVersionUID = 6182281942894446671L;
 	
+	private JMenuItem newExpansion = new JMenuItem("New...");
+	
 	private JMenuItem open = new JMenuItem("Open...");
 	
 	private JMenuItem save = new JMenuItem("Save");
@@ -35,13 +37,17 @@ public class FileMenu extends JMenu implements ActionListener {
 	{
 		this.setText("File");
 		
-		this.add(save);
-		
-		this.add(saveAs);
+		this.add(newExpansion);
 		
 		this.addSeparator();
 		
 		this.add(open);
+		
+		this.addSeparator();
+		
+		this.add(save);
+		
+		this.add(saveAs);
 		
 		this.addSeparator();
 		
@@ -101,9 +107,15 @@ public class FileMenu extends JMenu implements ActionListener {
 			int outcome = chooser.showOpenDialog(this);
 			if (outcome == JFileChooser.APPROVE_OPTION)
 			{
+				LegeditHelper.setProperty(legedit2.helpers.LegeditHelper.PROPERTIES.lastExpansion, chooser.getSelectedFile().getAbsolutePath());
 				ProjectHelper.loadProject(chooser.getSelectedFile());
 				LegeditHelper.setLastOpenDirectory(chooser.getSelectedFile().getAbsolutePath());
 			}
+		}
+		
+		if (e.getSource().equals(newExpansion))
+		{
+			ProjectHelper.newProject();
 		}
 		
 		if (e.getSource().equals(exportSingleImages))

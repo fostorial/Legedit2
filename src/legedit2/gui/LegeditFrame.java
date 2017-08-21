@@ -185,6 +185,8 @@ public class LegeditFrame extends JFrame {
 		}
 		legedit.setupGUI();
 		((LegeditMenuBar)legedit.getJMenuBar()).setupMenus(((LegeditMenuBar)legedit.getJMenuBar()).getMenuMode());
+		
+		this.setTitle(LegeditHelper.getFrameName());
 	}
 	
 	private void recursiveComponentSearch(Component comp)

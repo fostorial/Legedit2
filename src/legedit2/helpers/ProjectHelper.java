@@ -168,6 +168,18 @@ public class ProjectHelper {
 		LegeditFrame.refreshGUI();
 	}
 	
+	public static void newProject()
+	{
+		resetProject();
+		
+		setCurrentFile(null);
+		
+		LegeditHelper.getProperty(legedit2.helpers.LegeditHelper.PROPERTIES.lastExpansion);
+		LegeditHelper.setProperty(legedit2.helpers.LegeditHelper.PROPERTIES.lastExpansion, null);
+		
+		LegeditFrame.refreshGUI();
+	}
+	
 	private static void parseDeck(Node node)
 	{
 		Deck deck = new Deck();
