@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="recruitable_bystander"
+ displayname="Recruitable Bystander"
+ group="bystanders"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<bgimage
+ name="Background Image"
+ path=""
+ x="0"
+ y="0"
+ allowchange="true"
+ zoomable="true"
+ />
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="false"
+ highlight="blur"
+ highlightcolour="#000000"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="25"
+ colour="#FFFFFF"
+ textsize="45"
+ subnamesize="40"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="3"
+ />
+
+<image
+ name="text_overlay"
+ templatefile="true"
+ path="back_underlay.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<cardname 
+ name="Card Type"
+ defaultvalue="Bystander"
+ allowchange="false"
+ includesubname="false"
+ highlight="blur"
+ highlightcolour="#000000"
+ uppercase="true"
+ alignment="left"
+ x="130"
+ y="795"
+ colour="#FFFFFF"
+ textsize="60"
+ subnamesize="40"
+ blurradius="5"
+ bluedouble="false"
+ blurexpand="3"
+ />
+
+<icon
+ name="Victory"
+ defaultvalue="victory"
+ allowchange="false"
+ optional="true"
+ x="695"
+ y="760"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="false"
+ blurradius="1"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Victory Value"
+ linkedelement="Victory"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="695"
+ y="760"
+ colour="#FFFFFF"
+ textsize="40"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+<icon
+ name="Recruit"
+ defaultvalue="recruit"
+ allowchange="true"
+ optional="true"
+ x="65"
+ y="820"
+ maxwidth="120"
+ maxheight="120"
+ drawunderlay="true"
+ blurradius="3"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Recruit Value"
+ linkedelement="Recruit"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="65"
+ y="820"
+ colour="#FFFFFF"
+ textsize="100"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+<icon
+ name="Attack"
+ defaultvalue="attack"
+ allowchange="true"
+ optional="true"
+ x="65"
+ y="950"
+ maxwidth="120"
+ maxheight="120"
+ drawunderlay="true"
+ blurradius="3"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Attack Value"
+ linkedelement="Attack"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="65"
+ y="950"
+ colour="#FFFFFF"
+ textsize="100"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+<textarea
+ name="Card Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue="Card Text."
+ colour="#000000"
+ textsize="28"
+ rectxarray="120,690,690,500,347,180"
+ rectyarray="855,855,1040,1040,1000,909"
+ debug="false"
+ />
+
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="1"
+ />
+
+</xml>
+

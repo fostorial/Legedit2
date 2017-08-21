@@ -1,0 +1,27 @@
+AUTOBOT,autobot.png,false
+AVENGERS,avengers.png,false
+BROTHERHOOD,pic2683704_t.png,false
+CABAL,pic2683703_t.png,false
+DECEPTICON,decepticon.png,false
+DEFENDERS,defenders.png,false
+DINOBOT,dinobot.png,false
+FANTASTIC_FOUR,fantastic-four.png,false
+FOOT_CLAN,foot_clan_logo__2003_tv_series__by_jamesng8-d7rraxx.png,false
+GUARDIANS,guardians.png,false
+HYDRA,pic2683697_t (1).png,false
+ILLUMINATI,pic2683701_t.png,false
+MARVEL_KNIGHTS,marvel-knights.png,false
+MUTANT,mutants.png,true
+PREDACON,predacon.png,true
+QUINTESSON,quintesson.png,true
+RUNAWAYS,runaways.png,false
+SHIELD,shield.png,false
+SINISTER6,sinister6.png,false
+SPIDER_FRIENDS,spider-friends.png,false
+SQUIRREL,squirrels.png,false
+THUNDERBOLTS,thunderbolts.png,true
+TURTLES,turtles.png,false
+US_ARMY,us_army.png,false
+X_FORCE,x-force.png,false
+X_MEN,x-men.png,false
+MERCS_4_MONEY,687474703a2f2f692e696d6775722e636f6d2f343379547850772e706e67.png,false

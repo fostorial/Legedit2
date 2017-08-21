@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="starter_custom"
+ displayname="Starter Custom"
+ deck="starter_deck"
+ defaultsindeck="false"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<bgimage
+ name="Image"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="true"
+ zoomable="true"
+ />
+
+<image
+ name="back_grey"
+ templatefile="true"
+ path="back_grey.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<styles>
+
+ <style name="Villains">
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="true"
+ highlight="banner"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#e9dc98"
+ textsize="48"
+ subnametext="HERO"
+subnameeditable="true"
+ subnamesize="34"
+ subnamegap="15"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="4"
+ />
+
+  </style>
+
+<style name="Base Set">
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="true"
+ highlight="blur"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#e9dc98"
+ textsize="48"
+ subnametext="HERO"
+subnameeditable="true"
+ subnamesize="34"
+ subnamegap="15"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="4"
+ />
+
+  </style>
+
+</styles>
+
+
+<elementgroup 
+ name="Recruit">
+
+<icon
+ name="Recruit Icon"
+ defaultvalue="recruit"
+ allowchange="false"
+ optional="true"
+ x="82"
+ y="755"
+ maxwidth="130"
+ maxheight="130"
+ drawunderlay="true"
+ blurradius="15"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Recruit Value"
+ linkedelement="Recruit"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="82"
+ y="755"
+ colour="#FFFFFF"
+ textsize="110"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+</elementgroup>
+
+<elementgroup 
+ name="Attack">
+
+<icon
+ name="Attack Icon"
+ defaultvalue="attack"
+ allowchange="false"
+ optional="true"
+ x="82"
+ y="917"
+ maxwidth="130"
+ maxheight="130"
+ drawunderlay="true"
+ blurradius="15"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Attack Value"
+ linkedelement="Attack"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="82"
+ y="917"
+ colour="#FFFFFF"
+ textsize="110"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+
+</elementgroup>
+
+<text
+ name="Cost Value"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="X"
+ x="635"
+ y="950"
+ colour="#FFFFFF"
+ textsize="120"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+
+ />
+
+<!-- textarea
+ name="Card Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue="Card Text."
+ colour="#000000"
+ textsize="34"
+ rectxarray="150,650,650,550,550,150"
+ rectyarray="785,785,880,880,965,1000"
+ debug="true"
+ /-->
+
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="0"
+ />
+
+</xml>
+

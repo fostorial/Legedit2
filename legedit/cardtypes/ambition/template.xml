@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="ambition"
+ displayname="Ambition"
+ group="misc"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<bgimage
+ name="Background Image"
+ path=""
+ x="0"
+ y="0"
+ allowchange="true"
+ zoomable="true"
+ />
+
+<image
+ name="frame"
+ templatefile="true"
+ path="frame.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="true"
+ subnametext="Ambition"
+ subnameeditable="false"
+ highlight="banner"
+ highlightcolour="#000000"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="25"
+ colour="#FFFFFF"
+ textsize="45"
+ subnamesize="40"
+ subnamegap="15"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="3"
+ />
+
+<image
+ name="text_overlay"
+ templatefile="true"
+ path="text_overlay.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<icon
+ name="Attack"
+ defaultvalue="attack"
+ allowchange="true"
+ optional="true"
+ x="640"
+ y="965"
+ maxwidth="150"
+ maxheight="150"
+ drawunderlay="true"
+ blurradius="3"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Attack Value"
+ linkedelement="Attack"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="640"
+ y="955"
+ colour="#FFFFFF"
+ textsize="120"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+<textarea
+ name="Card Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue="Card Text."
+ colour="#000000"
+ textsize="28"
+ rectxarray="75,675,675,565,565,75"
+ rectyarray="800,800,890,890,1045,1045"
+ debug="false"
+ />
+
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="1"
+ />
+
+</xml>
+

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="commander"
+ displayname="Commander"
+ deck="commander"
+ defaultsindeck="true"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<image
+ name="text_overlay"
+ templatefile="true"
+ path="back_underlay.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<cardname 
+ name="Card Name"
+ defaultvalue="%DECKNAME%"
+ allowchange="false"
+ includesubname="true"
+ highlight="banner"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#FBD246"
+ textsize="48"
+ subnametext="Commander"
+ subnamesize="34"
+ subnamegap="15"
+ blurradius="16"
+ bluedouble="false"
+ blurexpand="8"
+ />
+
+<icon
+ name="Victory"
+ defaultvalue="victory"
+ allowchange="false"
+ optional="true"
+ x="662"
+ y="696"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="false"
+ blurradius="1"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Victory Value"
+ linkedelement="Victory"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="662"
+ y="696"
+ colour="#FFFFFF"
+ textsize="40"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+
+<icon
+ name="Attack"
+ defaultvalue="attack"
+ allowchange="true"
+ optional="true"
+ x="645"
+ y="950"
+ maxwidth="160"
+ maxheight="160"
+ drawunderlay="true"
+ blurradius="3"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Attack Value"
+ linkedelement="Attack"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="645"
+ y="950"
+ colour="#FFFFFF"
+ textsize="110"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+<textarea
+ name="Card Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue="Card Text."
+ colour="#000000"
+ textsize="34"
+ rectxarray="90,670,670,560,560,90"
+ rectyarray="785,785,885,885,1020,1020"
+ debug="false"
+ />
+
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="1"
+ />
+
+</xml>
+

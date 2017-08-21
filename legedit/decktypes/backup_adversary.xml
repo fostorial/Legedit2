@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<structure
+ name="backup_adversary"
+ displayname="Backup Adversary"
+ defaultstyle="Base"
+ group="henchmen_and_backup"
+ nameeditable="true"
+ />
+
+</xml>
+

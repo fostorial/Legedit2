@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<structure
+ name="henchmen"
+ displayname="Henchmen"
+ defaultstyle="Base"
+ group="henchmen"
+ nameeditable="true"
+ />
+
+</xml>
+

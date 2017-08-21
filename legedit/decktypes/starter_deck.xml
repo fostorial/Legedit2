@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<structure
+ name="starter_deck"
+ displayname="Starter Deck"
+ defaultstyle="Villains"
+ group="heroes_and_allies"
+ nameeditable="true"
+ />
+
+</xml>
+

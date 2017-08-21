@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<legedititems>
+<deck template="hero" name="Hero">
+
+<template>
+</template>
+
+<cards>
+<card template="hero_common">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" />
+<elementgroup name="Recruit">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" />
+</elementgroup>
+<elementgroup name="Attack">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." />
+<property name="Number in Deck" value="5" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" subnameValue="Hero" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" subnameValue="Hero" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_common">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" />
+<elementgroup name="Recruit">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" />
+</elementgroup>
+<elementgroup name="Attack">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." />
+<property name="Number in Deck" value="5" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" subnameValue="Hero" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" subnameValue="Hero" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_rare">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<icon name="Second Power" value="NONE" />
+<text name="Cost" value="0" />
+<elementgroup name="Recruit">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" />
+</elementgroup>
+<elementgroup name="Attack">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." />
+<property name="Number in Deck" value="1" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" subnameValue="Hero" />
+<icon name="Team" value="NONE" />
+<icon name="Power" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" subnameValue="Hero" />
+<icon name="Team" value="NONE" />
+<icon name="Power" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_uncommon">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" />
+<elementgroup name="Recruit">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" />
+</elementgroup>
+<elementgroup name="Attack">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." />
+<property name="Number in Deck" value="3" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="HAMMER" subnameValue="Hero" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" subnameValue="Hero" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+</cards>
+
+</deck>
+
+
+
+</legedititems>
+
+</xml>

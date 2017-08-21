@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="master_strike"
+ displayname="Master Strike"
+ group="misc"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<bgimage
+ name="Background Image"
+ path=""
+ x="0"
+ y="0"
+ allowchange="true"
+ zoomable="true"
+ />
+
+<image
+ name="text_overlay"
+ templatefile="true"
+ path="master_strike.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="1"
+ />
+
+</xml>
+

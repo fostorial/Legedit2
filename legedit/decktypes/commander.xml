@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<structure
+ name="commander"
+ displayname="Commander"
+ defaultstyle="Villains"
+ group="masterminds_and_commanders"
+ nameeditable="true"
+ />
+
+</xml>
+
