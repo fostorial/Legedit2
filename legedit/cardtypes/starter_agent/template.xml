@@ -16,7 +16,7 @@
 
 <bgimage
  name="Image"
- fullsize="true"
+ fullsize="false"
  x="0"
  y="0"
  maxwidth="750"

@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import org.w3c.dom.Node;
 
@@ -34,6 +35,7 @@ public class ElementBackgroundImage extends CustomElement {
 	private JLabel fileNameLabel;
 	private JButton browseButton;
 	private JFileChooser chooser;
+	private JTextField zoomField;
 	
 	public void drawElement(Graphics2D g)
 	{
@@ -171,5 +173,26 @@ public class ElementBackgroundImage extends CustomElement {
 		{
 			path = chooser.getSelectedFile().getAbsolutePath();
 		}
+		
+		if (zoomField != null && zoomable)
+		{
+			try
+			{
+				zoom = Double.parseDouble(zoomField.getText());
+			}
+			catch (Exception e)
+			{
+				/* DO NOTHING */
+			}
+		}
 	}
+
+	public JTextField getZoomField() {
+		return zoomField;
+	}
+
+	public void setZoomField(JTextField zoomField) {
+		this.zoomField = zoomField;
+	}
+
 }

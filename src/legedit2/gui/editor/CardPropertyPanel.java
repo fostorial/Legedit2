@@ -346,6 +346,30 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 				}
 			});
 			
+			row++;
+			
+			if (el.zoomable)
+			{
+				JLabel scaleLabel = new JLabel("Zoom");
+				c = new GridBagConstraints();
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.gridwidth = 1;
+				c.gridx = 0;
+				c.gridy = row;
+				panel.add(scaleLabel, c);
+				
+				JTextField scaleField = new JTextField();
+				c = new GridBagConstraints();
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.gridwidth = 1;
+				c.gridx = 1;
+				c.gridy = row;
+				c.weightx = 0.5;
+				panel.add(scaleField, c);
+				scaleField.setText(""+el.zoom);
+				el.setZoomField(scaleField);
+			}
+			
 			el.setFileNameLabel(fileNameLabel);
 			el.setBrowseButton(browseButton);
 			el.setChooser(chooser);

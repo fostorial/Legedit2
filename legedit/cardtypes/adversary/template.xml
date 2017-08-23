@@ -15,6 +15,17 @@
  dpi="300"
  />
 
+<bgimage
+ name="Image"
+ fullsize="false"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="true"
+ zoomable="true"
+ />
+
 <image
  name="text_overlay"
  templatefile="true"
