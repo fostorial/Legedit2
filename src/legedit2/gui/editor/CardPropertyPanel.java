@@ -1,12 +1,15 @@
 package legedit2.gui.editor;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -51,6 +54,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 	private HashMap<String, CustomElement> elementMap = new HashMap<>();
 	
 	private JButton updateButton = new JButton("Update");
+	private JButton closeButton = new JButton("Close");
 	
 	public CardPropertyPanel(Card card, LegeditItemPreviewPanel previewPanel) {
 		this.previewPanel = previewPanel;
@@ -68,8 +72,14 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 		
 		JToolBar tb = new JToolBar();
 		tb.setFloatable(false);
-		tb.add(updateButton);
+		JPanel p = new JPanel();
+		p.add(updateButton);
+		tb.add(p);
 		updateButton.addActionListener(this);
+		updateButton.setPreferredSize(new Dimension(100, 30));
+		p.add(closeButton);
+		closeButton.addActionListener(this);
+		closeButton.setPreferredSize(new Dimension(100, 30));
 		this.add(tb, BorderLayout.PAGE_END);
 		
 		setupComponents();
@@ -348,26 +358,66 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			
 			row++;
 			
+			int x = 0;
 			if (el.zoomable)
 			{
 				JLabel scaleLabel = new JLabel("Zoom");
 				c = new GridBagConstraints();
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridwidth = 1;
-				c.gridx = 0;
+				c.gridx = x;
 				c.gridy = row;
 				panel.add(scaleLabel, c);
+				x++;
 				
 				JTextField scaleField = new JTextField();
 				c = new GridBagConstraints();
 				c.fill = GridBagConstraints.HORIZONTAL;
 				c.gridwidth = 1;
-				c.gridx = 1;
+				c.gridx = x;
 				c.gridy = row;
-				c.weightx = 0.5;
 				panel.add(scaleField, c);
 				scaleField.setText(""+el.zoom);
 				el.setZoomField(scaleField);
+				x++;
+			}
+			
+			if (!el.fullSize)
+			{
+				JLabel offsetLabel = new JLabel("Offset X/Y");
+				c = new GridBagConstraints();
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.gridwidth = x;
+				c.gridx = x;
+				c.gridy = row;
+				panel.add(offsetLabel, c);
+				x++;
+				
+				JToolBar tb = new JToolBar();
+				tb.setFloatable(false);
+				
+				JTextField offsetXField = new JTextField();
+				c = new GridBagConstraints();
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.gridwidth = 1;
+				c.gridx = x;
+				c.gridy = row;
+				tb.add(offsetXField);
+				offsetXField.setText(""+el.imageOffsetY);
+				el.setOffsetXField(offsetXField);
+				
+				JTextField offsetYField = new JTextField();
+				c = new GridBagConstraints();
+				c.fill = GridBagConstraints.HORIZONTAL;
+				c.gridwidth = 1;
+				c.gridx = x;
+				c.gridy = row;
+				tb.add(offsetYField);
+				offsetYField.setText(""+el.imageOffsetY);
+				el.setOffsetYField(offsetYField);
+				
+				panel.add(tb, c);
+				x++;
 			}
 			
 			el.setFileNameLabel(fileNameLabel);
@@ -511,6 +561,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			    		}
 						
 						chooser.setFont(font);
+						chooser.setSelectedFont(font);
 						
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -674,7 +725,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			JTextField nameField = new JTextField();
 			c = new GridBagConstraints();
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 3;
+			c.gridwidth = 1;
 			c.gridx = 1;
 			c.gridy = row;
 			c.weightx = 0.5;
@@ -682,6 +733,81 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			nameField.setText(el.getValue());
 			
 			el.setCardNameField(nameField);
+			
+			JButton fontButton = new JButton("Name Font");
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 2;
+			c.gridy = row;
+			fontButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFontChooser chooser = new JFontChooser();
+					
+					Font font;
+					try {
+						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
+						font = font.deriveFont((float)el.textSize);
+						
+						if (el.fontName != null)
+			    		{
+			    			font = new Font(el.fontName, el.fontStyle, el.textSize);
+			    		}
+						
+						chooser.setFont(font);
+						chooser.setSelectedFont(font);
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					int showDialog = chooser.showDialog(LegeditFrame.legedit);
+					if (showDialog == JFontChooser.OK_OPTION)
+					{
+						el.textSize = chooser.getSelectedFont().getSize();
+					}
+				}
+			});
+			panel.add(fontButton, c);
+			
+			JButton subfontButton = new JButton("Subname Font");
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 3;
+			c.gridy = row;
+			subfontButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFontChooser chooser = new JFontChooser();
+					
+					Font font;
+					try {
+						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
+						font = font.deriveFont((float)el.subnameSize);
+						
+						if (el.fontName != null)
+			    		{
+			    			font = new Font(el.fontName, el.fontStyle, el.subnameSize);
+			    		}
+						
+						chooser.setFont(font);
+						chooser.setSelectedFont(font);
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					int showDialog = chooser.showDialog(LegeditFrame.legedit);
+					if (showDialog == JFontChooser.OK_OPTION)
+					{
+						el.subnameSize = chooser.getSelectedFont().getSize();
+					}
+				}
+			});
+			panel.add(subfontButton, c);
+			
 			row++;
 		}
 		
@@ -735,10 +861,16 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			if (getPreviewPanel().getSelectedItem() instanceof Card)
 			{
 				System.out.println("Updating card...");
+				((Card)getPreviewPanel().getSelectedItem()).setChanged(true);
 				((Card)getPreviewPanel().getSelectedItem()).updateCardValues();
 				getPreviewPanel().rebuildImageList();
-				getPreviewPanel().resetPreviewPanel();				
+				getPreviewPanel().resetPreviewPanel();
 			}
+		}
+		
+		if (e.getSource().equals(closeButton))
+		{
+			LegeditFrame.legedit.closeTab();
 		}
 	}
 	

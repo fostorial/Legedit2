@@ -50,7 +50,7 @@ public class LegeditItemPreviewPanel extends JPanel {
 		
 		resetPreviewPanel();
 		
-		scroll.setViewportView(innerPanel);
+		scroll.setViewportView(getInnerPanel());
 		scroll.setBorder(null);
 		
 		this.add(scroll, BorderLayout.CENTER);
@@ -63,7 +63,7 @@ public class LegeditItemPreviewPanel extends JPanel {
 		
 		resetPreviewPanel();
 		
-		scroll.setViewportView(innerPanel);
+		scroll.setViewportView(getInnerPanel());
 		scroll.setBorder(null);
 		
 		this.add(scroll, BorderLayout.CENTER);
@@ -76,7 +76,7 @@ public class LegeditItemPreviewPanel extends JPanel {
 		
 		resetPreviewPanel();
 		
-		scroll.setViewportView(innerPanel);
+		scroll.setViewportView(getInnerPanel());
 		scroll.setBorder(null);
 		
 		this.add(scroll, BorderLayout.CENTER);
@@ -99,41 +99,41 @@ public class LegeditItemPreviewPanel extends JPanel {
 	
 	public void resetPreviewPanel()
 	{
-		innerPanel = new JPanel();
+		setInnerPanel(new JPanel());
 		
 		if (selectedItem != null)
 		{
 			if (selectedItem instanceof Deck)
 			{
-				innerPanel.setLayout(new GridLayout(((Deck)selectedItem).getCards().size(), 1));
+				getInnerPanel().setLayout(new GridLayout(((Deck)selectedItem).getCards().size(), 1));
 				for (Card c : ((Deck)selectedItem).getCards())
 				{
 					if (imageMap.get(c) == null)
 					{
-						innerPanel.add(new JLabel("Loading..."));
+						getInnerPanel().add(new JLabel("Loading..."));
 					}
 					else
 					{
-						innerPanel.add(new JLabel(new ImageIcon(imageMap.get(c))));
+						getInnerPanel().add(new JLabel(new ImageIcon(imageMap.get(c))));
 					}
 				}
 			}
 			else if (selectedItem instanceof Card)
 			{
-				innerPanel.setLayout(new GridLayout(1, 1));
+				getInnerPanel().setLayout(new GridLayout(1, 1));
 				if (imageMap.get((Card)selectedItem) == null)
 				{
-					innerPanel.add(new JLabel("Loading..."));
+					getInnerPanel().add(new JLabel("Loading..."));
 				}
 				else
 				{
-					innerPanel.add(new JLabel(new ImageIcon(imageMap.get((Card)selectedItem))));
+					getInnerPanel().add(new JLabel(new ImageIcon(imageMap.get((Card)selectedItem))));
 				}
 			}
 			else
 			{
-				innerPanel.setLayout(new GridLayout(1, 1));
-				innerPanel.add(new JLabel());
+				getInnerPanel().setLayout(new GridLayout(1, 1));
+				getInnerPanel().add(new JLabel());
 			}
 		}
 		
@@ -141,27 +141,27 @@ public class LegeditItemPreviewPanel extends JPanel {
 		{
 			if (selectedItemType instanceof DeckType || selectedItemType instanceof CardType)
 			{
-				innerPanel.setLayout(new GridLayout(tempCardList.size(), 1));
+				getInnerPanel().setLayout(new GridLayout(tempCardList.size(), 1));
 				for (Card c : tempCardList)
 				{
 					if (imageMap.get(c) == null)
 					{
-						innerPanel.add(new JLabel("Loading..."));
+						getInnerPanel().add(new JLabel("Loading..."));
 					}
 					else
 					{
-						innerPanel.add(new JLabel(new ImageIcon(imageMap.get(c))));
+						getInnerPanel().add(new JLabel(new ImageIcon(imageMap.get(c))));
 					}
 				}
 			}
 			else
 			{
-				innerPanel.setLayout(new GridLayout(1, 1));
-				innerPanel.add(new JLabel());
+				getInnerPanel().setLayout(new GridLayout(1, 1));
+				getInnerPanel().add(new JLabel());
 			}
 		}
 		
-		scroll.setViewportView(innerPanel);
+		scroll.setViewportView(getInnerPanel());
 	}
 
 	public ItemType getSelectedItemType() {
@@ -237,6 +237,14 @@ public class LegeditItemPreviewPanel extends JPanel {
 		this.cardMaker = cardMaker;
 	}
 	
+	public JPanel getInnerPanel() {
+		return innerPanel;
+	}
+
+	public void setInnerPanel(JPanel innerPanel) {
+		this.innerPanel = innerPanel;
+	}
+
 	class RenderTask extends SwingWorker<Void, Void> {
 		
 		private Card taskCard;

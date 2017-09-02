@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="bindings"
+ displayname="Bindings"
+ group="bystanders"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<bgimage
+ name="Background Image"
+ path=""
+ x="0"
+ y="0"
+ allowchange="true"
+ zoomable="true"
+ />
+
+<image
+ name="wound_underlay"
+ templatefile="true"
+ path="wound_underlay.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<cardname 
+ name="Wound Card Type"
+ defaultvalue="Bindings"
+ allowchange="false"
+ includesubname="false"
+ highlight="blur"
+ highlightcolour="#000000"
+ uppercase="true"
+ alignment="left"
+ x="100"
+ y="775"
+ colour="#FFFFFF"
+ textsize="60"
+ subnamesize="40"
+ blurradius="5"
+ bluedouble="false"
+ blurexpand="3"
+ />
+
+<textarea
+ name="Wound Card Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue="Betrayal: If you don't recruit any Allies or defeat any Adversaries or Commanders on your turn, you may KO a Bindings from your hand. If you do, the player to your right gains all the other Bindings from your hand."
+ colour="#000000"
+ textsize="28"
+ rectxarray="120,735,735,500,347,180"
+ rectyarray="845,845,1040,1040,1000,909"
+ debug="false"
+ />
+
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="1"
+ />
+
+</xml>
+

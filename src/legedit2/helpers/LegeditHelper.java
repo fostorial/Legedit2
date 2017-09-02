@@ -9,8 +9,11 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import legedit2.card.Card;
+import legedit2.deck.Deck;
 import legedit2.gui.LegeditFrame;
 
 public class LegeditHelper {
@@ -54,6 +57,30 @@ public class LegeditHelper {
 	
 	public static boolean doChangesExist()
 	{
+		for (Card c : ProjectHelper.getCards())
+		{
+			if (c.isChanged())
+			{
+				return true;
+			}
+		}
+		
+		for (Deck d : ProjectHelper.getDecks())
+		{
+			if (d.isChanged())
+			{
+				return true;
+			}
+			
+			for (Card c : d.getCards())
+			{
+				if (c.isChanged())
+				{
+					return true;
+				}
+			}
+		}
+		
 		return false;
 	}
 	
@@ -65,7 +92,22 @@ public class LegeditHelper {
 			
 			if (outcome == JOptionPane.YES_OPTION)
 			{
-				/* Save file */
+				String saveFile = LegeditHelper.getProperty(legedit2.helpers.LegeditHelper.PROPERTIES.lastExpansion);
+				if (saveFile != null && new File(saveFile).exists())
+				{
+					ProjectHelper.saveProject(new File(saveFile));
+				}
+				else
+				{
+					JFileChooser chooser = new JFileChooser(LegeditHelper.getLastOpenDirectory());
+					int outcome2 = chooser.showSaveDialog(LegeditFrame.legedit);
+					if (outcome2 == JFileChooser.APPROVE_OPTION)
+					{
+						ProjectHelper.saveProject(chooser.getSelectedFile());
+						LegeditHelper.setLastOpenDirectory(chooser.getSelectedFile().getAbsolutePath());
+						LegeditHelper.setProperty(legedit2.helpers.LegeditHelper.PROPERTIES.lastExpansion, chooser.getSelectedFile().getAbsolutePath());
+					}
+				}
 			}
     	}
 	}

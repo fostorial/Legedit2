@@ -119,6 +119,8 @@ public class DeckCardSelectionPanel extends JPanel implements ActionListener, It
 						LegeditItem item = LegeditItem.generateLegeditItem(type);
 						if (item != null)
 						{
+							selectedDeck.setChanged(true);
+							
 							cardListModel.addElement(item);
 							getSelectedDeck().getCards().add((Card)item);
 							cardList.setSelectedValue(item, true);
@@ -147,11 +149,15 @@ public class DeckCardSelectionPanel extends JPanel implements ActionListener, It
 		}
 		if (e.getSource().equals(deleteLegeditItem))
 		{
+			
 			if (cardList.getSelectedValue() != null)
 			{
 				try
 				{
-					
+					if (getSelectedDeck() != null)
+					{
+						selectCardForDelete();
+					}
 				}
 				catch (Exception ex)
 				{
@@ -254,6 +260,19 @@ public class DeckCardSelectionPanel extends JPanel implements ActionListener, It
 		{
 			Card.setStaticCard((Card)cardList.getSelectedValue());
 			getProjectPanel().selectCardForEdit((Card)cardList.getSelectedValue());
+		}
+	}
+	
+	private void selectCardForDelete()
+	{
+		System.out.println("Deleting");
+		if (selectedDeck != null && cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Card)
+		{
+			selectedDeck.setChanged(true);
+			
+			Card.setStaticCard(null);
+			selectedDeck.getCards().remove(cardList.getSelectedValue());
+			LegeditFrame.refreshGUI();
 		}
 	}
 }

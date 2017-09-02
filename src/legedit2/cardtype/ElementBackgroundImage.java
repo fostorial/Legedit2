@@ -36,6 +36,8 @@ public class ElementBackgroundImage extends CustomElement {
 	private JButton browseButton;
 	private JFileChooser chooser;
 	private JTextField zoomField;
+	private JTextField offsetXField;
+	private JTextField offsetYField;
 	
 	public void drawElement(Graphics2D g)
 	{
@@ -185,6 +187,30 @@ public class ElementBackgroundImage extends CustomElement {
 				/* DO NOTHING */
 			}
 		}
+		
+		if (offsetXField != null && !fullSize)
+		{
+			try
+			{
+				imageOffsetX = Integer.parseInt(offsetXField.getText());
+			}
+			catch (Exception e)
+			{
+				/* DO NOTHING */
+			}
+		}
+		
+		if (offsetYField != null && !fullSize)
+		{
+			try
+			{
+				imageOffsetY = Integer.parseInt(offsetYField.getText());
+			}
+			catch (Exception e)
+			{
+				/* DO NOTHING */
+			}
+		}
 	}
 
 	public JTextField getZoomField() {
@@ -193,6 +219,22 @@ public class ElementBackgroundImage extends CustomElement {
 
 	public void setZoomField(JTextField zoomField) {
 		this.zoomField = zoomField;
+	}
+
+	public JTextField getOffsetYField() {
+		return offsetYField;
+	}
+
+	public void setOffsetYField(JTextField offsetYField) {
+		this.offsetYField = offsetYField;
+	}
+
+	public JTextField getOffsetXField() {
+		return offsetXField;
+	}
+
+	public void setOffsetXField(JTextField offsetXField) {
+		this.offsetXField = offsetXField;
 	}
 
 }
