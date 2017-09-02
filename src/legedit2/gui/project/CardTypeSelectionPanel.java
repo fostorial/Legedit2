@@ -167,7 +167,14 @@ public class CardTypeSelectionPanel extends JPanel implements ActionListener, It
 			{
 				try
 				{
-					
+					if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Deck)
+					{
+						selectCardForDelete();
+					}
+					else if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Card)
+					{
+						selectCardForDelete();
+					}
 				}
 				catch (Exception ex)
 				{
@@ -178,6 +185,30 @@ public class CardTypeSelectionPanel extends JPanel implements ActionListener, It
 			{
 				JOptionPane.showMessageDialog(LegeditFrame.legedit, "No Item Selected", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
 			}		
+		}
+	}
+	
+	private void selectCardForDelete()
+	{
+		System.out.println("Deleting");
+		
+		if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Deck)
+		{
+			if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Deck)
+			{
+				Deck.setStaticDeck(null);
+				ProjectHelper.getDecks().remove(cardList.getSelectedValue());
+				LegeditFrame.refreshGUI();
+			}
+		}
+		else if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Card)
+		{
+			if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Card)
+			{
+				Card.setStaticCard(null);
+				ProjectHelper.getCards().remove(cardList.getSelectedValue());
+				LegeditFrame.refreshGUI();
+			}
 		}
 	}
 

@@ -283,6 +283,48 @@ subnameeditable="false"
 
 </elementgroup>
 
+<elementgroup 
+ name="Piercing"
+ visible="false">
+
+<icon
+ name="Piercing Icon"
+ defaultvalue="piercing"
+ allowchange="false"
+ optional="true"
+ x="82"
+ y="910"
+ maxwidth="140"
+ maxheight="140"
+ drawunderlay="true"
+ blurradius="15"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ visible="false"
+ />
+
+<text
+ name="Piercing Value"
+ linkedelement="Piercing"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="82"
+ y="910"
+ colour="#FFFFFF"
+ textsize="110"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ visible="false"
+ />
+
+</elementgroup>
+
 <textarea
  name="Card Text"
  alignmenthorizontal="left"

@@ -870,13 +870,38 @@ public class ElementTextArea extends CustomElement {
 			value = node.getAttributes().getNamedItem("value").getNodeValue();
 			value = restoreNonXMLCharacters(value);
 		}
+		
+		if (node.getAttributes().getNamedItem("fontname") != null)
+		{
+			fontName = node.getAttributes().getNamedItem("fontname").getNodeValue();
+		}
+		
+		if (node.getAttributes().getNamedItem("fontnamebold") != null)
+		{
+			fontNameBold = node.getAttributes().getNamedItem("fontnamebold").getNodeValue();
+		}
+		
+		if (node.getAttributes().getNamedItem("textsize") != null)
+		{
+			textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+			textSizeBold = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+		}
+		
+		if (node.getAttributes().getNamedItem("textsizebold") != null)
+		{
+			textSizeBold = Integer.parseInt(node.getAttributes().getNamedItem("textsizebold").getNodeValue());
+		}
 	}
 	
 	public String getDifferenceXML()
 	{
 		String str = "";
 		
-		str += "<textarea name=\"" + name + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" fontname=\""+fontName+"\" fontnamebold=\""+fontNameBold+"\" textsize=\""+textSize+"\" textsizebold=\""+textSizeBold+"\" />\n";
+		str += "<textarea name=\"" + name + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" "
+				+ (fontName == null ? " " : "fontname=\""+fontName+"\" ")
+				+ (fontNameBold == null ? " " : "fontnamebold=\""+fontNameBold+"\" ")
+				+ "textsize=\""+textSize+"\" "
+				+ "textsizebold=\""+textSizeBold+"\" />\n";
 		
 		return str;
 	}

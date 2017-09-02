@@ -905,6 +905,7 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("textsize") != null)
 			{
 				element.textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+				element.textSizeBold = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("textsizebold") != null)

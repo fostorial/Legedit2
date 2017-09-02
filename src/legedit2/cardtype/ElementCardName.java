@@ -360,7 +360,12 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	{
 		String str = "";
 		
-		str += "<cardname name=\"" + name + "\" value=\""+getValue()+"\" subnameValue=\"" + getSubnameValue() + "\" />\n";
+		str += "<cardname name=\"" + name + "\" "
+				+ "value=\""+getValue()+"\" "
+				+ "subnameValue=\"" + getSubnameValue() + "\" "
+				+ (fontName == null ? " " : "fontname=\""+fontName+"\" ")
+				+ "textsize=\""+textSize+"\" "
+				+ "subnamesize=\""+subnameSize+"\" />\n";
 		
 		return str;
 	}
@@ -380,6 +385,21 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		if (node.getAttributes().getNamedItem("subnameValue") != null)
 		{
 			subnameValue = node.getAttributes().getNamedItem("subnameValue").getNodeValue();
+		}
+		
+		if (node.getAttributes().getNamedItem("fontname") != null)
+		{
+			fontName = node.getAttributes().getNamedItem("fontname").getNodeValue();
+		}
+		
+		if (node.getAttributes().getNamedItem("textsize") != null)
+		{
+			textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+		}
+		
+		if (node.getAttributes().getNamedItem("subnamesize") != null)
+		{
+			subnameSize = Integer.parseInt(node.getAttributes().getNamedItem("subnamesize").getNodeValue());
 		}
 	}
 }
