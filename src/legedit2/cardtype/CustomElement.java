@@ -19,6 +19,7 @@ import org.w3c.dom.Node;
 import legedit2.card.Card;
 import legedit2.deck.Deck;
 import legedit2.definitions.Icon;
+import legedit2.helpers.ProjectHelper;
 import legedit2.imaging.CustomCardMaker;
 import legedit2.imaging.GaussianFilter;
 
@@ -328,11 +329,39 @@ public class CustomElement implements Cloneable {
 		
 	}
 	
-	public String populateVariables(String s)
+	public String populateVariables(String s, CustomElement ce)
 	{
-		if (Deck.getStaticDeck() != null && s != null)
+//		if (Deck.getStaticDeck() != null && s != null)
+//		{
+//			s = s.replace("%DECKNAME%", Deck.getStaticDeck().getDeckName());
+//		}
+		
+		for (Deck d : ProjectHelper.getDecks())
 		{
-			s = s.replace("%DECKNAME%", Deck.getStaticDeck().getDeckName());
+			for (Card c : d.getCards())
+			{
+				if (c.getTemplate() != null)
+				{
+					for (CustomElement e : c.getTemplate().elements)
+					{
+						if (e.equals(ce))
+						{
+							s = s.replace("%DECKNAME%", d.getDeckName());
+						}
+					}
+					
+					for (Style st : c.getTemplate().getStyles())
+					{
+						for (CustomElement e : st.getElements())
+						{
+							if (e.equals(ce))
+							{
+								s = s.replace("%DECKNAME%", d.getDeckName());
+							}
+						}
+					}
+				}
+			}
 		}
 		
 		return s;

@@ -241,9 +241,9 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	{
 		if (value != null)
 		{
-			return populateVariables(value);
+			return populateVariables(value, this);
 		}
-		return populateVariables(defaultValue);
+		return populateVariables(defaultValue, this);
 	}
 	
 	private String getValueForDraw()
@@ -259,9 +259,9 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	{
 		if (subnameValue != null)
 		{
-			return populateVariables(subnameValue);
+			return populateVariables(subnameValue, this);
 		}
-		return populateVariables(subnameText);
+		return populateVariables(subnameText, this);
 	}
 	
 	private String getSubnameValueForDraw()
@@ -389,7 +389,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 					&& card.getTemplate().findElementByType(ElementCardName.class) != null
 					&& ((ElementCardName)card.getTemplate().findElementByType(ElementCardName.class)).subnameEditable)
 			{
-				subnameValue = node.getAttributes().getNamedItem("subnameValue").getNodeValue();				
+				subnameValue = node.getAttributes().getNamedItem("subnameValue").getNodeValue();
 			}
 		}
 		
