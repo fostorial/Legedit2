@@ -16,6 +16,7 @@ import javax.swing.JCheckBox;
 
 import org.w3c.dom.Node;
 
+import legedit2.card.Card;
 import legedit2.deck.Deck;
 import legedit2.definitions.Icon;
 import legedit2.imaging.CustomCardMaker;
@@ -342,7 +343,7 @@ public class CustomElement implements Cloneable {
 		return "\n";
 	}
 	
-	public void loadValues(Node node)
+	public void loadValues(Node node, Card card)
 	{
 		
 	}

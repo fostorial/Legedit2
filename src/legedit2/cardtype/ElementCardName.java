@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 
 import org.w3c.dom.Node;
 
+import legedit2.card.Card;
 import legedit2.imaging.CustomCardMaker;
 import legedit2.imaging.MotionBlurOp;
 
@@ -370,7 +371,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		return str;
 	}
 	
-	public void loadValues(Node node)
+	public void loadValues(Node node, Card card)
 	{
 		if (!node.getNodeName().equals("cardname"))
 		{
@@ -384,7 +385,12 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		
 		if (node.getAttributes().getNamedItem("subnameValue") != null)
 		{
-			subnameValue = node.getAttributes().getNamedItem("subnameValue").getNodeValue();
+			if (card.getTemplate() != null 
+					&& card.getTemplate().findElementByType(ElementCardName.class) != null
+					&& ((ElementCardName)card.getTemplate().findElementByType(ElementCardName.class)).subnameEditable)
+			{
+				subnameValue = node.getAttributes().getNamedItem("subnameValue").getNodeValue();				
+			}
 		}
 		
 		if (node.getAttributes().getNamedItem("fontname") != null)

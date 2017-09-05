@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import org.w3c.dom.Node;
 
+import legedit2.card.Card;
 import legedit2.definitions.Icon;
 import legedit2.definitions.Icon.ICON_TYPE;
 import legedit2.imaging.CustomCardMaker;
@@ -156,7 +157,7 @@ public class ElementIconImage extends CustomElement {
 		}
 	}
 	
-	public void loadValues(Node node)
+	public void loadValues(Node node, Card card)
 	{
 		if (!node.getNodeName().equals("iconbg"))
 		{

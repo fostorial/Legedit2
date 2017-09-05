@@ -21,6 +21,7 @@ import javax.swing.SwingUtilities;
 
 import org.w3c.dom.Node;
 
+import legedit2.card.Card;
 import legedit2.definitions.Icon;
 import legedit2.imaging.BoxBlurFilter;
 import legedit2.imaging.CustomCardMaker;
@@ -858,7 +859,7 @@ public class ElementTextArea extends CustomElement {
 		return bi;
 	}
 	
-	public void loadValues(Node node)
+	public void loadValues(Node node, Card card)
 	{
 		if (!node.getNodeName().equals("textarea"))
 		{

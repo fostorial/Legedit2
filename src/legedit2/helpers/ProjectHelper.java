@@ -254,7 +254,7 @@ public class ProjectHelper {
 									&& e.name != null
 									&& e.name.equals(node2.getAttributes().getNamedItem("name").getNodeValue()))
 							{
-								e.loadValues(node2);
+								e.loadValues(node2, card);
 							}
 						}	
 					}
@@ -283,7 +283,7 @@ public class ProjectHelper {
 																&& e.name != null
 																&& e.name.equals(node4.getAttributes().getNamedItem("name").getNodeValue()))
 														{
-															e.loadValues(node4);
+															e.loadValues(node4, card);
 														}
 													}											
 												}

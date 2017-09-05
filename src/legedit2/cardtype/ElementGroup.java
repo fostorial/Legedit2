@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
+import legedit2.card.Card;
 import legedit2.definitions.Icon;
 
 public class ElementGroup extends CustomElement {
@@ -48,7 +49,7 @@ public class ElementGroup extends CustomElement {
 		}
 	}
 	
-	public void loadValues(Node node)
+	public void loadValues(Node node, Card card)
 	{
 		if (!node.getNodeName().equals("elementgroup"))
 		{
@@ -72,7 +73,7 @@ public class ElementGroup extends CustomElement {
 							&& e.name != null
 							&& e.name.equals(node2.getAttributes().getNamedItem("name").getNodeValue()))
 					{
-						e.loadValues(node2);
+						e.loadValues(node2, card);
 						e.visible = visible;
 					}
 				}	

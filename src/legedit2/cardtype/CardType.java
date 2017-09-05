@@ -1138,5 +1138,27 @@ public class CardType extends ItemType implements Cloneable {
 		this.exception = exception;
 	}
 	
+	public CustomElement findElementByName(String name)
+	{
+		for (CustomElement ce : elements)
+		{
+			if (ce.name.equalsIgnoreCase(name))
+			{
+				return ce;
+			}
+		}
+		return null;
+	}
 	
+	public CustomElement findElementByType(Class clazz)
+	{
+		for (CustomElement ce : elements)
+		{
+			if (ce.getClass().getSimpleName().equalsIgnoreCase(clazz.getSimpleName()))
+			{
+				return ce;
+			}
+		}
+		return null;
+	}
 }

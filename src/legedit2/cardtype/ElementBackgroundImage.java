@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import org.w3c.dom.Node;
 
+import legedit2.card.Card;
 import legedit2.imaging.CustomCardMaker;
 
 public class ElementBackgroundImage extends CustomElement {
@@ -107,7 +108,7 @@ public class ElementBackgroundImage extends CustomElement {
 		return str;
 	}
 	
-	public void loadValues(Node node)
+	public void loadValues(Node node, Card card)
 	{
 		if (!node.getNodeName().equals("bgimage"))
 		{

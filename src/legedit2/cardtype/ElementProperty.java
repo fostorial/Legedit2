@@ -4,6 +4,8 @@ import javax.swing.JTextField;
 
 import org.w3c.dom.Node;
 
+import legedit2.card.Card;
+
 public class ElementProperty extends CustomElement {
 	
 	public CustomProperties property;
@@ -57,7 +59,7 @@ public class ElementProperty extends CustomElement {
 		}
 	}
 	
-	public void loadValues(Node node)
+	public void loadValues(Node node, Card card)
 	{
 		if (!node.getNodeName().equals("property"))
 		{
