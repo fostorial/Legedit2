@@ -58,7 +58,6 @@ public class ElementGroup extends CustomElement {
 		
 		if (node.getAttributes().getNamedItem("visible") != null)
 		{
-			System.out.println(node.getAttributes().getNamedItem("visible").getNodeValue());
 			visible = Boolean.parseBoolean(node.getAttributes().getNamedItem("visible").getNodeValue());
 		}
 		

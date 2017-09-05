@@ -70,6 +70,10 @@ public class LegeditExporterSingleImages extends LegeditExporter {
 					
 					if (i instanceof Card)
 					{
+						maker.setCard((Card)i);
+						BufferedImage bi = maker.generateCard();
+						exportImage(bi, (Card)i, exportDirectory);
+						
 						value++;
 						getDialog().getProgressBar().setValue(value);
 					}

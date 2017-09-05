@@ -191,16 +191,45 @@ public class ElementIconImage extends CustomElement {
 		int fadeHeight = getPercentage(CustomCardMaker.cardHeight, 0.14d);
 		double increment = 255d / (double)fadeHeight;
 		
+//		int alpha = 0;
+//		for (int xx = 0; xx < width; xx++) {
+//            for (int yy = 0; yy < height; yy++) {
+//                Color originalColor = new Color(bi.getRGB(xx, yy), true);
+//                if (originalColor.getAlpha() > 0) {
+//                	
+//                	if (yy <= ((CustomCardMaker.cardHeight / 2) + (fadeHeight / 2)))
+//                    {
+//                		
+//                    	alpha = (int)((((CustomCardMaker.cardHeight / 2) + (fadeHeight / 2)) - yy) * increment);
+//                    	if (alpha > 255)
+//                    	{
+//                    		alpha = 255;
+//                    	}
+//              
+//                    }
+//                	
+//                    else
+//                    {
+//                    	alpha = 0;
+//                    }
+//                	
+//                    int col = (alpha << 24) | (originalColor.getRed() << 16) | (originalColor.getGreen() << 8) | originalColor.getBlue();
+//                    bi.setRGB(xx, yy, col);
+//                }
+//            }
+//        }
+		
 		int alpha = 0;
 		for (int xx = 0; xx < width; xx++) {
-            for (int yy = 0; yy < height; yy++) {
+			int yyn = 0;
+            for (int yy = height-1; yy >= 0; yy--) {
                 Color originalColor = new Color(bi.getRGB(xx, yy), true);
                 if (originalColor.getAlpha() > 0) {
                 	
-                	if (yy <= ((CustomCardMaker.cardHeight / 2) + (fadeHeight / 2)))
+                	if (yy >= ((CustomCardMaker.cardHeight / 2) - (fadeHeight / 2)))
                     {
                 		
-                    	alpha = (int)((((CustomCardMaker.cardHeight / 2) + (fadeHeight / 2)) - yy) * increment);
+                    	alpha = (int)((((CustomCardMaker.cardHeight / 2) + (fadeHeight / 2)) - yyn) * increment);
                     	if (alpha > 255)
                     	{
                     		alpha = 255;
@@ -215,6 +244,7 @@ public class ElementIconImage extends CustomElement {
                 	
                     int col = (alpha << 24) | (originalColor.getRed() << 16) | (originalColor.getGreen() << 8) | originalColor.getBlue();
                     bi.setRGB(xx, yy, col);
+                    yyn++;
                 }
             }
         }

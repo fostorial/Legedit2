@@ -191,7 +191,6 @@ public class LegeditFrame extends JFrame {
 	
 	private void recursiveComponentSearch(Component comp)
 	{
-		System.out.println(comp);
 		
 		if (comp instanceof JPanel)
 		{

@@ -73,6 +73,9 @@
  blurexpand="3"
  />
 
+<elementgroup 
+ name="Victory">
+
 <icon
  name="Victory"
  defaultvalue="victory"
@@ -106,6 +109,11 @@
  blurexpand="3"
  blurcolour="#000000"
  />
+
+</elementgroup>
+
+<elementgroup 
+ name="Recruit">
 
 <icon
  name="Recruit"
@@ -141,6 +149,11 @@
  blurcolour="#000000"
  />
 
+</elementgroup>
+
+<elementgroup 
+ name="Attack">
+
 <icon
  name="Attack"
  defaultvalue="attack"
@@ -174,6 +187,8 @@
  blurexpand="3"
  blurcolour="#000000"
  />
+
+</elementgroup>
 
 <textarea
  name="Card Text"
