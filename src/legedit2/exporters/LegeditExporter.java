@@ -7,6 +7,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import legedit2.card.Card;
+import legedit2.helpers.ProjectHelper;
 
 public class LegeditExporter {
 	
@@ -66,16 +67,74 @@ public class LegeditExporter {
 			//ImageIO.write(image, "jpg", newFile);
 			if (!jpegMode)
 			{
-				File newFile = new File(exportFolder.getAbsolutePath() + File.separator + card.getCardName(exportFolder.getAbsolutePath()) + ".png");
+				File newFile = new File(exportFolder.getAbsolutePath() + File.separator + getExportName(card, exportFolder) + ".png");
 				exportToPNG(image, newFile);
 			}
 			else
 			{
-				File newFile = new File(exportFolder.getAbsolutePath() + File.separator + card.getCardName(exportFolder.getAbsolutePath()) + ".jpg");
+				File newFile = new File(exportFolder.getAbsolutePath() + File.separator + getExportName(card, exportFolder) + ".jpg");
 				exportToJPEG(image, newFile);
 			}
 		}
 		catch (Exception e) { e.printStackTrace(); }
+	}
+	
+	public void exportSingleImage(BufferedImage image, Card card, File exportFolder)
+	{
+		try
+		{
+			//ImageIO.write(image, "jpg", newFile);
+			if (!jpegMode)
+			{
+				File newFile = new File(exportFolder.getAbsolutePath());
+				exportToPNG(image, newFile);
+			}
+			else
+			{
+				File newFile = new File(exportFolder.getAbsolutePath());
+				exportToJPEG(image, newFile);
+			}
+		}
+		catch (Exception e) { e.printStackTrace(); }
+	}
+	
+	private String getExportName(Card card, File exportFolder)
+	{
+		if (card != null)
+		{
+			return card.getCardName(exportFolder.getAbsolutePath());
+		}
+		else if (ProjectHelper.getCurrentFile() != null)
+		{
+			int i = 1;
+			String filename = ProjectHelper.getCurrentFile().getName().replace(" ", "") + "_" + i;
+			
+			do
+			{
+				filename = ProjectHelper.getCurrentFile().getName().replace(" ", "") + "_" + i;
+				i++;
+			}
+			while (new File(exportFolder.getAbsolutePath() + File.separator + filename + ".jpg").exists() 
+					|| new File(exportFolder.getAbsolutePath() + File.separator + filename + ".png").exists());
+			
+			return filename;
+		}
+		else
+		{
+			int i = 1;
+			String filename = "Untitled_" + i;
+			
+			do
+			{
+				filename = "Untitled_" + i;
+				i++;
+			}
+			while (new File(exportFolder.getAbsolutePath() + File.separator + filename + ".jpg").exists() 
+					|| new File(exportFolder.getAbsolutePath() + File.separator + filename + ".png").exists());
+			
+			return filename;
+		}
+		
 	}
 	
 	public void exportToJPEG(BufferedImage image, File newFile) throws Exception

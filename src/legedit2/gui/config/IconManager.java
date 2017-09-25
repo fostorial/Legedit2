@@ -11,6 +11,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -21,7 +22,9 @@ import javax.swing.event.ListSelectionListener;
 
 import legedit2.definitions.Icon;
 import legedit2.definitions.Icon.ICON_TYPE;
+import legedit2.gui.LegeditFrame;
 import legedit2.gui.dialogs.ManageIconPanel;
+import legedit2.helpers.LegeditHelper;
 
 public class IconManager extends JPanel implements ActionListener, ItemListener, ListSelectionListener {
 
@@ -38,6 +41,7 @@ public class IconManager extends JPanel implements ActionListener, ItemListener,
 	private ManageIconPanel managePanel;
 	
 	private JButton newIconButton = new JButton(" + ");
+	private JButton deleteIconButton = new JButton(" - ");
 	
 	public IconManager()
 	{
@@ -73,6 +77,9 @@ public class IconManager extends JPanel implements ActionListener, ItemListener,
 		
 		newIconButton.addActionListener(this);
 		tb.add(newIconButton);
+		
+		deleteIconButton.addActionListener(this);
+		tb.add(deleteIconButton);
 		
 		iconListPanel.add(tb, BorderLayout.PAGE_START);
 		
@@ -123,6 +130,24 @@ public class IconManager extends JPanel implements ActionListener, ItemListener,
 			managePanel.setSelectedItem(null);
 			managePanel.setAddMode(true);
 			managePanel.resetFields();
+		}
+		
+		if (e.getSource().equals(deleteIconButton))
+		{
+			Icon icon = iconList.getSelectedValue();
+			if (icon != null)
+			{
+				iconListModel.removeElement(icon);
+				Icon.values().remove(icon);
+				Icon.saveIconDefinitions();
+				
+				managePanel.setSelectedItem(null);
+				managePanel.resetFields();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(LegeditFrame.legedit, "No icon selected", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	

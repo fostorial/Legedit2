@@ -16,6 +16,7 @@ public class LegeditMenuBar extends JMenuBar {
 	private ViewMenu viewMenu = new ViewMenu();
 	private ConfigMenu configMenu = new ConfigMenu();
 	private EditorMenu editorMenu = new EditorMenu();
+	private ToolsMenu toolsMenu = new ToolsMenu();
 	
 	public void setupMenus(MENU_MODE menuMode)
 	{
@@ -23,6 +24,7 @@ public class LegeditMenuBar extends JMenuBar {
 		this.add(editorMenu);
 		//this.add(viewMenu);
 		this.add(configMenu);
+		this.add(toolsMenu);
 		
 		this.setMenuMode(menuMode);
 		switch (menuMode)

@@ -12,11 +12,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import legedit2.card.Card;
 import legedit2.gui.LegeditFrame;
 import legedit2.helpers.LegeditHelper;
 
 public class LegeditExportDialog extends JDialog implements ActionListener, PropertyChangeListener {
 
+	private static final long serialVersionUID = -1844700819488507706L;
+	
 	private LegeditExporter exporter;
 	private JProgressBar progressBar;
 	
@@ -69,15 +72,64 @@ public class LegeditExportDialog extends JDialog implements ActionListener, Prop
 		}
 	}
 	
+	public void exportSingle()
+	{
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		int result = chooser.showSaveDialog(LegeditFrame.legedit);
+		if (result == JFileChooser.APPROVE_OPTION)
+		{
+			if (chooser.getSelectedFile().isDirectory())
+			{
+				JOptionPane.showMessageDialog(LegeditFrame.legedit, "Not a File!", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
+				this.setVisible(false);
+				return;
+			}
+			
+			exporter.setDialog(this);
+			exporter.export(chooser.getSelectedFile());
+			
+			this.setVisible(true);
+		}
+		else
+		{
+			return;
+		}
+	}
+	
 	public static void export(LegeditExporter exporter)
 	{
 		LegeditExportDialog d = new LegeditExportDialog(exporter);
 		d.export();
 	}
 	
+	public static void exportSingleImage(Card card)
+	{
+		LegeditExportDialog d = new LegeditExportDialog(new LegeditExporterSingleImage(card));
+		d.exportSingle();
+	}
+	
+	public static void exportSingleImageWithBleed(Card card)
+	{
+		LegeditExportDialog d = new LegeditExportDialog(new LegeditExporterSingleImageBleeder(card));
+		d.exportSingle();
+	}
+	
 	public static void exportSingleImages()
 	{
 		LegeditExportDialog d = new LegeditExportDialog(new LegeditExporterSingleImages());
+		d.export();
+	}
+	
+	public static void exportSingleImagesWithBleed()
+	{
+		LegeditExportDialog d = new LegeditExportDialog(new LegeditExporterSingleImagesBleeder());
+		d.export();
+	}
+	
+	public static void export3By3Pages()
+	{
+		LegeditExportDialog d = new LegeditExportDialog(new LegeditExporter3by3());
 		d.export();
 	}
 	

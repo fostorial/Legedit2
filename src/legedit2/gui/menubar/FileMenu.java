@@ -3,19 +3,16 @@ package legedit2.gui.menubar;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import legedit2.definitions.LegeditItem;
 import legedit2.exporters.LegeditExportDialog;
-import legedit2.exporters.LegeditExporter;
 import legedit2.helpers.LegeditHelper;
 import legedit2.helpers.ProjectHelper;
+import legedit2.tools.legeditimporter.LegeditImporter;
 
 public class FileMenu extends JMenu implements ActionListener {
 	
@@ -29,7 +26,13 @@ public class FileMenu extends JMenu implements ActionListener {
 	
 	private JMenuItem saveAs = new JMenuItem("Save As...");
 	
+	private JMenu exportMenu = new JMenu("Export");
+	
 	private JMenuItem exportSingleImages = new JMenuItem("Export Single Images...");
+	private JMenuItem exportSingleImagesBleed = new JMenuItem("Export Single Images With Bleed...");
+	private JMenuItem export3By3 = new JMenuItem("Export 3x3 Pages...");
+	
+	private JMenuItem importLegeditDef = new JMenuItem("Import Legedit Def...");
 	
 	private JMenuItem exit = new JMenuItem("Exit");
 	
@@ -43,6 +46,8 @@ public class FileMenu extends JMenu implements ActionListener {
 		
 		this.add(open);
 		
+		this.add(importLegeditDef);
+		
 		this.addSeparator();
 		
 		this.add(save);
@@ -51,7 +56,11 @@ public class FileMenu extends JMenu implements ActionListener {
 		
 		this.addSeparator();
 		
-		this.add(exportSingleImages);
+		this.add(exportMenu);
+		
+		exportMenu.add(exportSingleImages);
+		exportMenu.add(exportSingleImagesBleed);
+		exportMenu.add(export3By3);
 		
 		this.addSeparator();
 		
@@ -62,6 +71,17 @@ public class FileMenu extends JMenu implements ActionListener {
 			if (c instanceof JMenuItem)
 			{
 				((JMenuItem)c).addActionListener(this);
+			}
+			
+			if (c instanceof JMenu)
+			{
+				for (Component mc : ((JMenu)c).getMenuComponents())
+				{
+					if (mc instanceof JMenuItem)
+					{
+						((JMenuItem)mc).addActionListener(this);
+					}
+				}
 			}
 		}
 	}
@@ -113,6 +133,16 @@ public class FileMenu extends JMenu implements ActionListener {
 			}
 		}
 		
+		if (e.getSource().equals(importLegeditDef))
+		{
+			JFileChooser chooser = new JFileChooser(LegeditHelper.getLastOpenDirectory());
+			int outcome = chooser.showOpenDialog(this);
+			if (outcome == JFileChooser.APPROVE_OPTION)
+			{
+				new LegeditImporter(chooser.getSelectedFile());
+			}
+		}
+		
 		if (e.getSource().equals(newExpansion))
 		{
 			ProjectHelper.newProject();
@@ -121,6 +151,16 @@ public class FileMenu extends JMenu implements ActionListener {
 		if (e.getSource().equals(exportSingleImages))
 		{
 			LegeditExportDialog.exportSingleImages();
+		}
+		
+		if (e.getSource().equals(exportSingleImagesBleed))
+		{
+			LegeditExportDialog.exportSingleImagesWithBleed();
+		}
+		
+		if (e.getSource().equals(export3By3))
+		{
+			LegeditExportDialog.export3By3Pages();
 		}
 		
 		if (e.getSource().equals(exit))

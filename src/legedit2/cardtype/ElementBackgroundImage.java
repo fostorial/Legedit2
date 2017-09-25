@@ -127,7 +127,7 @@ public class ElementBackgroundImage extends CustomElement {
 		
 		if (node.getAttributes().getNamedItem("imageOffsetX") != null)
 		{
-			imageOffsetY = Integer.parseInt(node.getAttributes().getNamedItem("imageOffsetX").getNodeValue());
+			imageOffsetX = Integer.parseInt(node.getAttributes().getNamedItem("imageOffsetX").getNodeValue());
 		}
 		
 		if (node.getAttributes().getNamedItem("imageOffsetY") != null)

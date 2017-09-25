@@ -11,6 +11,7 @@ GUARDIANS,guardians.png,false
 HYDRA,pic2683697_t (1).png,false
 ILLUMINATI,pic2683701_t.png,false
 MARVEL_KNIGHTS,marvel-knights.png,false
+MERCS_4_MONEY,687474703a2f2f692e696d6775722e636f6d2f343379547850772e706e67.png,false
 MUTANT,mutants.png,true
 PREDACON,predacon.png,true
 QUINTESSON,quintesson.png,true
@@ -24,4 +25,3 @@ TURTLES,turtles.png,false
 US_ARMY,us_army.png,false
 X_FORCE,x-force.png,false
 X_MEN,x-men.png,false
-MERCS_4_MONEY,687474703a2f2f692e696d6775722e636f6d2f343379547850772e706e67.png,false

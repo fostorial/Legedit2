@@ -52,7 +52,7 @@
  y="40"
  colour="#FBD246"
  textsize="48"
- subnametext="%DECKNAME% - Mastermind Tactics"
+ subnametext="Mastermind Tactic - %DECKNAME%"
  subnamesize="34"
  subnamegap="15"
  blurradius="16"

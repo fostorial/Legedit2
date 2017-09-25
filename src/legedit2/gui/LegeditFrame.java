@@ -323,4 +323,22 @@ public class LegeditFrame extends JFrame {
 			
 		}
 	}
+	
+	public Card getCardFromTab()
+	{
+		if (editorMode.equals(EDITOR_MODE.TABBED))
+		{
+			int i = tabs.getSelectedIndex();
+			
+			if (i >= 0 && tabs.getComponentAt(i) instanceof CardEditorPanel)
+			{
+				return ((CardEditorPanel)tabs.getComponentAt(i)).getSelectedCard();
+			}
+		}
+		else
+		{
+			return null;
+		}
+		return null;
+	}
 }
