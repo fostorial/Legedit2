@@ -91,16 +91,16 @@ public class LegeditExportTool3x3 extends JFrame
 			file.mkdirs();
 			
 			List<BufferedImage> images = new ArrayList<BufferedImage>();
-			System.out.println();
-			System.out.println("Preloading Images");
+			//System.out.println();
+			//System.out.println("Preloading Images");
 			for (File f : cards)
 			{
 				BufferedImage image = resizeImage(new ImageIcon(f.getAbsolutePath()), cardWidth, cardHeight);
 				images.add(image);
 			}
 			
-			System.out.println();
-			System.out.println("Exporting Sheets");
+			//System.out.println();
+			//System.out.println("Exporting Sheets");
 			
 			int i = 0;
 			int j = 1;
@@ -159,10 +159,10 @@ public class LegeditExportTool3x3 extends JFrame
 		        j++;
 			}
 			
-			System.out.println();
-			System.out.println("Exported " + j + " Sheets");
-			System.out.println();
-			System.out.println("Export Complete");
+			//System.out.println();
+			//System.out.println("Exported " + j + " Sheets");
+			//System.out.println();
+			//System.out.println("Export Complete");
 			
 			g.dispose();
 		}
@@ -209,13 +209,13 @@ public class LegeditExportTool3x3 extends JFrame
 		
 		public static void prepareFiles()
 		{
-			System.out.println("Preparing Files");
+			//System.out.println("Preparing Files");
 			
 			for (String str : includedFolders)
 			{
 				File file = new File(expansionDirectory + File.separator + str + File.separator);
-				System.out.println();
-				System.out.println("Preparing: " + file.getName());
+				//System.out.println();
+				//System.out.println("Preparing: " + file.getName());
 				if (file.exists() && file.isDirectory())
 				{
 					File[] filesArray = file.listFiles();
@@ -227,7 +227,7 @@ public class LegeditExportTool3x3 extends JFrame
 						{
 							int dotPos = f.getName().lastIndexOf(".");
 							String nameNoExtension = f.getName().substring(0, dotPos);
-							System.out.println(nameNoExtension);
+							//System.out.println(nameNoExtension);
 							
 							files.add(f);
 						}
@@ -235,8 +235,8 @@ public class LegeditExportTool3x3 extends JFrame
 				}
 			}
 			
-			System.out.println();
-			System.out.println("Organising Cards");
+			//System.out.println();
+			//System.out.println("Organising Cards");
 			cards = new ArrayList<File>();
 			
 			for (File f : files)
@@ -256,7 +256,7 @@ public class LegeditExportTool3x3 extends JFrame
 						cards.add(f);
 						cards.add(f);
 						cards.add(f);
-						System.out.println(nameNoExtension + " x 5");
+						//System.out.println(nameNoExtension + " x 5");
 					}
 					
 					if (nameNoExtension.contains("_uncommon"))
@@ -264,13 +264,13 @@ public class LegeditExportTool3x3 extends JFrame
 						cards.add(f);
 						cards.add(f);
 						cards.add(f);
-						System.out.println(nameNoExtension + " x 3");
+						//System.out.println(nameNoExtension + " x 3");
 					}
 					
 					if (nameNoExtension.contains("_rare"))
 					{
 						cards.add(f);
-						System.out.println(nameNoExtension + " x 1");
+						//System.out.println(nameNoExtension + " x 1");
 					}
 					
 					if (nameNoExtension.contains("_x_"))
@@ -289,7 +289,7 @@ public class LegeditExportTool3x3 extends JFrame
 						{
 							cards.add(f);
 						}
-						System.out.println(nameNoExtension + " x " + count);
+						//System.out.println(nameNoExtension + " x " + count);
 					}
 				}
 				else if (parentFolder.toLowerCase().equals("villains"))
@@ -306,7 +306,7 @@ public class LegeditExportTool3x3 extends JFrame
 						cards.add(f);
 						cards.add(f);
 						cards.add(f);
-						System.out.println(nameNoExtension + " x 10");
+						//System.out.println(nameNoExtension + " x 10");
 					}
 					else if (nameNoExtension.contains("_x_"))
 					{
@@ -324,13 +324,13 @@ public class LegeditExportTool3x3 extends JFrame
 						{
 							cards.add(f);
 						}
-						System.out.println(nameNoExtension + " x " + count);
+						//System.out.println(nameNoExtension + " x " + count);
 					}
 					else
 					{
 						cards.add(f);
 						cards.add(f);
-						System.out.println(nameNoExtension + " x 2");
+						//System.out.println(nameNoExtension + " x 2");
 					}
 				}
 				//Anything else
@@ -352,12 +352,12 @@ public class LegeditExportTool3x3 extends JFrame
 						{
 							cards.add(f);
 						}
-						System.out.println(nameNoExtension + " x " + count);
+						//System.out.println(nameNoExtension + " x " + count);
 					}
 					else
 					{
 						cards.add(f);
-						System.out.println(nameNoExtension + " x 1");
+						//System.out.println(nameNoExtension + " x 1");
 					}
 				}
 			}

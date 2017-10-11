@@ -230,12 +230,12 @@ public class LegeditFrame extends JFrame {
 			{
 				if (c.equals(tabs))
 				{
-					System.out.println("Removing Tabs");
+					//System.out.println("Removing Tabs");
 					legedit.remove(tabs);				
 				}
 				if (c.equals(projectPanel))
 				{
-					System.out.println("Removing Project Panel");
+					//System.out.println("Removing Project Panel");
 					legedit.remove(projectPanel);				
 				}
 				recursiveComponentSearch(c);

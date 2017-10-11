@@ -130,6 +130,23 @@ subnameeditable="false"
  blurcolour="#000000"
  />
 
+<icon
+ name="Villain Team"
+ defaultvalue="none"
+ icontype="team"
+ allowchange="true"
+ optional="true"
+ x="720"
+ y="696"
+ maxwidth="50"
+ maxheight="50"
+ drawunderlay="false"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="0"
+ blurcolour="#FFFFFF"
+ />
+
 
 <icon
  name="Attack"

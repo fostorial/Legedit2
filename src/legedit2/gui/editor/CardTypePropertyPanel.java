@@ -202,7 +202,6 @@ public class CardTypePropertyPanel extends JPanel implements ActionListener, Ite
 				}
 				if (el instanceof ElementImage)
 				{
-					System.out.println("Image!!");
 					row = addImageItems((ElementImage)el, row);
 				}
 				if (el instanceof ElementBackgroundImage)
@@ -249,7 +248,6 @@ public class CardTypePropertyPanel extends JPanel implements ActionListener, Ite
 			}
 			if (el instanceof ElementImage)
 			{
-				System.out.println("Image!!");
 				row = addImageItems((ElementImage)el, row);
 			}
 			if (el instanceof ElementBackgroundImage)
@@ -673,7 +671,7 @@ public class CardTypePropertyPanel extends JPanel implements ActionListener, Ite
 		{
 			if (getPreviewPanel().getSelectedItem() instanceof Card)
 			{
-				System.out.println("Updating card...");
+				//System.out.println("Updating card...");
 				((Card)getPreviewPanel().getSelectedItem()).updateCardValues();
 				getPreviewPanel().rebuildImageList();
 				getPreviewPanel().resetPreviewPanel();				
@@ -685,7 +683,7 @@ public class CardTypePropertyPanel extends JPanel implements ActionListener, Ite
 	public void itemStateChanged(ItemEvent e) {
 		if (styleFilter.getSelectedItem() != null && ((Style)styleFilter.getSelectedItem()).getName() != null)
 		{
-			System.out.println("Rerendering Style...");
+			//System.out.println("Rerendering Style...");
 			card.setStyle(((Style)styleFilter.getSelectedItem()));
 			getPreviewPanel().rebuildImageList();
 			getPreviewPanel().resetPreviewPanel();	

@@ -125,7 +125,7 @@ public class TemplateManager extends JPanel implements ActionListener, ListSelec
 	public void valueChanged(ListSelectionEvent e) {
 		if (iconList.getSelectedValue() != null)
 		{
-			System.out.println(iconList.getSelectedValue().getTemplateDisplayName());
+			//System.out.println(iconList.getSelectedValue().getTemplateDisplayName());
 		}
 		previewPanel.setSelectedItemType(iconList.getSelectedValue());
 		previewPanel.resetPreviewPanel();

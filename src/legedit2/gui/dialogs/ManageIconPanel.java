@@ -310,14 +310,17 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 					
 					Icon.saveIconDefinitions();
 					
-					File newFile = new File("legendary"+File.separator+selectedItem.getIconType().name()+File.separator+iconFile.getName());
-					try {
-						if (!newFile.exists())
-						{
-							copyFile(iconFile, newFile);
+					if (iconFile != null)
+					{
+						File newFile = new File("legendary"+File.separator+selectedItem.getIconType().name()+File.separator+iconFile.getName());
+						try {
+							if (!newFile.exists())
+							{
+								copyFile(iconFile, newFile);
+							}
+						} catch (IOException e1) {
+							e1.printStackTrace();
 						}
-					} catch (IOException e1) {
-						e1.printStackTrace();
 					}
 				}
 			}

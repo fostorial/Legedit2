@@ -134,6 +134,16 @@ public class ElementBackgroundImage extends CustomElement {
 		{
 			imageOffsetY = Integer.parseInt(node.getAttributes().getNamedItem("imageOffsetY").getNodeValue());
 		}
+		
+		if (offsetXField != null)
+		{
+			offsetXField.setText("" + imageOffsetX);
+		}
+		
+		if (offsetYField != null)
+		{
+			offsetYField.setText("" + imageOffsetY);
+		}
 	}
 	
 	public String getDifferenceXML()

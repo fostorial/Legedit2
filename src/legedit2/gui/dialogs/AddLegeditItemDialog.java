@@ -210,7 +210,7 @@ public class AddLegeditItemDialog extends JDialog implements ActionListener, Ite
 					if (s.getName() != null && ((Style)styleTypeFilter.getSelectedItem()) != null 
 							&& s.getName().equals(((Style)styleTypeFilter.getSelectedItem()).getName()))
 					{
-						System.out.println("Set Style: " + s.getName());
+						//System.out.println("Set Style: " + s.getName());
 						((CardType)previewPanel.getSelectedItemType()).setStyle(s);
 					}
 				}
@@ -229,7 +229,7 @@ public class AddLegeditItemDialog extends JDialog implements ActionListener, Ite
 						if (s.getName() != null && ((Style)styleTypeFilter.getSelectedItem()) != null 
 								&& s.getName().equals(((Style)styleTypeFilter.getSelectedItem()).getName()))
 						{
-							System.out.println("Set Style: " + s.getName());
+							//System.out.println("Set Style: " + s.getName());
 							ct.setStyle(s);
 						}
 					}					

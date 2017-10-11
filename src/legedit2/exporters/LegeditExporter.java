@@ -139,7 +139,7 @@ public class LegeditExporter {
 	
 	public void exportToJPEG(BufferedImage image, File newFile) throws Exception
 	{
-		System.out.println("Exporting: " + newFile.getName());
+		//System.out.println("Exporting: " + newFile.getName());
 		
 		BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics g = bi.getGraphics();
@@ -153,7 +153,7 @@ public class LegeditExporter {
 	
 	public void exportToPNG(BufferedImage image, File newFile) throws Exception
 	{
-		System.out.println("Exporting: " + newFile.getName());
+		//System.out.println("Exporting: " + newFile.getName());
 		ImageIO.write(image, "png", newFile);
 	}
 

@@ -190,8 +190,6 @@ public class CardTypeSelectionPanel extends JPanel implements ActionListener, It
 	
 	private void selectCardForDelete()
 	{
-		System.out.println("Deleting");
-		
 		if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Deck)
 		{
 			if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Deck)
@@ -256,7 +254,7 @@ public class CardTypeSelectionPanel extends JPanel implements ActionListener, It
 	public void valueChanged(ListSelectionEvent e) {
 		if (cardList.getSelectedValue() != null)
 		{
-			System.out.println(cardList.getSelectedValue().getLegeditName());
+			//System.out.println(cardList.getSelectedValue().getLegeditName());
 			if (cardList.getSelectedValue() instanceof Deck)
 			{
 				if (cardList.getSelectedValue() instanceof Deck)

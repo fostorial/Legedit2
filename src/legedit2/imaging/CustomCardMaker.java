@@ -148,7 +148,7 @@ public class CustomCardMaker {
 	
 	public void exportToJPEG(BufferedImage image, File newFile) throws Exception
 	{
-		System.out.println("Exporting: " + newFile.getName());
+		//System.out.println("Exporting: " + newFile.getName());
 		
 		BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics g = bi.getGraphics();
@@ -163,7 +163,7 @@ public class CustomCardMaker {
 	
 	public void exportToPNG(BufferedImage image, File newFile) throws Exception
 	{
-		System.out.println("Exporting: " + newFile.getName());
+		//System.out.println("Exporting: " + newFile.getName());
 		ImageIO.write(image, "png", newFile);
 	}
 	
@@ -478,7 +478,7 @@ public class CustomCardMaker {
                     	
                     	if (yy <= ((cardHeight / 2) + (fadeHeight / 2)) && xx == 0)
                 		{
-                			System.out.println(yy + ":" + alpha);
+                			//System.out.println(yy + ":" + alpha);
                 		}
                     }
                 	

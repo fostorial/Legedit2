@@ -180,7 +180,7 @@ public class IconManager extends JPanel implements ActionListener, ItemListener,
 	public void valueChanged(ListSelectionEvent e) {
 		if (iconList.getSelectedValue() != null)
 		{
-			System.out.println(iconList.getSelectedValue().getTagName());
+			//System.out.println(iconList.getSelectedValue().getTagName());
 		}
 		managePanel.setAddMode(false);
 		managePanel.setSelectedItem(iconList.getSelectedValue());

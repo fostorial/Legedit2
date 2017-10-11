@@ -9,5 +9,13 @@
  nameeditable="true"
  />
 
+<attributes>
+ <attribute
+  name="Team"
+  type="icon"
+  icontype="team"
+ />
+</attributes>
+
 </xml>
 

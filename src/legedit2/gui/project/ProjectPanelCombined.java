@@ -20,7 +20,7 @@ public class ProjectPanelCombined extends ProjectPanel {
 		splitPane.setLeftComponent(new JList<>(new String[]{"Name"}));
 		splitPane.setRightComponent(new JPanel());
 		splitPane.setBorder(null);
-		System.out.println(splitPane.getBounds());
+		//System.out.println(splitPane.getBounds());
 		add(splitPane, BorderLayout.CENTER);
 		
 		setDeckPanel(new DeckCardSelectionPanel());

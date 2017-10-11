@@ -68,8 +68,8 @@ public class LegeditExporter3by3 extends LegeditExporter {
 				int value = 0;
 				
 				List<BufferedImage> images = new ArrayList<BufferedImage>();
-				System.out.println();
-				System.out.println("Preloading Images");
+				//System.out.println();
+				//System.out.println("Preloading Images");
 				for (LegeditItem li : items)
 				{
 					BufferedImage bi = null;

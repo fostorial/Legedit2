@@ -1,5 +1,6 @@
 package legedit2.gui.project;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -17,10 +18,15 @@ import javax.swing.JTextField;
 
 import legedit2.card.Card;
 import legedit2.cardtype.CardType;
+import legedit2.cardtype.CustomElement;
+import legedit2.cardtype.ElementIcon;
 import legedit2.cardtype.Style;
 import legedit2.deck.Deck;
 import legedit2.decktype.DeckType;
+import legedit2.decktype.DeckTypeAttribute;
+import legedit2.definitions.Icon;
 import legedit2.gui.dialogs.StyleListCellRenderer;
+import legedit2.gui.editor.IconListRenderer;
 
 public class DeckEditorPanel extends JPanel implements ItemListener, ActionListener {
 	
@@ -38,7 +44,12 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 	
 	public DeckEditorPanel()
 	{
-		setLayout(new GridBagLayout());
+		setGui();
+	}
+	
+	private void setGui()
+	{
+setLayout(new GridBagLayout());
 		
 		nameLabel = new JLabel("Name");
 		GridBagConstraints c = new GridBagConstraints();
@@ -79,15 +90,28 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 		styleList.setRenderer(new StyleListCellRenderer());
 		styleList.addItemListener(this);
 		
+		int row = 2;
+		if (selectedDeck != null && selectedDeck.getTemplate() != null && selectedDeck.getTemplate().getAttributes() != null)
+		{
+			for (DeckTypeAttribute attr : selectedDeck.getTemplate().getAttributes())
+			{
+				if (attr.getType() != null && attr.getType().equals("icon"))
+				{
+					addIconItems(attr, 2);
+					row++;
+				}
+			}			
+		}
 		
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 3;
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = row;
 		c.weightx = 0.5;
 		this.add(updateButton, c);
 		updateButton.addActionListener(this);
+		
 		
 		resetStyleMenu();
 	}
@@ -98,6 +122,9 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 
 	public void setSelectedDeck(Deck selectedDeck) {
 		this.selectedDeck = selectedDeck;
+		
+		this.removeAll();
+		setGui();
 		
 		boolean visible = false;
 		
@@ -183,6 +210,7 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 		return false;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (selectedDeck != null)
@@ -194,8 +222,62 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 			
 			for (Card c : selectedDeck.getCards())
 			{
+				for (DeckTypeAttribute attr : selectedDeck.getTemplate().getAttributes())
+				{
+					for (CustomElement el : c.getTemplate().elements)
+					{
+						if (el.name != null && el.name.equalsIgnoreCase(attr.getName()))
+						{
+							if (el instanceof ElementIcon && attr.getType().equalsIgnoreCase("icon"))
+							{
+								JComboBox box = null;
+								for (Component comp : this.getComponents())
+								{
+									if (comp instanceof JComboBox && comp.getName() != null && comp.getName().equals("icondropdown_"+attr.getName()))
+									{
+										box = (JComboBox)comp;
+										break;
+									}
+								}
+								
+								if (box != null)
+								{
+									((ElementIcon)el).value = (Icon)box.getSelectedItem();
+								}
+							}
+						}
+					}					
+				}
+				
 				for (Style s : c.getTemplate().getStyles())
 				{
+					for (DeckTypeAttribute attr : selectedDeck.getTemplate().getAttributes())
+					{
+						for (CustomElement el : s.getElements())
+						{
+							if (el.name != null && el.name.equalsIgnoreCase(attr.getName()))
+							{
+								if (el instanceof ElementIcon && attr.getType().equalsIgnoreCase("icon"))
+								{
+									JComboBox box = null;
+									for (Component comp : this.getComponents())
+									{
+										if (comp instanceof JComboBox && comp.getName() != null && comp.getName().equals("icondropdown_"+attr.getName()))
+										{
+											box = (JComboBox)comp;
+											break;
+										}
+									}
+									
+									if (box != null)
+									{
+										((ElementIcon)el).value = (Icon)box.getSelectedItem();
+									}
+								}
+							}
+						}					
+					}
+					
 					if (s.getName().equals(((Style)styleList.getSelectedItem()).getName()))
 					{
 						c.getTemplate().setStyle(s);
@@ -215,5 +297,49 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 
 	public void setProjectPanel(ProjectPanel projectPanel) {
 		this.projectPanel = projectPanel;
+	}
+	
+	private int addIconItems(DeckTypeAttribute attr, int row)
+	{
+		
+		{
+			JLabel nameLabel = new JLabel(attr.getName());
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 0;
+			c.gridy = row;
+			this.add(nameLabel, c);
+			
+			JComboBox<Icon> icons = new JComboBox<Icon>();
+			icons.setName("icondropdown_"+attr.getName());
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 3;
+			c.gridx = 1;
+			c.gridy = row;
+			c.weightx = 0.5;
+			icons.setRenderer(new IconListRenderer());
+			for (Icon icon : Icon.values())
+			{
+				if (attr.getIconType() != null && icon.getIconType() != null && (icon.getIconType().name().equalsIgnoreCase(attr.getIconType()) || icon.getEnumName().equalsIgnoreCase("NONE")))
+				{
+					icons.addItem(icon);
+				}
+				else if (attr.getIconType() == null)
+				{
+					icons.addItem(icon);
+				}
+				
+				if (icon.getEnumName().equalsIgnoreCase("NONE"))
+				{
+					icons.setSelectedItem(icon);
+				}
+			}
+			this.add(icons, c);
+			
+			row++;
+		}
+		return row;
 	}
 }

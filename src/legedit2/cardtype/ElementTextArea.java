@@ -132,7 +132,7 @@ public class ElementTextArea extends CustomElement {
 	    		
 	    		for (String sectionString : sections)
 	    		{
-	    			System.out.println("Section: " + sectionString);
+	    			//System.out.println("Section: " + sectionString);
 	    			
 	    			if (!sectionString.isEmpty())
 	    			{
@@ -186,7 +186,7 @@ public class ElementTextArea extends CustomElement {
 		    				}
 		    			}
 		    			
-		    			System.out.println("header: " + headerStr + ", card: " + cardStr);
+		    			//System.out.println("header: " + headerStr + ", card: " + cardStr);
 		    			
 		    			if (headerStr != null && !headerStr.isEmpty())
 		    			{
@@ -533,7 +533,7 @@ public class ElementTextArea extends CustomElement {
 			}
 			
 			polygon = new Polygon(xpoints, ypoints, xpoints.length);
-			System.out.println(polygon);
+			//System.out.println(polygon);
 		}
 		
 		return polygon;

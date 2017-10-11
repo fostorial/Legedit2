@@ -25,3 +25,4 @@ TURTLES,turtles.png,false
 US_ARMY,us_army.png,false
 X_FORCE,x-force.png,false
 X_MEN,x-men.png,false
+CYBERTRON,cybertron.png,false

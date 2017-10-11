@@ -26,6 +26,8 @@ public class DeckType extends ItemType implements Cloneable {
 	private static List<DeckType> deckTypes = null;
 	private List<CardType> cardTypes = new ArrayList<>();
 	
+	private List<DeckTypeAttribute> attributes = new ArrayList<>();
+	
 	public DeckType()
 	{
 		
@@ -115,6 +117,39 @@ public class DeckType extends ItemType implements Cloneable {
 						if (node.getAttributes().getNamedItem("nameeditable") != null)
 						{
 							t.setNameEditable(Boolean.parseBoolean(node.getAttributes().getNamedItem("nameeditable").getNodeValue()));
+						}
+					}
+					
+					if (node.getNodeName().equals("attributes"))
+					{	
+						if (node.getChildNodes() != null)
+						{
+							NodeList nodes = node.getChildNodes();
+							for (int count1 = 0; count1 < nodes.getLength(); count1++) {
+								Node node2 = nodes.item(count1);
+								DeckTypeAttribute attribute = new DeckTypeAttribute();
+								
+								if (node2.getAttributes() != null && node2.getAttributes().getNamedItem("name") != null)
+								{
+									attribute.setName(node2.getAttributes().getNamedItem("name").getNodeValue());
+								}
+								
+								if (node2.getAttributes() != null && node2.getAttributes().getNamedItem("type") != null)
+								{
+									attribute.setType(node2.getAttributes().getNamedItem("type").getNodeValue());
+								}
+								
+								if (node2.getAttributes() != null && node2.getAttributes().getNamedItem("icontype") != null)
+								{
+									attribute.setIconType(node2.getAttributes().getNamedItem("icontype").getNodeValue());
+								}
+								
+								if (attribute.getName() != null)
+								{
+									t.getAttributes().add(attribute);
+								}
+							}
+							
 						}
 					}
 				}
@@ -218,5 +253,13 @@ public class DeckType extends ItemType implements Cloneable {
 
 	public void setNameEditable(Boolean nameEditable) {
 		this.nameEditable = nameEditable;
+	}
+
+	public List<DeckTypeAttribute> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(List<DeckTypeAttribute> attributes) {
+		this.attributes = attributes;
 	}
 }

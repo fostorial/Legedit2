@@ -2,10 +2,10 @@
 <xml>
 
 <template
- name="henchmen"
- displayname="Henchman"
- deck="henchmen"
- defaultsindeck="true"
+ name="trap"
+ displayname="Trap"
+ deck="villain"
+ defaultsindeck="false"
  />
 
 <cardsize
@@ -40,39 +40,12 @@
 
 <styles>
 
- <style
-  name="Base Set">
-
- <cardname 
- name="Card Name"
- defaultvalue="%DECKNAME%"
- allowchange="false"
- includesubname="true"
- subnameeditable="false"
- highlight="blur"
- highlightcolour="#000000"
- uppercase="true"
- alignment="center"
- x="375"
- y="40"
- colour="#FBD246"
- textsize="48"
- subnametext="Henchman Villain"
- subnamesize="34"
- subnamegap="12"
- blurradius="15"
- bluedouble="false"
- blurexpand="4"
- />
-
- </style>
-
- <style
+<style
  name="Villains">
 
 <cardname 
  name="Card Name"
- defaultvalue="%DECKNAME%"
+ defaultvalue="Card Name"
  allowchange="true"
  includesubname="true"
  subnameeditable="false"
@@ -84,12 +57,41 @@
  y="40"
  colour="#FBD246"
  textsize="48"
- subnametext="Henchman Villain"
+ subnametext="%DECKNAME%"
+ subnameprefix="Trap - "
  subnamesize="34"
  subnamegap="12"
  blurradius="16"
  bluedouble="false"
  blurexpand="8"
+ />
+
+ </style>
+
+ <style
+  name="Base Set">
+
+ <cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="false"
+ includesubname="true"
+ subnameeditable="false"
+ highlight="blur"
+ highlightcolour="#000000"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#FBD246"
+ textsize="48"
+ subnametext="%DECKNAME%"
+ subnameprefix="Trap - "
+ subnamesize="34"
+ subnamegap="12"
+ blurradius="15"
+ bluedouble="false"
+ blurexpand="4"
  />
 
  </style>
@@ -130,74 +132,23 @@
  blurcolour="#000000"
  />
 
-<icon
- name="Villain Team"
- defaultvalue="none"
- icontype="team"
- allowchange="true"
- optional="true"
- x="720"
- y="696"
- maxwidth="50"
- maxheight="50"
- drawunderlay="false"
- blurradius="15"
- bluedouble="true"
- blurexpand="0"
- blurcolour="#FFFFFF"
- />
-
-<icon
- name="Attack"
- defaultvalue="attack"
- allowchange="false"
- optional="true"
- x="645"
- y="950"
- maxwidth="160"
- maxheight="160"
- drawunderlay="true"
- blurradius="3"
- bluedouble="false"
- blurexpand="0"
- blurcolour="#000000"
- />
-
-<text
- name="Attack Value"
- linkedelement="Attack"
- alignment="center"
- allowchange="true"
- defaultvalue="0"
- x="645"
- y="950"
- colour="#FFFFFF"
- textsize="110"
- uppercase="true"
- drawunderlay="true"
- blurradius="2"
- bluedouble="false"
- blurexpand="3"
- blurcolour="#000000"
- />
-
 <textarea
  name="Card Text"
  alignmenthorizontal="left"
  alignmentvertical="top"
  allowchange="true"
- defaultvalue="Card Text."
+ defaultvalue="&lt;k&gt;By End of Turn:&lt;r&gt; &lt;g&gt; &lt;k&gt;Or Suffer:&lt;r&gt;"
  colour="#000000"
  textsize="34"
- rectxarray="110,710,710,560,560,445,345,205"
- rectyarray="785,785,885,885,1030,1030,1000,909"
+ rectxarray="110,710,710,560,445,345,205"
+ rectyarray="785,785,1030,1030,1030,1000,909"
  debug="false"
  />
 
 <property
  name="Number in Deck"
  property="numberindeck"
- defaultvalue="10"
+ defaultvalue="2"
  />
 
 </xml>

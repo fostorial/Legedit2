@@ -164,7 +164,6 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 				}
 				if (el instanceof ElementImage)
 				{
-					System.out.println("Image!!");
 					row = addImageItems((ElementImage)el, row);
 				}
 				if (el instanceof ElementBackgroundImage)
@@ -403,7 +402,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 				c.gridx = x;
 				c.gridy = row;
 				tb.add(offsetXField);
-				offsetXField.setText(""+el.imageOffsetY);
+				offsetXField.setText(""+el.imageOffsetX);
 				el.setOffsetXField(offsetXField);
 				
 				JTextField offsetYField = new JTextField();
@@ -860,7 +859,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 		{
 			if (getPreviewPanel().getSelectedItem() instanceof Card)
 			{
-				System.out.println("Updating card...");
+				//System.out.println("Updating card...");
 				((Card)getPreviewPanel().getSelectedItem()).setChanged(true);
 				((Card)getPreviewPanel().getSelectedItem()).updateCardValues();
 				getPreviewPanel().rebuildImageList();

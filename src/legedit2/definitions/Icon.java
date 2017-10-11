@@ -85,11 +85,11 @@ public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 	
 	public static void loadIcons()
 	{
-		System.out.println("Loading Icons...");
+		//System.out.println("Loading Icons...");
 		
 		icons = new ArrayList<Icon>();
 		
-		System.out.println("Loading Teams...");
+		//System.out.println("Loading Teams...");
 		
 		File file = new File("legedit" + File.separator + "icons" + File.separator + "teams" + File.separator + "teams.txt");
 		if (file.exists())
@@ -111,7 +111,7 @@ public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 						   }
 						   Icon i = new Icon(split[0], "legedit" + File.separator + "icons" + File.separator +"teams"+File.separator+split[1], underlay, ICON_TYPE.TEAM);
 						   icons.add(i);
-						   System.out.println("Loaded: " + i.getEnumName()); 
+						   //System.out.println("Loaded: " + i.getEnumName()); 
 					   }
 					   catch (Exception e)
 					   {
@@ -128,7 +128,7 @@ public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 			}
 		}
 		
-		System.out.println("Loading Powers...");
+		//System.out.println("Loading Powers...");
 		
 		file = new File("legedit" + File.separator + "icons" + File.separator + "powers" + File.separator);
 		if (file.exists())
@@ -141,12 +141,12 @@ public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 					
 					Icon i = new Icon(f.getAbsolutePath(), ICON_TYPE.POWER);
 					icons.add(i);
-					System.out.println("Loaded: " + i.getEnumName());
+					//System.out.println("Loaded: " + i.getEnumName());
 				}
 			}
 		}
 		
-		System.out.println("Loading Attributes...");
+		//System.out.println("Loading Attributes...");
 		
 		file = new File("legedit" + File.separator + "icons" + File.separator + "attributes" + File.separator);
 		if (file.exists())
@@ -159,12 +159,12 @@ public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 					
 					Icon i = new Icon(f.getAbsolutePath(), ICON_TYPE.ATTRIBUTE);
 					icons.add(i);
-					System.out.println("Loaded: " + i.getEnumName());
+					//System.out.println("Loaded: " + i.getEnumName());
 				}
 			}
 		}
 		
-		System.out.println("Loading Misc Icons...");
+		//System.out.println("Loading Misc Icons...");
 		
 		file = new File("legedit" + File.separator + "icons" + File.separator + "misc" + File.separator);
 		if (file.exists())
@@ -177,14 +177,14 @@ public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 					
 					Icon i = new Icon(f.getAbsolutePath(), ICON_TYPE.MISC);
 					icons.add(i);
-					System.out.println("Loaded: " + i.getEnumName());
+					//System.out.println("Loaded: " + i.getEnumName());
 				}
 			}
 		}
 		
 		icons.add(Icon.noneIcon);
 		
-		System.out.println("Icons Loaded...");
+		//System.out.println("Icons Loaded...");
 	}
 	
 	public static Icon valueOf(String key)

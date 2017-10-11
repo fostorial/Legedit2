@@ -144,7 +144,7 @@ public class LegeditBleeder extends JFrame
 				File[] files = folder.listFiles();
 				for (File f : files)
 				{
-					System.out.println(f.getAbsolutePath());
+					//System.out.println(f.getAbsolutePath());
 					
 					ImageIcon imageIcon = null;
 					String imageType = null;

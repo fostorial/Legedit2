@@ -190,7 +190,7 @@ public class DeckCardSelectionPanel extends JPanel implements ActionListener, It
 				Card.setStaticCard((Card)cardList.getSelectedValue());
 			}
 			
-			System.out.println(cardList.getSelectedValue().getLegeditName());
+			//System.out.println(cardList.getSelectedValue().getLegeditName());
 			getPreviewPanel().setSelectedItem(cardList.getSelectedValue());
 		}
 	}
@@ -265,7 +265,6 @@ public class DeckCardSelectionPanel extends JPanel implements ActionListener, It
 	
 	private void selectCardForDelete()
 	{
-		System.out.println("Deleting");
 		if (selectedDeck != null && cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Card)
 		{
 			selectedDeck.setChanged(true);

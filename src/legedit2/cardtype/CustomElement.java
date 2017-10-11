@@ -331,6 +331,11 @@ public class CustomElement implements Cloneable {
 	
 	public String populateVariables(String s, CustomElement ce)
 	{
+		if (s == null)
+		{
+			return s;
+		}
+		
 //		if (Deck.getStaticDeck() != null && s != null)
 //		{
 //			s = s.replace("%DECKNAME%", Deck.getStaticDeck().getDeckName());
