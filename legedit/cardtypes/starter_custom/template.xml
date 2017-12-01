@@ -64,6 +64,22 @@ subnameeditable="true"
  blurexpand="4"
  />
 
+<icon
+ name="Team"
+ defaultvalue="none"
+ allowchange="true"
+ icontype="team"
+ x="50"
+ y="50"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ />
+
   </style>
 
 <style name="Base Set">
@@ -88,6 +104,22 @@ subnameeditable="true"
  blurradius="15"
  bluedouble="true"
  blurexpand="4"
+ />
+
+<icon
+ name="Team"
+ defaultvalue="none"
+ allowchange="true"
+ icontype="team"
+ x="50"
+ y="50"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
  />
 
   </style>

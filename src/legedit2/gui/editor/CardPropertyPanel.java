@@ -35,6 +35,7 @@ import legedit2.cardtype.ElementIcon;
 import legedit2.cardtype.ElementIconImage;
 import legedit2.cardtype.ElementImage;
 import legedit2.cardtype.ElementProperty;
+import legedit2.cardtype.ElementScrollingTextArea;
 import legedit2.cardtype.ElementText;
 import legedit2.cardtype.ElementTextArea;
 import legedit2.definitions.Icon;
@@ -121,6 +122,10 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					{
 						row = addTextAreaItems((ElementTextArea)el, row);
 					}
+					if (el instanceof ElementScrollingTextArea)
+					{
+						row = addTextAreaItems((ElementScrollingTextArea)el, row);
+					}
 					if (el instanceof ElementImage)
 					{
 						row = addImageItems((ElementImage)el, row);
@@ -161,6 +166,10 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 				if (el instanceof ElementTextArea)
 				{
 					row = addTextAreaItems((ElementTextArea)el, row);
+				}
+				if (el instanceof ElementScrollingTextArea)
+				{
+					row = addTextAreaItems((ElementScrollingTextArea)el, row);
 				}
 				if (el instanceof ElementImage)
 				{
@@ -240,6 +249,10 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			if (el instanceof ElementTextArea)
 			{
 				row = addTextAreaItems((ElementTextArea)el, row);
+			}
+			if (el instanceof ElementScrollingTextArea)
+			{
+				row = addTextAreaItems((ElementScrollingTextArea)el, row);
 			}
 			if (el instanceof ElementImage)
 			{
@@ -458,6 +471,149 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 	}
 	
 	private int addTextAreaItems(ElementTextArea el, int row)
+	{
+		if (el.allowChange)
+		{
+			JTextArea textArea = new JTextArea();
+			
+			JLabel nameLabel = new JLabel(el.name);
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 0;
+			c.gridy = row;
+			panel.add(nameLabel, c);
+			
+			JComboBox<Icon> icons = new JComboBox<Icon>();
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 2;
+			c.gridx = 1;
+			c.gridy = row;
+			c.weightx = 0.5;
+			icons.setRenderer(new IconListRenderer());
+			for (Icon icon : Icon.values())
+			{
+				icons.addItem(icon);
+			}
+			icons.setSelectedItem(Icon.valueOf("ATTACK"));
+			panel.add(icons, c);
+			
+			el.setIconComboBox(icons);
+			
+			JButton addIcon = new JButton("+");
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 3;
+			c.gridy = row;
+			addIcon.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					textArea.insert("<" + ((Icon)icons.getSelectedItem()).getEnumName() + ">", textArea.getCaretPosition());
+				}
+			});
+			panel.add(addIcon, c);
+			
+			el.setAddIconButton(addIcon);
+			
+			row++;
+			
+			JButton keywordButton = new JButton("Keyword");
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 0;
+			c.gridy = row;
+			keywordButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					textArea.insert("<k>", textArea.getCaretPosition());
+				}
+			});
+			panel.add(keywordButton, c);
+			
+			el.setKeywordButton(keywordButton);
+			
+			JButton regularButton = new JButton("Regular");
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 1;
+			c.gridy = row;
+			regularButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					textArea.insert("<r>", textArea.getCaretPosition());
+				}
+			});
+			panel.add(regularButton, c);
+			
+			el.setRegularButton(regularButton);
+			
+			JButton fontButton = new JButton("Font");
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 2;
+			c.gridy = row;
+			fontButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFontChooser chooser = new JFontChooser();
+					
+					Font font;
+					try {
+						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
+						font = font.deriveFont((float)el.textSize);
+						
+						if (el.fontName != null)
+			    		{
+			    			font = new Font(el.fontName, el.fontStyle, el.textSize);
+			    		}
+						
+						chooser.setFont(font);
+						chooser.setSelectedFont(font);
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					int showDialog = chooser.showDialog(LegeditFrame.legedit);
+					if (showDialog == JFontChooser.OK_OPTION)
+					{
+						el.textSize = chooser.getSelectedFont().getSize();
+						el.textSizeBold = chooser.getSelectedFont().getSize();
+					}
+				}
+			});
+			panel.add(fontButton, c);
+			
+			el.setFontButton(fontButton);
+			
+			row++;
+			
+			JScrollPane scrollPane = new JScrollPane();
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 4;
+			c.ipady = 50;
+			c.gridx = 0;
+			c.gridy = row;
+			c.weightx = 0.5;
+			panel.add(scrollPane, c);
+			textArea.setText(el.getValue());
+			scrollPane.setViewportView(textArea);
+			
+			el.setTextArea(textArea);
+			el.setScrollPane(scrollPane);
+			row++;
+		}
+		
+		return row;
+	}
+	
+	private int addTextAreaItems(ElementScrollingTextArea el, int row)
 	{
 		if (el.allowChange)
 		{

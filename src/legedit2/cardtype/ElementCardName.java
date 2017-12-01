@@ -22,7 +22,7 @@ import legedit2.imaging.MotionBlurOp;
 
 public class ElementCardName extends CustomElement implements Cloneable {
 
-	public enum HIGHLIGHT {BANNER, BLUR, NONE}
+	public enum HIGHLIGHT {BANNER, BLUR, BANNER_BLUR, NONE}
 	
 	public String defaultValue;
 	public boolean includeSubname;
@@ -33,6 +33,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	public int x;
 	public int y;
 	public Color colour;
+	public Color subNameColour;
 	public boolean drawUnderlay;
 	public int blurRadius;
 	public boolean blurDouble;
@@ -152,7 +153,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        }
 	        
 	        
-	        if (highlight.equals(HIGHLIGHT.BLUR))
+	        if (highlight.equals(HIGHLIGHT.BLUR) || highlight.equals(HIGHLIGHT.BANNER_BLUR))
 	        {
 	        	g2 = setGraphicsHints(g2);
 	        	
@@ -176,7 +177,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		    	drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, getPercentage(blurRadius, getScale()), blurDouble, getPercentage(blurExpand, getScale()), highlightColour);
 	        }
 	        
-	        if (highlight.equals(HIGHLIGHT.BANNER))
+	        if (highlight.equals(HIGHLIGHT.BANNER) || highlight.equals(HIGHLIGHT.BANNER_BLUR))
 	        {
 	        	BufferedImage bi2 = new BufferedImage(getPercentage(CustomCardMaker.cardWidth, getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 		        Graphics g3 = bi2.getGraphics();
@@ -213,12 +214,18 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        
 		        g2 = setGraphicsHints(g2);
 		        
+		        if (subNameColour != null)
+		        {
+		        	g2.setColor(subNameColour);
+		        }
+		        
         		g2.drawString(getSubnameValueForDraw(), newxSubname, yModifiedSubname);
         		
         		g2.setFont(font);
 		        metrics = g2.getFontMetrics(font);
 		        
 		        g2 = setGraphicsHints(g2);
+		        g2.setColor(colour);
         	}
 	    	
 	    	if (rotate > 0)

@@ -794,6 +794,11 @@ public class CardType extends ItemType implements Cloneable {
 				element.colour = Color.decode(node.getAttributes().getNamedItem("colour").getNodeValue());
 			}
 			
+			if (node.getAttributes().getNamedItem("subnamecolour") != null)
+			{
+				element.subNameColour = Color.decode(node.getAttributes().getNamedItem("subnamecolour").getNodeValue());
+			}
+			
 			if (node.getAttributes().getNamedItem("drawunderlay") != null)
 			{
 				element.drawUnderlay = Boolean.parseBoolean(node.getAttributes().getNamedItem("drawunderlay").getNodeValue());
@@ -931,6 +936,100 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("rectyarray") != null)
 			{
 				element.rectYArray = node.getAttributes().getNamedItem("rectyarray").getNodeValue();
+			}
+			
+			if (node.getAttributes().getNamedItem("debug") != null)
+			{
+				element.debug = Boolean.parseBoolean(node.getAttributes().getNamedItem("debug").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("visible") != null)
+			{
+				element.visible = Boolean.parseBoolean(node.getAttributes().getNamedItem("visible").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("rotate") != null)
+			{
+				element.rotate = Integer.parseInt(node.getAttributes().getNamedItem("rotate").getNodeValue());
+			}
+			
+			t.addElement(element, s, group);
+		}
+		
+		if (node.getNodeName().equals("scrollingtextarea"))
+		{
+			ElementScrollingTextArea element = new ElementScrollingTextArea();
+			element.template = t;
+			
+			if (node.getAttributes().getNamedItem("name") != null)
+			{
+				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+			}
+			
+			if (node.getAttributes().getNamedItem("defaultvalue") != null)
+			{
+				element.defaultValue = node.getAttributes().getNamedItem("defaultvalue").getNodeValue();
+			}
+			
+			if (node.getAttributes().getNamedItem("allowchange") != null)
+			{
+				element.allowChange = Boolean.parseBoolean(node.getAttributes().getNamedItem("allowchange").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("colour") != null)
+			{
+				element.colour = Color.decode(node.getAttributes().getNamedItem("colour").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("fontname") != null)
+			{
+				element.fontName = node.getAttributes().getNamedItem("fontname").getNodeValue();
+			}
+			
+			if (node.getAttributes().getNamedItem("fontnamebold") != null)
+			{
+				element.fontNameBold = node.getAttributes().getNamedItem("fontnamebold").getNodeValue();
+			}
+			
+			if (node.getAttributes().getNamedItem("textsize") != null)
+			{
+				element.textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+				element.textSizeBold = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("textsizebold") != null)
+			{
+				element.textSizeBold = Integer.parseInt(node.getAttributes().getNamedItem("textsizebold").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("alignmenthorizontal") != null)
+			{
+				element.alignmentHorizontal = ALIGNMENT.valueOf(node.getAttributes().getNamedItem("alignmenthorizontal").getNodeValue().toUpperCase());
+			}
+			
+			if (node.getAttributes().getNamedItem("alignmentvertical") != null)
+			{
+				element.alignmentVertical = ALIGNMENT.valueOf(node.getAttributes().getNamedItem("alignmentvertical").getNodeValue().toUpperCase());
+			}
+			
+			if (node.getAttributes().getNamedItem("startx") != null)
+			{
+				element.startX = Integer.parseInt(node.getAttributes().getNamedItem("startx").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("endx") != null)
+			{
+				element.endX = Integer.parseInt(node.getAttributes().getNamedItem("endx").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("starty") != null)
+			{
+				element.startX = Integer.parseInt(node.getAttributes().getNamedItem("starty").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("direction") != null)
+			{
+				element.direction = node.getAttributes().getNamedItem("direction").getNodeValue();
 			}
 			
 			if (node.getAttributes().getNamedItem("debug") != null)

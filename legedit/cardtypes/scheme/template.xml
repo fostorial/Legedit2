@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="scheme"
+ displayname="Scheme"
+ group="bystanders"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<bgimage
+ name="Image"
+ fullsize="false"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="true"
+ zoomable="true"
+ />
+
+<styles>
+
+<style
+ name="Villains">
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="false"
+ subnameeditable="false"
+ highlight="banner"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#e9dc98"
+ textsize="48"
+ subnametext=""
+ subnameprefix=""
+ subnamesize="34"
+ subnamegap="12"
+ blurradius="16"
+ bluedouble="false"
+ blurexpand="8"
+ />
+
+ </style>
+
+ <style
+  name="Base Set">
+
+ <cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="false"
+ includesubname="false"
+ subnameeditable="false"
+ highlight="blur"
+ highlightcolour="#000000"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#FBD246"
+ textsize="48"
+ subnametext="%DECKNAME%"
+ subnameprefix="Trap - "
+ subnamesize="34"
+ subnamegap="12"
+ blurradius="15"
+ bluedouble="false"
+ blurexpand="4"
+ />
+
+ </style>
+
+</styles>
+
+
+<scrollingtextarea
+ name="Card Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue="Card Text."
+ colour="#000000"
+ textsize="34"
+ startx="50"
+ endx="700"
+ starty="50"
+ direction="up"
+ debug="true"
+ />
+
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="1"
+ />
+
+</xml>
+
