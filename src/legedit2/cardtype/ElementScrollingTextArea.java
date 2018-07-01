@@ -13,11 +13,7 @@ import java.awt.image.BufferedImageOp;
 import java.io.File;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import org.w3c.dom.Node;
 
@@ -41,10 +37,13 @@ public class ElementScrollingTextArea extends CustomElement {
 	public String fontNameBold;
 	public String fontNameHeader;
 	public int fontStyle;
+	public String headerText;
+	public Color headerColour = Color.red;
 
 	public int startX = 0;
 	public int endX = 750;
 	public int startY = 50;
+	public int endY = 1050;
 	
 	public String direction = "up";
 	
@@ -66,7 +65,9 @@ public class ElementScrollingTextArea extends CustomElement {
 	private JButton keywordButton;
 	private JButton regularButton;
 	private JButton fontButton;
-	
+
+	private ElementBackgroundImage bg;
+
 	public String getValue()
 	{
 		if (value != null)
@@ -87,13 +88,19 @@ public class ElementScrollingTextArea extends CustomElement {
 			if (debug)
 			{
 				g2.setColor(Color.BLACK);
-				g2.fillRect(startX, startY, CustomCardMaker.cardWidth - (endX - startX), CustomCardMaker.cardHeight);
+				g2.fillRect(getPercentage(startX, getScale()), getPercentage(startY, getScale()), getPercentage(endX - startX, getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()));
 			}
 			
 	    	g2.setColor(colour);
+
+			int x = -1;
+			int y = -1;
+
+			Font font = null;
+
 	    	try
 	    	{
-	    		Font font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
+	    		font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
 	    		font = font.deriveFont((float)getPercentage(textSize,getScale()));
 	    		if (fontName != null)
 	    		{
@@ -117,14 +124,55 @@ public class ElementScrollingTextArea extends CustomElement {
 	    		fontHeader = fontHeader.deriveFont((float)getPercentage(textSizeHeader, getScale()));
 	    		
 	    		FontMetrics metrics = g2.getFontMetrics(font);
-	    		
-	    		int x = -1;
-	    		int y = -1;
+
 	    		
 	    		//TODO other alignments
-	    		
-	    		x = startX;
-	    		y = startY;
+
+				x = getPercentage(startX, getScale());
+				y = getPercentage(startY, getScale()) + g2.getFontMetrics(font).getHeight();
+
+				/* Draw Element Header */
+				if (headerText != null)
+				{
+					HeaderIcon headerIcon = null;
+
+						//Calculate Header Icons
+						if (headerText.toLowerCase().contains("<hi") && headerText.toLowerCase().contains("/>"))
+						{
+							String[] spl = headerText.split("<hi");
+							headerText = spl[0];
+							String[] spl2 = spl[1].split("/>");
+							String headerIconText = spl2[0];
+
+							String[] iconPairs = headerIconText.split(" ");
+							for (String i : iconPairs)
+							{
+								if (i.toUpperCase().startsWith("ICON="))
+								{
+									if (headerIcon == null)
+									{
+										headerIcon = new HeaderIcon();
+									}
+									headerIcon.icon = isIcon(i.toUpperCase().trim().replace("ICON=", ""));
+								}
+
+								if (i.toUpperCase().startsWith("VALUE="))
+								{
+									if (headerIcon == null)
+									{
+										headerIcon = new HeaderIcon();
+									}
+									headerIcon.value = i.toUpperCase().trim().replace("VALUE=", "");
+								}
+							}
+					}
+
+					if (headerText != null && !headerText.isEmpty())
+					{
+						int headerHeight = (int)((double)g.getFontMetrics(fontHeader).getHeight() * 1.3d);
+						drawHeader(g2, headerText.toUpperCase(), fontHeader, headerColour, y - (headerHeight*2) + (int)(headerHeight*0.1d), headerHeight, getPercentage(CustomCardMaker.cardWidth, 0.2d), headerIcon);
+					}
+				}
 	    		
 	    		String[] sections = getValue().split("<h>");
 	    		boolean firstSection = true;
@@ -246,13 +294,13 @@ public class ElementScrollingTextArea extends CustomElement {
 			    			if (gap == true)
 			    			{
 			    				y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight);
-			    				x = startX;
+			    				x = getPercentage(startX, getScale());
 			    			}
 			    			else if (icon == null)
 			    			{
 			    				int stringLength = SwingUtilities.computeStringWidth(metrics, s);
 
-			    				if (x > (CustomCardMaker.cardWidth - (endX - startX)))
+			    				if (x + stringLength > getPercentage(endX, getScale()))
 			    				{
 			    					//TODO Restore for rare backing?
 			    					/*
@@ -262,7 +310,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			    					}
 			    					*/
 			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textDefaultGapHeight);
-			    					x = startX;
+			    					x = getPercentage(startX, getScale());
 			    				}
 			    				g2.drawString(s + " ", x, y);
 			    				x += stringLength + SwingUtilities.computeStringWidth(metrics, spaceChar);
@@ -271,7 +319,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			    			{
 			    				BufferedImage i = getIconMaxHeight(icon, getPercentage(metrics.getHeight(), 1.2d));
 
-			    				if (x > (CustomCardMaker.cardWidth - (endX - startX)))
+			    				if (x + i.getWidth() > getPercentage(endX, getScale()))
 			    				{
 			    					//TODO Restore for rare backing?
 			    					/*
@@ -281,7 +329,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			    					}
 			    					*/
 			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textDefaultGapHeight);
-			    					x = startX;
+			    					x = getPercentage(startX, getScale());
 			    				}
 			    				
 			    				int modifiedY = (int)(y - i.getHeight() + metrics.getDescent());
@@ -332,8 +380,67 @@ public class ElementScrollingTextArea extends CustomElement {
 				AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 				bi = op.filter(bi, null);
 			}
+
+			int directionY = 0;
+	    	if (direction.equalsIgnoreCase("up"))
+			{
+				directionY = getPercentage(endY, getScale()) - (y - getPercentage(startY, getScale()))
+					- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight)
+						- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight)
+						- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight);
+			}
+			else
+			{
+				directionY = 0;
+			}
+
+			if (bg != null)
+			{
+				String file = bg.path;
+				if (bg.templateFile)
+				{
+					file = CustomCardMaker.templateFolder + File.separator
+							+ template.getTemplateName()
+							+ File.separator + bg.path;
+				}
+				else
+				{
+					file = bg.path;
+				}
+
+
+				if (file != null)
+				{
+					File fileValue = new File(file);
+					if (fileValue.exists())
+					{
+						BufferedImage bi2 = null;
+						if (bg.fullSize)
+						{
+							bi2 = resizeImage(new ImageIcon(file), getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight,getScale()));
+						}
+						else
+						{
+							ImageIcon ii = new ImageIcon(file);
+							bi2 = resizeImage(new ImageIcon(file), (int)(getPercentage(ii.getIconWidth(),getScale()) * bg.zoom), (int)(getPercentage(ii.getIconHeight(),getScale()) * bg.zoom));
+						}
+
+						if (rotate > 0)
+						{
+							double rotationRequired = Math.toRadians (rotate);
+							double locationX = bi.getWidth() / 2;
+							double locationY = bi.getHeight() / 2;
+							AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+							AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+							bi2 = op.filter(bi, null);
+						}
+
+						g.drawImage(bi2, getPercentage(bg.x + bg.imageOffsetX,getScale()), directionY + getPercentage( bg.y + bg.imageOffsetY,getScale()), null);
+					}
+				}
+			}
 	    	
-	    	g.drawImage(bi, 0, 0, null);
+	    	g.drawImage(bi, 0, directionY, null);
 	    	
 	    	g2.dispose();
 		}
@@ -481,7 +588,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			g3 = setGraphicsHints(g3);
 		}
 		
-		drawUnderlay(bi2, g3, BufferedImage.TYPE_INT_ARGB, 0, 0, 5, true, 3);
+		drawUnderlay(bi2, g3, BufferedImage.TYPE_INT_ARGB, 0, 0, 7, false, 2);
 		
 		g3.drawString(header, getPercentage(getPercentage(CustomCardMaker.cardWidth,getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
 		
@@ -659,5 +766,13 @@ public class ElementScrollingTextArea extends CustomElement {
 
 	public void setFontButton(JButton fontButton) {
 		this.fontButton = fontButton;
+	}
+
+	public ElementBackgroundImage getBg() {
+		return bg;
+	}
+
+	public void setBg(ElementBackgroundImage bg) {
+		this.bg = bg;
 	}
 }

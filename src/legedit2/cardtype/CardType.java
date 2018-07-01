@@ -965,6 +965,11 @@ public class CardType extends ItemType implements Cloneable {
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
 			}
+
+			if (node.getAttributes().getNamedItem("headertext") != null)
+			{
+				element.headerText = node.getAttributes().getNamedItem("headertext").getNodeValue();
+			}
 			
 			if (node.getAttributes().getNamedItem("defaultvalue") != null)
 			{
@@ -1024,7 +1029,12 @@ public class CardType extends ItemType implements Cloneable {
 			
 			if (node.getAttributes().getNamedItem("starty") != null)
 			{
-				element.startX = Integer.parseInt(node.getAttributes().getNamedItem("starty").getNodeValue());
+				element.startY = Integer.parseInt(node.getAttributes().getNamedItem("starty").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("endy") != null)
+			{
+				element.endY = Integer.parseInt(node.getAttributes().getNamedItem("endy").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("direction") != null)
@@ -1045,6 +1055,80 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("rotate") != null)
 			{
 				element.rotate = Integer.parseInt(node.getAttributes().getNamedItem("rotate").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("headercolour") != null)
+			{
+				element.headerColour = Color.decode(node.getAttributes().getNamedItem("headercolour").getNodeValue());
+			}
+
+			/* Attach a BG image */
+			ElementBackgroundImage bg = new ElementBackgroundImage();
+			bg.template = t;
+
+			if (node.getAttributes().getNamedItem("imagename") != null)
+			{
+				bg.name = node.getAttributes().getNamedItem("imagename").getNodeValue();
+			}
+
+			if (node.getAttributes().getNamedItem("imagepath") != null)
+			{
+				bg.path = node.getAttributes().getNamedItem("imagepath").getNodeValue();
+			}
+
+			if (node.getAttributes().getNamedItem("imageallowchange") != null)
+			{
+				bg.allowChange = Boolean.parseBoolean(node.getAttributes().getNamedItem("imageallowchange").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagex") != null)
+			{
+				bg.x = Integer.parseInt(node.getAttributes().getNamedItem("imagex").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagey") != null)
+			{
+				bg.y = Integer.parseInt(node.getAttributes().getNamedItem("imagey").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagemaxwidth") != null)
+			{
+				bg.maxWidth = Integer.parseInt(node.getAttributes().getNamedItem("imagemaxwidth").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagemaxheight") != null)
+			{
+				bg.maxHeight = Integer.parseInt(node.getAttributes().getNamedItem("imagemaxheight").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagezoomable") != null)
+			{
+				bg.zoomable = Boolean.parseBoolean(node.getAttributes().getNamedItem("imagezoomable").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagefullsize") != null)
+			{
+				bg.fullSize = Boolean.parseBoolean(node.getAttributes().getNamedItem("imagefullsize").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagetemplatefile") != null)
+			{
+				bg.templateFile = Boolean.parseBoolean(node.getAttributes().getNamedItem("imagetemplatefile").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagevisible") != null)
+			{
+				bg.visible = Boolean.parseBoolean(node.getAttributes().getNamedItem("imagevisible").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("imagerotate") != null)
+			{
+				bg.rotate = Integer.parseInt(node.getAttributes().getNamedItem("imagerotate").getNodeValue());
+			}
+
+			if (bg.path != null)
+			{
+				element.setBg(bg);
 			}
 			
 			t.addElement(element, s, group);

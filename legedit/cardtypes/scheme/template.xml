@@ -24,6 +24,20 @@
  zoomable="true"
  />
 
+<image
+ name="text_overlay"
+ templatefile="true"
+ path="back_underlay.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+
 <styles>
 
 <style
@@ -90,14 +104,26 @@
  alignmenthorizontal="left"
  alignmentvertical="top"
  allowchange="true"
+ headertext="SCHEME"
+ headercolour="#60f788"
  defaultvalue="Card Text."
  colour="#000000"
  textsize="34"
  startx="50"
  endx="700"
- starty="50"
+ starty="120"
+ endy="1050"
  direction="up"
- debug="true"
+ debug="false"
+ imagetemplatefile="true"
+ imagepath="backing.png"
+ imagefullsize="true"
+ imagex="0"
+ imagey="0"
+ imagemaxwidth="750"
+ imagemaxheight="1050"
+ imageallowchange="false"
+ imagezoomable="false"
  />
 
 <property
