@@ -384,12 +384,20 @@ public class CustomElement implements Cloneable {
 	
 	public String replaceNonXMLCharacters(String str)
 	{
-		return str.replace("<", "&lt;").replace(">","&gt;").replace("\"", "&quot;");
+		return str.replace("<", "&lt;")
+				.replace(">","&gt;")
+				.replace("\"", "&quot;")
+				.replace("'", "&apos;")
+				.replace("&", "&amp;");
 	}
 	
 	public String restoreNonXMLCharacters(String str)
 	{
-		return str.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;","\"");
+		return str.replace("&lt;", "<")
+				.replace("&gt;", ">")
+				.replace("&quot;","\"")
+				.replace("&apos;", "'")
+				.replace("&amp;", "&");
 	}
 
 	public JCheckBox getVisibleCheckbox() {
