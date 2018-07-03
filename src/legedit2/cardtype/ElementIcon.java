@@ -146,7 +146,7 @@ public class ElementIcon extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<icon name=\"" + name + "\" value=\""+getIconValue().getEnumName()+"\" />\n";
+		str += "<icon name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+getIconValue().getEnumName()+"\" />\n";
 		
 		return str;
 	}

@@ -2,8 +2,8 @@
 <xml>
 
 <template
- name="mastermind_epic"
- displayname="Epic Mastermind"
+ name="mastermind_transformed"
+ displayname="Transformed Mastermind"
  deck="mastermind"
  defaultsindeck="false"
  />
@@ -41,7 +41,7 @@
 <cardname 
  name="Card Name"
  defaultvalue="%DECKNAME%"
- allowchange="false"
+ allowchange="true"
  includesubname="true"
  highlight="banner_blur"
  highlightcolour="#111111"
@@ -51,7 +51,7 @@
  y="40"
  colour="#FBD246"
  textsize="48"
- subnametext="Epic Mastermind"
+ subnametext="Transformed"
  subnamecolour="#FD0004"
  subnamesize="34"
  subnamegap="15"

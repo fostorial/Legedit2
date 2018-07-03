@@ -114,7 +114,7 @@ public class Card extends LegeditItem implements Comparator<Card>, Comparable<Ca
 		{
 			if (ce instanceof ElementCardName)
 			{
-				if (((ElementCardName)ce).getSubnameValue() != null)
+				if (((ElementCardName)ce).getSubnameValue() != null && !((ElementCardName)ce).getSubnameValue().isEmpty())
 				{
 					return ((ElementCardName)ce).getValue() + " (" + ((ElementCardName)ce).getSubnameValue() + ") - " + getTemplate().getTemplateDisplayName();
 				}
@@ -131,7 +131,7 @@ public class Card extends LegeditItem implements Comparator<Card>, Comparable<Ca
 			{
 				if (ce instanceof ElementCardName)
 				{
-					if (((ElementCardName)ce).getSubnameValue() != null)
+					if (((ElementCardName)ce).getSubnameValue() != null && !((ElementCardName)ce).getSubnameValue().isEmpty())
 					{
 						return ((ElementCardName)ce).getValue() + " (" + ((ElementCardName)ce).getSubnameValue() + ") - " + getTemplate().getTemplateDisplayName();
 					}

@@ -150,7 +150,7 @@ public class ElementBackgroundImage extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<bgimage name=\"" + name + "\" path=\""+path+"\" zoom=\""+zoom+"\" imageOffsetX=\""+imageOffsetX+"\" imageOffsetY=\""+imageOffsetY+"\" />\n";
+		str += "<bgimage name=\"" + replaceNonXMLCharacters(name) + "\" path=\""+replaceNonXMLCharacters(path)+"\" zoom=\""+zoom+"\" imageOffsetX=\""+imageOffsetX+"\" imageOffsetY=\""+imageOffsetY+"\" />\n";
 		
 		return str;
 	}

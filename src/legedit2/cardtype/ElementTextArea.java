@@ -898,9 +898,9 @@ public class ElementTextArea extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<textarea name=\"" + name + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" "
-				+ (fontName == null ? " " : "fontname=\""+fontName+"\" ")
-				+ (fontNameBold == null ? " " : "fontnamebold=\""+fontNameBold+"\" ")
+		str += "<textarea name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" "
+				+ (fontName == null ? " " : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
+				+ (fontNameBold == null ? " " : "fontnamebold=\""+replaceNonXMLCharacters(fontNameBold)+"\" ")
 				+ "textsize=\""+textSize+"\" "
 				+ "textsizebold=\""+textSizeBold+"\" />\n";
 		

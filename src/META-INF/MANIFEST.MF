@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: legedit2.gui.LegeditFrame
+

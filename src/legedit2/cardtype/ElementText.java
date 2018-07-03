@@ -186,7 +186,7 @@ public class ElementText extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<text name=\"" + name + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" />\n";
+		str += "<text name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" />\n";
 		
 		return str;
 	}

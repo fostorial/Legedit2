@@ -133,7 +133,7 @@ public class ElementImage extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<image name=\"" + name + "\" path=\""+path+"\" zoom=\""+zoom+"\" imageOffsetX=\""+imageOffsetX+"\" imageOffsetY=\""+imageOffsetY+"\" />\n";
+		str += "<image name=\"" + replaceNonXMLCharacters(name) + "\" path=\""+replaceNonXMLCharacters(path)+"\" zoom=\""+zoom+"\" imageOffsetX=\""+imageOffsetX+"\" imageOffsetY=\""+imageOffsetY+"\" />\n";
 		
 		return str;
 	}

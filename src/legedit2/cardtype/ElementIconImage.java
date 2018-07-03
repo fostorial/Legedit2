@@ -174,7 +174,7 @@ public class ElementIconImage extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<iconbg name=\"" + name + "\" value=\""+getIconValue().getEnumName()+"\" />\n";
+		str += "<iconbg name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+getIconValue().getEnumName()+"\" />\n";
 		
 		return str;
 	}

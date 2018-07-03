@@ -368,10 +368,10 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	{
 		String str = "";
 		
-		str += "<cardname name=\"" + name + "\" "
-				+ "value=\""+getValue()+"\" "
-				+ "subnameValue=\"" + getSubnameValue() + "\" "
-				+ (fontName == null ? " " : "fontname=\""+fontName+"\" ")
+		str += "<cardname name=\"" + replaceNonXMLCharacters(name) + "\" "
+				+ "value=\""+replaceNonXMLCharacters(getValue())+"\" "
+				+ "subnameValue=\"" + replaceNonXMLCharacters(getSubnameValue()) + "\" "
+				+ (fontName == null ? " " : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
 				+ "textsize=\""+textSize+"\" "
 				+ "subnamesize=\""+subnameSize+"\" />\n";
 		

@@ -77,7 +77,7 @@ public class ElementProperty extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<property name=\"" + name + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" />\n";
+		str += "<property name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" />\n";
 		
 		return str;
 	}

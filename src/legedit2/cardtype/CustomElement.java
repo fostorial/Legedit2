@@ -32,7 +32,7 @@ public class CustomElement implements Cloneable {
 	public int rotate = 0;
 	private double scale = 1.0d;
 	
-	public static String[] elementTypes = new String[]{"cardname", "text", "textarea", "property", "icon", "iconbg", "image", "bgimage", "imagebg", "elementgroup"};
+	public static String[] elementTypes = new String[]{"cardname", "text", "textarea", "property", "icon", "iconbg", "image", "bgimage", "imagebg", "elementgroup", "scrollingtextarea"};
 	
 	private JCheckBox visibleCheckbox;
 	

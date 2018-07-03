@@ -84,7 +84,7 @@ public class ElementGroup extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<elementgroup name=\"" + name + "\" visible=\""+visible+"\">\n";
+		str += "<elementgroup name=\"" + replaceNonXMLCharacters(name) + "\" visible=\""+visible+"\">\n";
 		
 		for (CustomElement e : elements)
 		{

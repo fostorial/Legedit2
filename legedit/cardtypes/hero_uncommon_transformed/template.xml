@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="hero_uncommon_transformed"
+ displayname="Hero Transformed (Uncommon)"
+ deck="hero"
+ defaultsindeck="false"
+ defaultcopies="1"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<bgimage
+ name="Image"
+ fullsize="false"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="true"
+ zoomable="true"
+ />
+
+<iconbg
+ name="Power"
+ defaultvalue="none"
+ allowchange="true"
+ icontype="power"
+ x="50"
+ y="120"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="false"
+ blurradius="1"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ imagex="0"
+ imagey="0"
+ imagemaxwidth="750"
+ imagemaxheight="1050"
+ imageprefix="back_"
+ imageextension=".png"
+ />
+
+<iconbg
+ name="Second Power"
+ defaultvalue="none"
+ allowchange="true"
+ icontype="power"
+ x="50"
+ y="190"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ imagex="0"
+ imagey="0"
+ imagemaxwidth="750"
+ imagemaxheight="1050"
+ imageprefix="back_"
+ imageextension=".png"
+ imagefilter="dualclass"
+ />
+
+<image
+ name="back_text"
+ templatefile="true"
+ path="back_text.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<image
+ name="back_cost"
+ templatefile="true"
+ path="back_cost.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<styles>
+
+ <style name="Villains">
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="true"
+ highlight="banner"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#e9dc98"
+ textsize="48"
+ subnametext="%DECKNAME%, TRANSFORMED"
+subnamecolour="#FD0004"
+ subnamesize="34"
+ subnamegap="15"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="4"
+ />
+
+<icon
+ name="Team"
+ defaultvalue="none"
+ allowchange="true"
+ icontype="team"
+ x="50"
+ y="50"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ />
+
+<icon
+ name="Power Overlay"
+ defaultvalue="none"
+ allowchange="false"
+ x="50"
+ y="120"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ valuefrom="Power"
+ />
+
+  </style>
+
+<style name="Base Set">
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="true"
+ highlight="blur"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#e9dc98"
+ textsize="48"
+ subnametext="%DECKNAME%, TRANSFORMED"
+subnamecolour="#FD0004"
+subnameeditable="false"
+ subnamesize="34"
+ subnamegap="15"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="4"
+ />
+
+<icon
+ name="Team"
+ defaultvalue="none"
+ allowchange="true"
+ icontype="team"
+ x="50"
+ y="50"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ />
+
+<icon
+ name="Power Overlay"
+ defaultvalue="none"
+ allowchange="false"
+ x="50"
+ y="120"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ valuefrom="Power"
+ />
+
+  </style>
+
+</styles>
+
+<text
+ name="Cost"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="633"
+ y="947"
+ colour="#FFFFFF"
+ textsize="140"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ />
+
+<elementgroup 
+ name="Recruit">
+
+<icon
+ name="Recruit Icon"
+ defaultvalue="recruit"
+ allowchange="false"
+ optional="true"
+ x="82"
+ y="755"
+ maxwidth="130"
+ maxheight="130"
+ drawunderlay="true"
+ blurradius="15"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Recruit Value"
+ linkedelement="Recruit"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="82"
+ y="755"
+ colour="#FFFFFF"
+ textsize="110"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+</elementgroup>
+
+<elementgroup 
+ name="Attack">
+
+<icon
+ name="Attack Icon"
+ defaultvalue="attack"
+ allowchange="false"
+ optional="true"
+ x="82"
+ y="917"
+ maxwidth="130"
+ maxheight="130"
+ drawunderlay="true"
+ blurradius="15"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Attack Value"
+ linkedelement="Attack"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="82"
+ y="917"
+ colour="#FFFFFF"
+ textsize="110"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+
+</elementgroup>
+
+<elementgroup 
+ name="Piercing"
+ visible="false">
+
+<icon
+ name="Piercing Icon"
+ defaultvalue="piercing"
+ allowchange="false"
+ optional="true"
+ x="82"
+ y="910"
+ maxwidth="140"
+ maxheight="140"
+ drawunderlay="true"
+ blurradius="15"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ visible="false"
+ />
+
+<text
+ name="Piercing Value"
+ linkedelement="Piercing"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="82"
+ y="910"
+ colour="#FFFFFF"
+ textsize="110"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ visible="false"
+ />
+
+</elementgroup>
+
+<textarea
+ name="Card Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue="Card Text."
+ colour="#000000"
+ textsize="34"
+ rectxarray="140,740,740,555,555,140"
+ rectyarray="780,780,880,880,965,1000"
+ debug="false"
+ />
+
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="1"
+ />
+
+</xml>
+
