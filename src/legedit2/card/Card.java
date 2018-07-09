@@ -16,6 +16,7 @@ import legedit2.definitions.LegeditItem;
 public class Card extends LegeditItem implements Comparator<Card>, Comparable<Card> {
 	private String templateName;
 	private CardType template;
+	private String style;
 	
 	private ImageIcon imageSummary;
 	
@@ -273,7 +274,12 @@ public class Card extends LegeditItem implements Comparator<Card>, Comparable<Ca
 	{
 		String str = "";
 		
-		str += "<card template=\"" + getTemplate().getName() + "\">\n";
+		str += "<card template=\"" + getTemplate().getName() + "\"";
+		if (style != null)
+		{
+			str += " style=\""+ getStyle() + "\"";
+		}
+		str +=">\n";
 		
 		str += "<template>\n";
 		
@@ -304,5 +310,13 @@ public class Card extends LegeditItem implements Comparator<Card>, Comparable<Ca
 		str += "</card>\n\n";
 		
 		return str;
+	}
+
+	public String getStyle() {
+		return style;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
 	}
 }

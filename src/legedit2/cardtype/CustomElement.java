@@ -384,6 +384,11 @@ public class CustomElement implements Cloneable {
 	
 	public String replaceNonXMLCharacters(String str)
 	{
+	    if (str == null)
+        {
+            return str;
+        }
+
 		return str.replace("<", "&lt;")
 				.replace(">","&gt;")
 				.replace("\"", "&quot;")

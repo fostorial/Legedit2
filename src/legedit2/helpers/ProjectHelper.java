@@ -236,6 +236,20 @@ public class ProjectHelper {
 				}
 			}
 		}
+
+		if (node.getAttributes().getNamedItem("style") != null)
+		{
+			if (card.getTemplate() != null)
+			{
+				for (Style s : card.getTemplate().getStyles())
+				{
+					if (s.getName().equalsIgnoreCase(node.getAttributes().getNamedItem("style").getNodeValue()))
+					{
+						card.getTemplate().setStyle(s);
+					}
+				}
+			}
+		}
 		
 		for (int count = 0; count < node.getChildNodes().getLength(); count++) {
 			Node node1 = node.getChildNodes().item(count);

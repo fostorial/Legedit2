@@ -174,6 +174,7 @@ setLayout(new GridBagLayout());
 		
 		if (selectedDeck != null)
 		{
+			Style selected = null;
 			DeckType dt = selectedDeck.getTemplate();
 			List<String> usedStyles = new ArrayList<>(); 
 			for (CardType ct : dt.getCardTypes())
@@ -281,6 +282,7 @@ setLayout(new GridBagLayout());
 					if (s.getName().equals(((Style)styleList.getSelectedItem()).getName()))
 					{
 						c.getTemplate().setStyle(s);
+						c.setStyle(s.getName());
 					}
 				}
 			}
