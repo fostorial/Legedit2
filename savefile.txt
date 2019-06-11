@@ -10,7 +10,7 @@
 <cards>
 <card template="hero_common">
 <template>
-<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<bgimage name="Image" path="null" zoom="1.10" imageOffsetX="0" imageOffsetY="0" />
 <iconbg name="Power" value="NONE" />
 <iconbg name="Second Power" value="NONE" />
 <image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
