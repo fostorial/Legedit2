@@ -182,127 +182,156 @@ public class ProjectHelper {
 	
 	private static void parseDeck(Node node)
 	{
-		Deck deck = new Deck();
-		
-		if (node.getAttributes().getNamedItem("name") != null)
-		{
-			deck.setName(node.getAttributes().getNamedItem("name").getNodeValue());
-		}
-		
-		if (node.getAttributes().getNamedItem("template") != null)
-		{
-			for (DeckType type : DeckType.getDeckTypes())
+        Deck deck = new Deck();
+        deck.setName("Unknown");
+        
+		try
+		{			
+			if (node.getAttributes().getNamedItem("name") != null)
 			{
-				if (type.getName().equals(node.getAttributes().getNamedItem("template").getNodeValue()))
+				deck.setName(node.getAttributes().getNamedItem("name").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("template") != null)
+			{
+				for (DeckType type : DeckType.getDeckTypes())
 				{
-					deck.setTemplateName(type.getName());
-					deck.setTemplate(type.getCopy());
-					break;
+					if (type.getName().equals(node.getAttributes().getNamedItem("template").getNodeValue()))
+					{
+						deck.setTemplateName(type.getName());
+						deck.setTemplate(type.getCopy());
+						break;
+					}
 				}
 			}
-		}
-		
-		for (int count = 0; count < node.getChildNodes().getLength(); count++) {
-			Node node1 = node.getChildNodes().item(count);
 			
-			if (node1.getNodeName().equals("cards"))
-			{
-				for (int count1 = 0; count1 < node1.getChildNodes().getLength(); count1++) {
-					Node node2 = node1.getChildNodes().item(count1);
-					if (node2.getNodeName().equals("card"))
-					{
-						parseCard(node2, deck);
+			for (int count = 0; count < node.getChildNodes().getLength(); count++) {
+				Node node1 = node.getChildNodes().item(count);
+				
+				if (node1.getNodeName().equals("cards"))
+				{
+					for (int count1 = 0; count1 < node1.getChildNodes().getLength(); count1++) {
+						Node node2 = node1.getChildNodes().item(count1);
+						if (node2.getNodeName().equals("card"))
+						{
+							parseCard(node2, deck);
+						}
 					}
 				}
 			}
 		}
-		
-		addLegeditItem(deck);
+		catch (Exception e)
+		{			
+			JOptionPane.showMessageDialog(LegeditFrame.legedit, "Something went wrong when trying to load in the deck " + deck.getName() + ". It will be ignored.", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
+		}
+		finally
+		{
+			if (deck.getTemplate() != null)
+			{
+				addLegeditItem(deck);
+			}
+			else
+			{
+				String templateName = "Unknown";
+				if (node.getAttributes().getNamedItem("template") != null)
+				{
+					templateName = node.getAttributes().getNamedItem("template").getNodeValue();
+				}
+
+				JOptionPane.showMessageDialog(LegeditFrame.legedit, "Could not load the template data for deck " + deck.getName() + " (template used was " + templateName + 
+											  "). It will be ignored.", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 	
 	private static void parseCard(Node node, Deck deck)
 	{
 		Card card = new Card();
-		
-		if (node.getAttributes().getNamedItem("template") != null)
-		{
-			for (CardType type : CardType.getCardTypes())
-			{
-				if (type.getName().equals(node.getAttributes().getNamedItem("template").getNodeValue()))
-				{
-					card.setTemplateName(type.getName());
-					card.setTemplate(type.getCopy());
-					break;
-				}
-			}
-		}
+		card.setTemplateName("Unknown");
 
-		if (node.getAttributes().getNamedItem("style") != null)
+		try 
 		{
-			if (card.getTemplate() != null)
+			if (node.getAttributes().getNamedItem("template") != null)
 			{
-				for (Style s : card.getTemplate().getStyles())
+				card.setTemplateName(node.getAttributes().getNamedItem("template").getNodeValue());
+				for (CardType type : CardType.getCardTypes())
 				{
-					if (s.getName().equalsIgnoreCase(node.getAttributes().getNamedItem("style").getNodeValue()))
+					if (type.getName().equals(card.getTemplateName()))
 					{
-						card.getTemplate().setStyle(s);
+						card.setTemplateName(type.getName());
+						card.setTemplate(type.getCopy());
+						break;
 					}
 				}
 			}
-		}
-		
-		for (int count = 0; count < node.getChildNodes().getLength(); count++) {
-			Node node1 = node.getChildNodes().item(count);
-			
-			if (node1.getNodeName().equals("template"))
+	
+			if (node.getAttributes().getNamedItem("style") != null)
 			{
-				/* Parse Template Elements */
-				for (int count1 = 0; count1 < node1.getChildNodes().getLength(); count1++) {
-					Node node2 = node1.getChildNodes().item(count1);
-					
-					if (Arrays.asList(CustomElement.elementTypes).contains(node2.getNodeName()))
+				if (card.getTemplate() != null)
+				{
+					for (Style s : card.getTemplate().getStyles())
 					{
-						for (CustomElement e : card.getTemplate().elements)
+						if (s.getName().equalsIgnoreCase(node.getAttributes().getNamedItem("style").getNodeValue()))
 						{
-							if (node2.getAttributes().getNamedItem("name") != null
-									&& e.name != null
-									&& e.name.equals(node2.getAttributes().getNamedItem("name").getNodeValue()))
-							{
-								e.loadValues(node2, card);
-							}
-						}	
+							card.getTemplate().setStyle(s);
+						}
 					}
-					
-					if (node2.getNodeName().equals("styles"))
-					{
-						/* Deal with Style */
-						for (int count2 = 0; count2 < node2.getChildNodes().getLength(); count2++) {
-							Node node3 = node2.getChildNodes().item(count2);
-							if (node3.getNodeName().equals("style"))
+				}
+			}
+			
+			for (int count = 0; count < node.getChildNodes().getLength(); count++) {
+				Node node1 = node.getChildNodes().item(count);
+				
+				if (node1.getNodeName().equals("template"))
+				{
+					/* Parse Template Elements */
+					for (int count1 = 0; count1 < node1.getChildNodes().getLength(); count1++) {
+						Node node2 = node1.getChildNodes().item(count1);
+						
+						if (Arrays.asList(CustomElement.elementTypes).contains(node2.getNodeName()))
+						{
+							for (CustomElement e : card.getTemplate().elements)
 							{
-								if (card.getTemplate() != null && node3.getAttributes().getNamedItem("name") != null)
+								if (node2.getAttributes().getNamedItem("name") != null
+										&& e.name != null
+										&& e.name.equals(node2.getAttributes().getNamedItem("name").getNodeValue()))
 								{
-									for (Style s : card.getTemplate().getStyles())
+									e.loadValues(node2, card);
+								}
+							}	
+						}
+						
+						if (node2.getNodeName().equals("styles"))
+						{
+							/* Deal with Style */
+							for (int count2 = 0; count2 < node2.getChildNodes().getLength(); count2++) {
+								Node node3 = node2.getChildNodes().item(count2);
+								if (node3.getNodeName().equals("style"))
+								{
+									if (card.getTemplate() != null && node3.getAttributes().getNamedItem("name") != null)
 									{
-										if (s.getName().equals(node3.getAttributes().getNamedItem("name").getNodeValue()))
+										for (Style s : card.getTemplate().getStyles())
 										{
-											/* Style Found */
-											for (int count3 = 0; count3 < node3.getChildNodes().getLength(); count3++) {
-												Node node4 = node3.getChildNodes().item(count3);
-												if (Arrays.asList(CustomElement.elementTypes).contains(node4.getNodeName()))
-												{
-													for (CustomElement e : s.getElements())
+											if (s.getName().equals(node3.getAttributes().getNamedItem("name").getNodeValue()))
+											{
+												/* Style Found */
+												for (int count3 = 0; count3 < node3.getChildNodes().getLength(); count3++) {
+													Node node4 = node3.getChildNodes().item(count3);
+													if (Arrays.asList(CustomElement.elementTypes).contains(node4.getNodeName()))
 													{
-														if (node4.getAttributes().getNamedItem("name") != null
-																&& e.name != null
-																&& e.name.equals(node4.getAttributes().getNamedItem("name").getNodeValue()))
+														for (CustomElement e : s.getElements())
 														{
-															e.loadValues(node4, card);
-														}
-													}											
+															if (node4.getAttributes().getNamedItem("name") != null
+																	&& e.name != null
+																	&& e.name.equals(node4.getAttributes().getNamedItem("name").getNodeValue()))
+															{
+																e.loadValues(node4, card);
+															}
+														}											
+													}
 												}
+												break;
 											}
-											break;
 										}
 									}
 								}
@@ -311,15 +340,19 @@ public class ProjectHelper {
 					}
 				}
 			}
+			
+			if (deck == null)
+			{
+				addLegeditItem(card);
+			}
+			else
+			{
+				deck.getCards().add(card);
+			}
 		}
-		
-		if (deck == null)
+		catch (Exception e)
 		{
-			addLegeditItem(card);
-		}
-		else
-		{
-			deck.getCards().add(card);
+			JOptionPane.showMessageDialog(LegeditFrame.legedit, "When trying to load the deck " + deck.getName() + ", a card of type " + card.getTemplateName() + " could not be loaded. It will be ignored.", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
