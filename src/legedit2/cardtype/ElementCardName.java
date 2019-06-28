@@ -48,6 +48,8 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	public int subnameGap = -1;
 	
 	public String value;
+	public String namePrefix = "";
+	public String nameSuffix = "";
 	public String subnameValue;
 	private String subnamePrefix = "";
 	private String subnameSuffix = "";
@@ -255,11 +257,12 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	
 	private String getValueForDraw()
 	{
-		if (uppercase && getValue() != null)
+		String valueForDraw = getNamePrefix() + getValue() + getNameSuffix();
+		if (uppercase && valueForDraw != null)
 		{
-			return getValue().toUpperCase();
+			return valueForDraw.toUpperCase();
 		}
-		return getValue();
+		return valueForDraw;
 	}
 	
 	public String getSubnameValue()
@@ -317,6 +320,22 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		str += "CUSTOMVALUE;" + name + ";visible;" + visible + "\n";
 		return str;
 	}
+	
+	public String getNamePrefix() {
+		return namePrefix;
+	}
+
+	public void setNamePrefix(String namePrefix) {
+		this.namePrefix = namePrefix;
+	}	
+
+	public String getNameSuffix() {
+		return nameSuffix;
+	}
+
+	public void setNameSuffix(String nameSuffix) {
+		this.nameSuffix = nameSuffix;
+	}	
 
 	public String getSubnamePrefix() {
 		return subnamePrefix;

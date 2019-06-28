@@ -748,6 +748,16 @@ public class CardType extends ItemType implements Cloneable {
 			{
 				element.defaultValue = node.getAttributes().getNamedItem("defaultvalue").getNodeValue();
 			}
+
+			if (node.getAttributes().getNamedItem("nameprefix") != null)
+			{
+				element.setNamePrefix(node.getAttributes().getNamedItem("nameprefix").getNodeValue());
+			}
+			
+			if (node.getAttributes().getNamedItem("namesuffix") != null)
+			{
+				element.setNameSuffix(node.getAttributes().getNamedItem("namesuffix").getNodeValue());
+			}
 			
 			if (node.getAttributes().getNamedItem("includesubname") != null)
 			{
