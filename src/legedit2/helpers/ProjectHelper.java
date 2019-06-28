@@ -182,9 +182,9 @@ public class ProjectHelper {
 	
 	private static void parseDeck(Node node)
 	{
-        Deck deck = new Deck();
-        deck.setName("Unknown");
-        
+		Deck deck = new Deck();
+		deck.setName("Unknown");
+
 		try
 		{			
 			if (node.getAttributes().getNamedItem("name") != null)
