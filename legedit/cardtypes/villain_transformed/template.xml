@@ -5,8 +5,8 @@
  name="villain_transformed"
  displayname="Villain Transformed"
  deck="villain"
- defaultsindeck="true"
- defaultcopies="4"
+ defaultsindeck="false"
+ defaultcopies="0"
  />
 
 <cardsize
