@@ -920,7 +920,10 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					int showDialog = chooser.showDialog(LegeditFrame.legedit);
 					if (showDialog == JFontChooser.OK_OPTION)
 					{
-						el.textSize = chooser.getSelectedFont().getSize();
+						Font selectedFont = chooser.getSelectedFont();
+						el.fontName = selectedFont.getName();
+						el.fontStyle = selectedFont.getStyle();
+						el.textSize = selectedFont.getSize();
 					}
 				}
 			});
@@ -942,9 +945,9 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
 						font = font.deriveFont((float)el.subnameSize);
 						
-						if (el.fontName != null)
+						if (el.subnameFontName != null)
 			    		{
-			    			font = new Font(el.fontName, el.fontStyle, el.subnameSize);
+			    			font = new Font(el.subnameFontName, el.subnameFontStyle, el.subnameSize);
 			    		}
 						
 						chooser.setFont(font);
@@ -957,7 +960,10 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					int showDialog = chooser.showDialog(LegeditFrame.legedit);
 					if (showDialog == JFontChooser.OK_OPTION)
 					{
-						el.subnameSize = chooser.getSelectedFont().getSize();
+						Font selectedFont = chooser.getSelectedFont();
+						el.subnameFontName = selectedFont.getName();
+						el.subnameFontStyle = selectedFont.getStyle();
+						el.subnameSize = selectedFont.getSize();
 					}
 				}
 			});
