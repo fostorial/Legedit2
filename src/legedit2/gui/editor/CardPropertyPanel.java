@@ -582,8 +582,11 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					int showDialog = chooser.showDialog(LegeditFrame.legedit);
 					if (showDialog == JFontChooser.OK_OPTION)
 					{
-						el.textSize = chooser.getSelectedFont().getSize();
-						el.textSizeBold = chooser.getSelectedFont().getSize();
+						Font selectedFont = chooser.getSelectedFont();
+						el.fontName = selectedFont.getName();
+						el.textSize = selectedFont.getSize();
+						el.textSizeBold = selectedFont.getSize();
+						el.fontStyle = selectedFont.getStyle();
 					}
 				}
 			});
