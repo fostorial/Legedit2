@@ -340,6 +340,23 @@ subnameeditable="false"
  debug="false"
  />
 
+<scrollingtextarea
+ name="Flavor Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue=""
+ colour="#000000"
+ textsize="20"
+ fontstyle="2"
+ startx="150"
+ endx="500"
+ starty="200"
+ endy="850"
+ direction="up"
+ debug="false"
+/>
+
 <property
  name="Number in Deck"
  property="numberindeck"

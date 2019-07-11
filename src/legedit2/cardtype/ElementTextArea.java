@@ -882,6 +882,11 @@ public class ElementTextArea extends CustomElement {
 			fontNameBold = node.getAttributes().getNamedItem("fontnamebold").getNodeValue();
 		}
 		
+		if (node.getAttributes().getNamedItem("fontstyle") != null)
+		{
+			fontStyle = Integer.parseInt(node.getAttributes().getNamedItem("fontstyle").getNodeValue());
+		}
+		
 		if (node.getAttributes().getNamedItem("textsize") != null)
 		{
 			textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
@@ -899,8 +904,9 @@ public class ElementTextArea extends CustomElement {
 		String str = "";
 		
 		str += "<textarea name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" "
-				+ (fontName == null ? " " : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
-				+ (fontNameBold == null ? " " : "fontnamebold=\""+replaceNonXMLCharacters(fontNameBold)+"\" ")
+				+ (fontName == null ? "" : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
+				+ (fontNameBold == null ? "" : "fontnamebold=\""+replaceNonXMLCharacters(fontNameBold)+"\" ")
+				+ (fontName == null ? "" : "fontstyle=\""+fontStyle+"\" ")
 				+ "textsize=\""+textSize+"\" "
 				+ "textsizebold=\""+textSizeBold+"\" />\n";
 		

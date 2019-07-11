@@ -456,15 +456,56 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			JTextField nameField = new JTextField();
 			c = new GridBagConstraints();
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 3;
+			c.gridwidth = GridBagConstraints.RELATIVE;
 			c.gridx = 1;
 			c.gridy = row;
 			c.weightx = 0.5;
-			panel.add(nameField, c);
-			nameField.setText(el.getValue());
-			
+			nameField.setText(el.getValue());			
 			el.setTextField(nameField);
-			row++;
+			panel.add(nameField, c);
+			
+			JButton fontButton = new JButton("Font");
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridwidth = 1;
+			c.gridx = 3;
+			c.gridy = row;			
+			fontButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFontChooser chooser = new JFontChooser();
+					
+					Font font;
+					try {
+						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
+						font = font.deriveFont(el.fontStyle, (float)el.textSize);
+						
+						if (el.fontName != null)
+			    		{
+			    			font = new Font(el.fontName, el.fontStyle, el.textSize);
+			    		}
+						
+						chooser.setFont(font);
+						chooser.setSelectedFont(font);
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					int showDialog = chooser.showDialog(LegeditFrame.legedit);
+					if (showDialog == JFontChooser.OK_OPTION)
+					{
+						Font selectedFont = chooser.getSelectedFont();
+						el.fontName = selectedFont.getName();
+						el.textSize = selectedFont.getSize();
+						el.fontStyle = selectedFont.getStyle();
+					}
+				}
+			});
+			panel.add(fontButton, c);			
+			el.setFontButton(fontButton);
+			
+			row++;			
 		}
 		
 		return row;
@@ -582,8 +623,11 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					int showDialog = chooser.showDialog(LegeditFrame.legedit);
 					if (showDialog == JFontChooser.OK_OPTION)
 					{
-						el.textSize = chooser.getSelectedFont().getSize();
-						el.textSizeBold = chooser.getSelectedFont().getSize();
+						Font selectedFont = chooser.getSelectedFont();
+						el.fontName = selectedFont.getName();
+						el.textSize = selectedFont.getSize();
+						el.textSizeBold = selectedFont.getSize();
+						el.fontStyle = selectedFont.getStyle();
 					}
 				}
 			});
@@ -708,7 +752,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					Font font;
 					try {
 						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
-						font = font.deriveFont((float)el.textSize);
+						font = font.deriveFont(el.fontStyle, (float)el.textSize);
 						
 						if (el.fontName != null)
 			    		{
@@ -725,8 +769,11 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					int showDialog = chooser.showDialog(LegeditFrame.legedit);
 					if (showDialog == JFontChooser.OK_OPTION)
 					{
-						el.textSize = chooser.getSelectedFont().getSize();
-						el.textSizeBold = chooser.getSelectedFont().getSize();
+						Font selectedFont = chooser.getSelectedFont();
+						el.textSize = selectedFont.getSize();
+						el.textSizeBold = selectedFont.getSize();
+						el.fontName = selectedFont.getName();
+						el.fontStyle = selectedFont.getStyle();
 					}
 				}
 			});
@@ -920,7 +967,10 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					int showDialog = chooser.showDialog(LegeditFrame.legedit);
 					if (showDialog == JFontChooser.OK_OPTION)
 					{
-						el.textSize = chooser.getSelectedFont().getSize();
+						Font selectedFont = chooser.getSelectedFont();
+						el.fontName = selectedFont.getName();
+						el.fontStyle = selectedFont.getStyle();
+						el.textSize = selectedFont.getSize();
 					}
 				}
 			});
@@ -942,9 +992,9 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
 						font = font.deriveFont((float)el.subnameSize);
 						
-						if (el.fontName != null)
+						if (el.subnameFontName != null)
 			    		{
-			    			font = new Font(el.fontName, el.fontStyle, el.subnameSize);
+			    			font = new Font(el.subnameFontName, el.subnameFontStyle, el.subnameSize);
 			    		}
 						
 						chooser.setFont(font);
@@ -957,7 +1007,10 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					int showDialog = chooser.showDialog(LegeditFrame.legedit);
 					if (showDialog == JFontChooser.OK_OPTION)
 					{
-						el.subnameSize = chooser.getSelectedFont().getSize();
+						Font selectedFont = chooser.getSelectedFont();
+						el.subnameFontName = selectedFont.getName();
+						el.subnameFontStyle = selectedFont.getStyle();
+						el.subnameSize = selectedFont.getSize();
 					}
 				}
 			});

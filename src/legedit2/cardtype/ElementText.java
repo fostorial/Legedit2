@@ -11,6 +11,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -42,6 +43,7 @@ public class ElementText extends CustomElement {
 	public String value;
 	
 	private JTextField textField;
+	private JButton fontButton;
 	
 	public void drawElement(Graphics2D g)
 	{
@@ -60,7 +62,7 @@ public class ElementText extends CustomElement {
 	    	try
 	    	{
 	    	font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Sylfaen.ttf"));
-	        font = font.deriveFont((float)getPercentage(textSize,getScale()));
+	        font = font.deriveFont(fontStyle, (float)getPercentage(textSize,getScale()));
 	    	}
 	    	catch (Exception e)
 	    	{
@@ -180,14 +182,37 @@ public class ElementText extends CustomElement {
 			value = node.getAttributes().getNamedItem("value").getNodeValue();
 			value = restoreNonXMLCharacters(value);
 		}
+		
+		if (node.getAttributes().getNamedItem("fontname") != null)
+		{
+			fontName = node.getAttributes().getNamedItem("fontname").getNodeValue();
+		}
+		
+		if (node.getAttributes().getNamedItem("fontstyle") != null)
+		{
+			fontStyle = Integer.parseInt(node.getAttributes().getNamedItem("fontstyle").getNodeValue());
+		}
+
+		if (node.getAttributes().getNamedItem("textsize") != null)
+		{
+			textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+		}
 	}
 	
 	public String getDifferenceXML()
 	{
 		String str = "";
 		
-		str += "<text name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" />\n";
+		str += "<text name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(getValue())+ "\" "
+				+ (fontName == null ? "" : "fontname=\""+replaceNonXMLCharacters(fontName) + "\" ")
+				+ (fontName == null ? "" : "fontstyle=\""+fontStyle+"\" ")
+				+ "textsize=\""+textSize+"\" />\n";
 		
+
 		return str;
 	}
+
+	public void setFontButton(JButton fontButton) {
+		this.fontButton = fontButton;
+	}	
 }

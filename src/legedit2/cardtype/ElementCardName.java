@@ -24,6 +24,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 
 	public enum HIGHLIGHT {BANNER, BLUR, BANNER_BLUR, NONE}
 	
+	// global card name settings
 	public String defaultValue;
 	public boolean includeSubname;
 	public String subnameText;
@@ -39,24 +40,52 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	public boolean blurDouble;
 	public int blurExpand;
 	public Color highlightColour;
-	public int textSize;
-	public int subnameSize;
-	public String fontName;
-	public int fontStyle;
 	public boolean uppercase;
 	public HIGHLIGHT highlight = HIGHLIGHT.NONE;
 	public int subnameGap = -1;
-	
-	public String value;
-	public String namePrefix = "";
-	public String nameSuffix = "";
-	public String subnameValue;
-	private String subnamePrefix = "";
-	private String subnameSuffix = "";
-	
 	private JTextField cardNameField;
 	private JTextField cardSubNameField;
 	
+	// card name specific settings
+	public String value;
+	public String fontName;
+	public int fontStyle;
+	public int textSize;
+	public String namePrefix = "";
+	public String nameSuffix = "";
+	
+	// sub name specific settings
+	public String subnameValue;
+	public String subnameFontName;
+	public int subnameFontStyle;
+	public int subnameSize;
+	private String subnamePrefix = "";
+	private String subnameSuffix = "";	
+
+	
+	private Font createFont(String fontName, int fontStyle, int textSize)
+	{
+		Font newFont = null;
+    	try
+    	{
+    		newFont = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
+    		newFont = newFont.deriveFont((float)getPercentage(textSize, getScale()));
+    	}
+    	catch (Exception e)
+    	{
+    		e.printStackTrace();
+    		
+    		newFont = new Font("Percolator", Font.PLAIN, getPercentage(textSize, getScale()));
+    	}
+    	
+    	if (fontName != null)
+		{
+    		newFont = new Font(fontName, fontStyle, getPercentage(textSize, getScale()));
+		}
+    	
+    	return newFont;
+    }
+
 	public void drawElement(Graphics2D g)
 	{
 		if (getValue() != null)
@@ -70,23 +99,9 @@ public class ElementCardName extends CustomElement implements Cloneable {
 				g2.setColor(colour);
 			}
 			
-			Font font = null;
-	    	try
-	    	{
-	    	font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
-	        font = font.deriveFont((float)getPercentage(textSize, getScale()));
-	    	}
-	    	catch (Exception e)
-	    	{
-	    		e.printStackTrace();
-	    		
-	    		font = new Font("Percolator", Font.PLAIN, getPercentage(textSize,getScale()));
-	    	}
-	    	if (fontName != null)
-    		{
-    			font = new Font(fontName, fontStyle, getPercentage(textSize, getScale()));
-    		}
+			Font font = createFont(fontName, fontStyle, textSize);
 	        g2.setFont(font);
+	        
 	        FontMetrics metrics = g2.getFontMetrics(font);
 	        int stringLength = SwingUtilities.computeStringWidth(metrics, getValueForDraw());
 	        
@@ -129,7 +144,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        Font fontSubname = null;
 	        if (includeSubname)
 	        {
-	        	fontSubname = font.deriveFont((float)getPercentage(subnameSize, getScale()));
+	        	fontSubname = createFont(subnameFontName, subnameFontStyle, subnameSize);
 		        
 		        g2.setFont(fontSubname);
 		        metrics = g2.getFontMetrics(fontSubname);
@@ -150,8 +165,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        g2.setFont(font);
 		        metrics = g2.getFontMetrics(font);
 		        
-		        bannerEnd = yModifiedSubname + getPercentage(getPercentage(CustomCardMaker.cardHeight, getScale()), 0.015d);
-		        
+		        bannerEnd = yModifiedSubname + getPercentage(getPercentage(CustomCardMaker.cardHeight, getScale()), 0.015d);		        
 	        }
 	        
 	        
@@ -389,9 +403,12 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		
 		str += "<cardname name=\"" + replaceNonXMLCharacters(name) + "\" "
 				+ "value=\""+replaceNonXMLCharacters(getValue())+"\" "
-				+ "subnameValue=\"" + replaceNonXMLCharacters(getSubnameValue()) + "\" "
-				+ (fontName == null ? " " : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
+				+ (fontName == null ? "" : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
+				+ (fontName == null ? "" : "fontstyle=\""+fontStyle+"\" ")
 				+ "textsize=\""+textSize+"\" "
+				+ "subnameValue=\"" + replaceNonXMLCharacters(getSubnameValue()) + "\" "
+				+ (subnameFontName == null ? "" : "subnamefontname=\""+replaceNonXMLCharacters(subnameFontName)+"\" ")
+				+ (subnameFontName == null ? "" : "subnamefontstyle=\""+subnameFontStyle+"\" ")
 				+ "subnamesize=\""+subnameSize+"\" />\n";
 		
 		return str;
@@ -404,11 +421,31 @@ public class ElementCardName extends CustomElement implements Cloneable {
 			return;
 		}
 		
+		// card name specific settings
+		
 		if (node.getAttributes().getNamedItem("value") != null)
 		{
 			value = node.getAttributes().getNamedItem("value").getNodeValue();
 		}
 		
+		if (node.getAttributes().getNamedItem("fontname") != null)
+		{
+			fontName = node.getAttributes().getNamedItem("fontname").getNodeValue();
+		}
+		
+		if (node.getAttributes().getNamedItem("fontstyle") != null)
+		{
+			fontStyle = Integer.parseInt(node.getAttributes().getNamedItem("fontstyle").getNodeValue());
+		}
+
+		if (node.getAttributes().getNamedItem("textsize") != null)
+		{
+			textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+		}
+		
+		
+		// sub name specific settings
+
 		if (node.getAttributes().getNamedItem("subnameValue") != null)
 		{
 			if (card.getTemplate() != null 
@@ -418,17 +455,17 @@ public class ElementCardName extends CustomElement implements Cloneable {
 				subnameValue = node.getAttributes().getNamedItem("subnameValue").getNodeValue();
 			}
 		}
-		
-		if (node.getAttributes().getNamedItem("fontname") != null)
+
+		if (node.getAttributes().getNamedItem("subnamefontname") != null)
 		{
-			fontName = node.getAttributes().getNamedItem("fontname").getNodeValue();
+			subnameFontName = node.getAttributes().getNamedItem("subnamefontname").getNodeValue();
 		}
 		
-		if (node.getAttributes().getNamedItem("textsize") != null)
+		if (node.getAttributes().getNamedItem("subnamefontstyle") != null)
 		{
-			textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
+			subnameFontStyle = Integer.parseInt(node.getAttributes().getNamedItem("subnamefontstyle").getNodeValue());
 		}
-		
+
 		if (node.getAttributes().getNamedItem("subnamesize") != null)
 		{
 			subnameSize = Integer.parseInt(node.getAttributes().getNamedItem("subnamesize").getNodeValue());
