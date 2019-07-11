@@ -752,7 +752,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					Font font;
 					try {
 						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
-						font = font.deriveFont((float)el.textSize);
+						font = font.deriveFont(el.fontStyle, (float)el.textSize);
 						
 						if (el.fontName != null)
 			    		{
@@ -769,8 +769,11 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					int showDialog = chooser.showDialog(LegeditFrame.legedit);
 					if (showDialog == JFontChooser.OK_OPTION)
 					{
-						el.textSize = chooser.getSelectedFont().getSize();
-						el.textSizeBold = chooser.getSelectedFont().getSize();
+						Font selectedFont = chooser.getSelectedFont();
+						el.textSize = selectedFont.getSize();
+						el.textSizeBold = selectedFont.getSize();
+						el.fontName = selectedFont.getName();
+						el.fontStyle = selectedFont.getStyle();
 					}
 				}
 			});

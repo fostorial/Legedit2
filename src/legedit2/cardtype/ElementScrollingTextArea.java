@@ -101,7 +101,7 @@ public class ElementScrollingTextArea extends CustomElement {
 	    	try
 	    	{
 	    		font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
-	    		font = font.deriveFont((float)getPercentage(textSize,getScale()));
+	    		font = font.deriveFont(fontStyle, (float)getPercentage(textSize,getScale()));
 	    		if (fontName != null)
 	    		{
 	    			font = new Font(fontName, fontStyle, getPercentage(textSize,getScale()));
@@ -735,6 +735,11 @@ public class ElementScrollingTextArea extends CustomElement {
 			fontNameBold = node.getAttributes().getNamedItem("fontnamebold").getNodeValue();
 		}
 		
+		if (node.getAttributes().getNamedItem("fontstyle") != null)
+		{
+			fontStyle = Integer.parseInt(node.getAttributes().getNamedItem("fontstyle").getNodeValue());
+		}
+
 		if (node.getAttributes().getNamedItem("textsize") != null)
 		{
 			textSize = Integer.parseInt(node.getAttributes().getNamedItem("textsize").getNodeValue());
@@ -752,8 +757,9 @@ public class ElementScrollingTextArea extends CustomElement {
 		String str = "";
 		
 		str += "<scrollingtextarea name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" "
-				+ (fontName == null ? " " : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
-				+ (fontNameBold == null ? " " : "fontnamebold=\""+replaceNonXMLCharacters(fontNameBold)+"\" ")
+				+ (fontName == null ? "" : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
+				+ (fontNameBold == null ? "" : "fontnamebold=\""+replaceNonXMLCharacters(fontNameBold)+"\" ")
+				+ ((fontName == null && fontNameBold == null) ? "" : "fontstyle=\""+fontStyle+"\" ")
 				+ "textsize=\""+textSize+"\" "
 				+ "textsizebold=\""+textSizeBold+"\" />\n";
 		
