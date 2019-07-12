@@ -10,6 +10,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -19,6 +21,7 @@ import org.w3c.dom.Node;
 import legedit2.card.Card;
 import legedit2.imaging.CustomCardMaker;
 import legedit2.imaging.MotionBlurOp;
+
 
 public class ElementCardName extends CustomElement implements Cloneable {
 
@@ -85,43 +88,149 @@ public class ElementCardName extends CustomElement implements Cloneable {
     	
     	return newFont;
     }
+	
+	private int getScreenStartingXPositionForString(String text, FontMetrics metrics)
+	{
+    	int stringLength = SwingUtilities.computeStringWidth(metrics, text);
+        
+        if (alignment.equals(ALIGNMENT.CENTER))
+        	stringLength /= 2;
+        
+    	return getPercentage(x, getScale()) - stringLength;
+	}
+	
+	private LineInformation createLineInformation(String text, Graphics2D g, FontMetrics metrics, int x, int y)
+	{
+        int stringLength = SwingUtilities.computeStringWidth(metrics, text);		        
+        
+        if (alignment.equals(ALIGNMENT.CENTER))
+        	stringLength /= 2;
+        if (alignment.equals(ALIGNMENT.RIGHT) || alignment.equals(ALIGNMENT.CENTER))
+        	x -= stringLength;
 
+    	LineMetrics lm = metrics.getLineMetrics(text, g);
+
+    	return new LineInformation(text, x, y + (int)((lm.getAscent() - lm.getDescent())), (int)(lm.getDescent() * 1.5));
+	}
+	
+	private List<LineInformation> prepareTextLines(String text, Graphics2D g, Font font, int xStart, int yStart)
+	{
+        g.setFont(font);
+        FontMetrics metrics = g.getFontMetrics(font);
+
+		List<LineInformation> lines = new ArrayList<LineInformation>();
+		//String tmpText = text.replaceAll("\\N", " ");
+		//Boolean mustBreak = !text.contentEquals(tmpText);
+		
+		if (/*!mustBreak && */getScreenStartingXPositionForString(/*tmpText*/text, metrics) > 0)
+		{
+			// no need to break anything up, it fits already
+			lines.add(createLineInformation(text, g, metrics, xStart, yStart));
+		}
+		else
+		{
+			// its too long, we need to break it down
+			String newLine = "";
+			int currentY = yStart;
+	        for (String word : /*tmpText*/text.split("\\s+"))
+	        {
+	        	String testLine = newLine + " " + word;
+	        	if (getScreenStartingXPositionForString(testLine, metrics) > 0)
+	        	{
+	        		// still fits, add and continue
+	        		newLine = testLine;
+	        	}
+	        	else
+	        	{
+	        		// became too long, break and start new line
+	        		LineInformation newLineInfo = createLineInformation(newLine, g, metrics, xStart, currentY);
+	        		lines.add(newLineInfo);
+	        		newLine = word;
+	        		
+	        		// update for next line
+	        		currentY = newLineInfo.drawYPosition + newLineInfo.lineThickness;
+	        	}
+	        }
+	        
+	        if (!newLine.isEmpty())
+	        {
+	        	// must not forget last line
+        		LineInformation newLineInfo = createLineInformation(newLine, g, metrics, xStart, currentY);
+        		lines.add(newLineInfo);
+	        }
+		}
+		
+		return lines;
+	}	
+	
 	public void drawElement(Graphics2D g)
 	{
 		if (getValue() != null)
 		{
-			BufferedImage bi = new BufferedImage(getPercentage(CustomCardMaker.cardWidth, getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
+        	double scale = getScale();
+        	int xScaled = getPercentage(x, scale);
+	        int currentY = getPercentage(y, scale);
+
+	        
+	        BufferedImage bi = new BufferedImage(getPercentage(CustomCardMaker.cardWidth, getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = getGraphics(bi);
 			g2 = setGraphicsHints(g2);
 			
 			if (colour != null)
-			{
 				g2.setColor(colour);
-			}
-			
+        
+
 			Font font = createFont(fontName, fontStyle, textSize);
-	        g2.setFont(font);
+	        Font fontSubname = null;
 	        
-	        FontMetrics metrics = g2.getFontMetrics(font);
-	        int stringLength = SwingUtilities.computeStringWidth(metrics, getValueForDraw());
+		
+			////////////////////////////////////////////////////////
+	        // Prep up by breaking out our lines for card name and subname
+	        ////////////////////////////////////////////////////////
 	        
-	        g2 = setGraphicsHints(g2);
+	        List<LineInformation> cardNameLines = prepareTextLines(getValueForDraw(), g2, font, xScaled, currentY);
+	        List<LineInformation> subNameLines = null;
 	        
-	        int newx = getPercentage(x,getScale());
-	        if (alignment.equals(ALIGNMENT.CENTER))
+	        if (includeSubname)
 	        {
-	        	newx = getPercentage(x,getScale()) - (stringLength / 2);
+	        	fontSubname = createFont(subnameFontName, subnameFontStyle, subnameSize);
+		        
+	        	LineInformation lastLine = cardNameLines.isEmpty() ? null : cardNameLines.get(cardNameLines.size()-1);
+	        	if (lastLine != null)
+		        	currentY = lastLine.drawYPosition + lastLine.lineThickness;
+	        	
+	        	int subnameGapScaled = getPercentage(subnameGap, getScale());
+		        if (subnameGapScaled >= 0 )
+		        	currentY += subnameGapScaled;
+		        
+	        	subNameLines = prepareTextLines(getSubnameValueForDraw(), g2, fontSubname, xScaled, currentY);
+	        	
+		        g2.setFont(font);
 	        }
-	        if (alignment.equals(ALIGNMENT.RIGHT))
+	        
+	        ////////////////////////////////////////////////////////
+	        // Draw our banners/highlights if needed
+	        ////////////////////////////////////////////////////////
+	        
+	        if (highlight.equals(HIGHLIGHT.BLUR) || highlight.equals(HIGHLIGHT.BANNER_BLUR))
 	        {
-	        	newx = getPercentage(x,getScale()) - stringLength;
+	        	// We want the underlay to be applied to the text, that means we need it to had been drawn prior but before 
+	        	// the banner (else its just a big blob of blackness). So draw here first (yes text will be drawn twice but thats life)
+		        for (LineInformation line: cardNameLines)
+		        {
+			    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
+		        }
+		        
+		        if (includeSubname)
+		        {
+			        g2.setFont(fontSubname);
+			        for (LineInformation line: subNameLines)
+				    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
+			        g2.setFont(font);
+		        }
+		        
+		    	drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, getPercentage(blurRadius, getScale()), blurDouble, getPercentage(blurExpand, getScale()), highlightColour);
 	        }
-	        
-	        LineMetrics lm = metrics.getLineMetrics(getValueForDraw(), g2);
-	        int yModified = getPercentage(y,getScale()) + (int)((lm.getAscent() - lm.getDescent()));
-	        
-	        int bannerStart = (yModified - (int)lm.getAscent() + (int)lm.getDescent()) - getPercentage(getPercentage(CustomCardMaker.cardHeight, getScale()), 0.01d);
-	        int bannerEnd = yModified + getPercentage(getPercentage(CustomCardMaker.cardHeight, getScale()), 0.015d);
 	        
 	        /*
 	        g.setColor(Color.GREEN);
@@ -132,119 +241,79 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        
 	        g.setColor(Color.BLUE);
 	        g.drawLine(0, yModified + (int)lm.getDescent(), 750, yModified + (int)lm.getDescent());
-	        */
-	        
-	        int subnameStartY = yModified + (int)lm.getDescent() + (int)(lm.getDescent() / 2);
-	        if (getPercentage(subnameGap, getScale()) >= 0)
-	        {
-	        	subnameStartY = yModified + getPercentage(subnameGap, getScale());
-	        }
-	        int newxSubname = getPercentage(x,getScale());
-	        int yModifiedSubname = subnameStartY;
-	        Font fontSubname = null;
-	        if (includeSubname)
-	        {
-	        	fontSubname = createFont(subnameFontName, subnameFontStyle, subnameSize);
-		        
-		        g2.setFont(fontSubname);
-		        metrics = g2.getFontMetrics(fontSubname);
-		        stringLength = SwingUtilities.computeStringWidth(metrics, getSubnameValueForDraw());
-		        
-		        if (alignment.equals(ALIGNMENT.CENTER))
-		        {
-		        	newxSubname = getPercentage(x,getScale()) - (stringLength / 2);
-		        }
-		        if (alignment.equals(ALIGNMENT.RIGHT))
-		        {
-		        	newxSubname = getPercentage(x,getScale()) - stringLength;
-		        }
-		        
-		        lm = metrics.getLineMetrics(getValueForDraw(), g2);
-		        yModifiedSubname = subnameStartY + (int)((lm.getAscent() - lm.getDescent()));
-		        
-		        g2.setFont(font);
-		        metrics = g2.getFontMetrics(font);
-		        
-		        bannerEnd = yModifiedSubname + getPercentage(getPercentage(CustomCardMaker.cardHeight, getScale()), 0.015d);		        
-	        }
-	        
-	        
-	        if (highlight.equals(HIGHLIGHT.BLUR) || highlight.equals(HIGHLIGHT.BANNER_BLUR))
-	        {
-	        	g2 = setGraphicsHints(g2);
-	        	
-	        	g2.drawString(getValueForDraw(), newx, yModified);
-	        	
-	        	if (includeSubname)
-	        	{
-	        		g2.setFont(fontSubname);
-			        metrics = g2.getFontMetrics(fontSubname);
-			        
-			        g2 = setGraphicsHints(g2);
-			        
-	        		g2.drawString(getSubnameValueForDraw(), newxSubname, yModifiedSubname);
-	        		
-	        		g2.setFont(font);
-			        metrics = g2.getFontMetrics(font);
-			        
-			        g2 = setGraphicsHints(g2);
-	        	}
-	        	
-		    	drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, getPercentage(blurRadius, getScale()), blurDouble, getPercentage(blurExpand, getScale()), highlightColour);
-	        }
+	        */	        
 	        
 	        if (highlight.equals(HIGHLIGHT.BANNER) || highlight.equals(HIGHLIGHT.BANNER_BLUR))
-	        {
-	        	BufferedImage bi2 = new BufferedImage(getPercentage(CustomCardMaker.cardWidth, getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
-		        Graphics g3 = bi2.getGraphics();
-		        
-	        	int bannerHeight = bannerEnd - bannerStart;
-				g3.setColor(highlightColour);
-				g3.fillRect((getPercentage(CustomCardMaker.cardWidth,getScale()) / 2), bannerStart - getPercentage(getPercentage(CustomCardMaker.cardHeight, getScale()), 0.005d), getPercentage(getPercentage(CustomCardMaker.cardWidth, getScale()), 0.15d), bannerHeight);
-		    	
-				MotionBlurOp op = new MotionBlurOp();
-				op.setDistance(200f);
-	        	bi2 = op.filter(bi2, null);
-	        	
-	        	makeTransparent(bi2, 0.8d);
-				
-				g2.drawImage(bi2, 0, 0, null);
-				
-				//Flip and re-draw image
-				AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-				tx.translate(-bi2.getWidth(null), 0);
-				AffineTransformOp aop = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-				bi2 = aop.filter(bi2, null);
-				
-				g2.drawImage(bi2, 0, 0, null);
-	        }
-	    	
-	        g2 = setGraphicsHints(g2);
-	        
-	    	g2.drawString(getValueForDraw(), newx, yModified);
-	    	
-	    	if (includeSubname)
-        	{
-	    		g2.setFont(fontSubname);
-		        metrics = g2.getFontMetrics(fontSubname);
-		        
-		        g2 = setGraphicsHints(g2);
-		        
-		        if (subNameColour != null)
+	        {	        
+	        	int cardWidthScaled = getPercentage(CustomCardMaker.cardWidth, getScale());
+	        	int cardHeightScaled = getPercentage(CustomCardMaker.cardHeight, getScale());
+
+	        	int bannerStart = 0;
+	        	LineInformation firstLine = null;
+		        if (!cardNameLines.isEmpty())
+		        	firstLine = cardNameLines.get(0);
+		        else if (subNameLines != null && !subNameLines.isEmpty())
+		        	firstLine = subNameLines.get(0);
+	        	bannerStart = getPercentage(y, scale) - getPercentage(cardHeightScaled, 0.01d);
+	
+	        	int bannerEnd = 0;
+	        	LineInformation lastLine = null;
+		        if (subNameLines != null && !subNameLines.isEmpty())
+		        	lastLine = subNameLines.get(subNameLines.size()-1);
+		        else if (!cardNameLines.isEmpty())
+		        	lastLine = cardNameLines.get(cardNameLines.size()-1);
+	        	bannerEnd = lastLine.drawYPosition + lastLine.lineThickness + getPercentage(cardHeightScaled, 0.015d);
+
+		        if (firstLine != null && lastLine != null)
 		        {
-		        	g2.setColor(subNameColour);
+		        	BufferedImage bi2 = new BufferedImage(cardWidthScaled, cardHeightScaled, BufferedImage.TYPE_INT_ARGB);
+			        Graphics g3 = bi2.getGraphics();
+			        
+		        	int bannerHeight = bannerEnd - bannerStart;
+					g3.setColor(highlightColour);
+					g3.fillRect(cardWidthScaled / 2, bannerStart - getPercentage(cardHeightScaled, 0.005d), getPercentage(cardWidthScaled, 0.15d), bannerHeight);
+			    	
+					MotionBlurOp op = new MotionBlurOp();
+					op.setDistance(200f);
+		        	bi2 = op.filter(bi2, null);
+		        	
+		        	makeTransparent(bi2, 0.8d);
+					
+					g2.drawImage(bi2, 0, 0, null);
+					
+					//Flip and re-draw image
+					AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+					tx.translate(-bi2.getWidth(null), 0);
+					AffineTransformOp aop = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+					bi2 = aop.filter(bi2, null);
+					
+					g2.drawImage(bi2, 0, 0, null);		        	
 		        }
-		        
-        		g2.drawString(getSubnameValueForDraw(), newxSubname, yModifiedSubname);
-        		
-        		g2.setFont(font);
-		        metrics = g2.getFontMetrics(font);
-		        
-		        g2 = setGraphicsHints(g2);
-		        g2.setColor(colour);
-        	}
-	    	
-	    	if (rotate > 0)
+	        }
+	        
+	        ////////////////////////////////////////////////////////
+	        // Now we can draw our lines	
+	        ////////////////////////////////////////////////////////
+	        
+	        for (LineInformation line: cardNameLines)
+	        {
+		    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
+	        }
+	        
+	        if (includeSubname)
+	        {
+		        g2.setFont(fontSubname);
+		        for (LineInformation line: subNameLines)
+			    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
+		        g2.setFont(font); // just in case, for consistency, but not really needed since we are doing drawing
+	        }
+	        
+	        
+	        ////////////////////////////////////////////////////////
+	        // Final polish	
+	        ////////////////////////////////////////////////////////
+
+	        if (rotate > 0)
 			{
 				double rotationRequired = Math.toRadians (rotate);
 				double locationX = bi.getWidth() / 2;
@@ -253,9 +322,8 @@ public class ElementCardName extends CustomElement implements Cloneable {
 				AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 				bi = op.filter(bi, null);
 			}
-
-	    	g.drawImage(bi, 0, 0, null);
 	    	
+	    	g.drawImage(bi, 0, 0, null);
 	    	g2.dispose();
 		}
 	}
