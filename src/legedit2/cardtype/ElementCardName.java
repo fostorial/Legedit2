@@ -216,6 +216,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        {
 	        	// We want the underlay to be applied to the text, that means we need it to had been drawn prior but before 
 	        	// the banner (else its just a big blob of blackness). So draw here first (yes text will be drawn twice but thats life)
+		        g2.setColor(colour);
 		        for (LineInformation line: cardNameLines)
 		        {
 			    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
@@ -223,12 +224,14 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        
 		        if (includeSubname)
 		        {
+			        g2.setColor(subNameColour);
 			        g2.setFont(fontSubname);
 			        for (LineInformation line: subNameLines)
 				    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
 			        g2.setFont(font);
 		        }
 		        
+		        g2.setColor(colour);	// just in case
 		    	drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, getPercentage(blurRadius, getScale()), blurDouble, getPercentage(blurExpand, getScale()), highlightColour);
 	        }
 	        
@@ -295,6 +298,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        // Now we can draw our lines	
 	        ////////////////////////////////////////////////////////
 	        
+	        g2.setColor(colour);
 	        for (LineInformation line: cardNameLines)
 	        {
 		    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
@@ -303,6 +307,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        if (includeSubname)
 	        {
 		        g2.setFont(fontSubname);
+		        g2.setColor(subNameColour);
 		        for (LineInformation line: subNameLines)
 			    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
 		        g2.setFont(font); // just in case, for consistency, but not really needed since we are doing drawing
