@@ -43,7 +43,7 @@
  defaultvalue="%DECKNAME%"
  allowchange="true"
  includesubname="true"
- subnameeditable = "true"
+ subnameeditable="true"
  highlight="banner_blur"
  highlightcolour="#111111"
  uppercase="true"
