@@ -1037,6 +1037,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			c.gridy = row;
 			c.weightx = 0.5;
 			panel.add(subnameField, c);
+			subnameField.setText(el.getSubnameValue());
 			
 			el.setCardSubNameField(subnameField);
 			row++;

@@ -521,12 +521,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 
 		if (node.getAttributes().getNamedItem("subnameValue") != null)
 		{
-			if (card.getTemplate() != null 
-					&& card.getTemplate().findElementByType(ElementCardName.class) != null
-					&& ((ElementCardName)card.getTemplate().findElementByType(ElementCardName.class)).subnameEditable)
-			{
-				subnameValue = node.getAttributes().getNamedItem("subnameValue").getNodeValue();
-			}
+			subnameValue = node.getAttributes().getNamedItem("subnameValue").getNodeValue();
 		}
 
 		if (node.getAttributes().getNamedItem("subnamefontname") != null)
