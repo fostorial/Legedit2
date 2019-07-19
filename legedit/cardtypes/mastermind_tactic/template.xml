@@ -44,6 +44,7 @@
  defaultvalue="Card Name"
  allowchange="true"
  includesubname="true"
+ subnameeditable="true"
  highlight="banner"
  highlightcolour="#111111"
  uppercase="true"
