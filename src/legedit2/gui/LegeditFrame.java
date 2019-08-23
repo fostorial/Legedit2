@@ -2,8 +2,6 @@ package legedit2.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -20,7 +18,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javafx.stage.Popup;
 import legedit2.card.Card;
 import legedit2.cardtype.CardType;
-import legedit2.decktype.DeckType;
 import legedit2.gui.config.ConfigPanel;
 import legedit2.gui.editor.CardEditorPanel;
 import legedit2.gui.editor.CardTypeEditorPanel;
@@ -58,30 +55,6 @@ public class LegeditFrame extends JFrame {
 		setupMenus();
 		setupWindow();
 		
-		try 
-		{	
-			String fontFolder = "legedit" + File.separator + "fonts";
-
-			File dir = new File(fontFolder);
-			if (dir.exists())
-			{
-				// Register packaged fonts
-				GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-
-				for (File f : dir.listFiles())
-				{
-					if (f.getName().toLowerCase().endsWith(".otf") || f.getName().toLowerCase().endsWith(".ttf"))
-					{
-						Font font = Font.createFont(Font.TRUETYPE_FONT, f);
-						env.registerFont(font);
-					}
-				}
-			}			
-		} 
-		catch (Exception e1) 
-		{
-		}
-
 		String saveFile = LegeditHelper.getProperty(legedit2.helpers.LegeditHelper.PROPERTIES.lastExpansion);
 		if (saveFile != null && new File(saveFile).exists())
 		{
