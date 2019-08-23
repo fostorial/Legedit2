@@ -2,6 +2,8 @@ package legedit2.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -54,6 +56,30 @@ public class LegeditFrame extends JFrame {
 		setupGUI();
 		setupMenus();
 		setupWindow();
+		
+		try 
+		{	
+			String fontFolder = "legedit" + File.separator + "fonts";
+
+			File dir = new File(fontFolder);
+			if (dir.exists())
+			{
+				// Register packaged fonts
+				GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+				for (File f : dir.listFiles())
+				{
+					if (f.getName().toLowerCase().endsWith(".otf") || f.getName().toLowerCase().endsWith(".ttf"))
+					{
+						Font font = Font.createFont(Font.TRUETYPE_FONT, f);
+						env.registerFont(font);
+					}
+				}
+			}			
+		} 
+		catch (Exception e1) 
+		{
+		}
 		
 		String saveFile = LegeditHelper.getProperty(legedit2.helpers.LegeditHelper.PROPERTIES.lastExpansion);
 		if (saveFile != null && new File(saveFile).exists())
