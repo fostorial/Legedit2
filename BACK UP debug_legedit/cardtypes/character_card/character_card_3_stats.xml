@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="character_card_3stats"
+ displayname="Character 3 Stats"
+ deck="character_cards"
+ defaultsindeck="true"
+ defaultcopies="1"
+ />
+
+<cardsize
+ cardwidth="1050"
+ cardheight="750"
+ dpi="300"
+ />
+
+ <text
+ name="EnergyLabel"
+ alignment="right"
+ allowchange="false"
+ defaultvalue="Energy"
+ x="870"
+ y="275"
+ colour="#FFFFFF"
+ textsize="65"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ />
+ 
+<styles>
+
+<style name="Base">
+
+<cardname 
+ name=""
+ defaultvalue=""
+ allowchange="true"
+ includesubname="false"
+ highlight="blur"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="right"
+ x="1000"
+ y="40"
+ colour="#e9dc98"
+ textsize="40"
+ subnametext=""
+ subnameeditable="false"
+ subnamesize="38"
+ subnamegap="15"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="4"
+ rotate="0"
+ />
+
+</style>
+
+</styles>
+
+</xml>
+

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<legedititems>
+<deck template="hero" name="Wazzzzup!">
+
+<template>
+</template>
+
+<cards>
+<card template="hero_common">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" textsize="140" />
+<elementgroup name="Recruit" visible="true">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Attack" visible="true">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Piercing" visible="false">
+<icon name="Piercing Icon" value="PIERCING" />
+<text name="Piercing Value" value="0" textsize="110" />
+</elementgroup>
+<textarea name="Card Text" value="My card text 2" fontname="Eurostile" fontstyle="1" textsize="36" textsizebold="36" />
+<scrollingtextarea name="Flavor Text" value="A natural telepath, Emma knows what you&amp;apos;re thinking before you do." textsize="20" textsizebold="20" />
+<property name="Number in Deck" value="5" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Some Test Card 2" fontname="Sylfaen" fontstyle="0" textsize="36" subnameValue="Hola!" subnamefontname="Sylfaen" subnamefontstyle="2" subnamesize="26" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Mama" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_common_transformed">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" textsize="140" />
+<elementgroup name="Recruit" visible="true">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Attack" visible="true">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Piercing" visible="false">
+<icon name="Piercing Icon" value="PIERCING" />
+<text name="Piercing Value" value="0" textsize="110" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<scrollingtextarea name="Flavor Text" value="" textsize="20" textsizebold="20" />
+<property name="Number in Deck" value="1" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Mama, TRANSFORMED" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Mama, TRANSFORMED" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_rare">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<icon name="Second Power" value="NONE" />
+<text name="Cost" value="0" textsize="140" />
+<elementgroup name="Recruit" visible="true">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Attack" visible="true">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Piercing" visible="false">
+<icon name="Piercing Icon" value="PIERCING" />
+<text name="Piercing Value" value="0" textsize="110" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<scrollingtextarea name="Flavor Text" value="" textsize="20" textsizebold="20" />
+<property name="Number in Deck" value="1" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="MaMa Ultimate!" textsize="48" subnameValue="Mama" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Mama" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_common">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" textsize="140" />
+<elementgroup name="Recruit" visible="true">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Attack" visible="true">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Piercing" visible="false">
+<icon name="Piercing Icon" value="PIERCING" />
+<text name="Piercing Value" value="0" textsize="110" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<scrollingtextarea name="Flavor Text" value="" textsize="20" textsizebold="20" />
+<property name="Number in Deck" value="5" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Wazzzzup!" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Wazzzzup!" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+</cards>
+
+</deck>
+
+
+
+<deck template="mastermind" name="Immortal Emperor Zheng Zhu">
+
+<template>
+</template>
+
+<cards>
+<card template="mastermind">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="text_overlay" path="back_underlay.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<cardname name="Card Name" value="Immortal Emperor Zheng Zhu" textsize="48" subnameValue="Mastermind" subnamesize="34" />
+<icon name="Victory" value="VICTORY" />
+<text name="Victory Value" value="0" textsize="40" />
+<icon name="Attack" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<property name="Number in Deck" value="1" />
+</template>
+</card>
+
+<card template="mastermind_tactic">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="text_overlay" path="back_underlay.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="" subnamesize="34" />
+<icon name="Victory" value="VICTORY" />
+<text name="Victory Value" value="0" textsize="40" />
+<icon name="Attack" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<property name="Number in Deck" value="1" />
+</template>
+</card>
+
+<card template="mastermind_tactic">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="text_overlay" path="back_underlay.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Mastermind Tactic - Zheng Zhu" subnamesize="34" />
+<icon name="Victory" value="VICTORY" />
+<text name="Victory Value" value="0" textsize="40" />
+<icon name="Attack" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<property name="Number in Deck" value="1" />
+</template>
+</card>
+
+<card template="mastermind_tactic">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="text_overlay" path="back_underlay.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Mastermind Tactic - Immortal Emperor Zheng Zhu" subnamesize="34" />
+<icon name="Victory" value="VICTORY" />
+<text name="Victory Value" value="0" textsize="40" />
+<icon name="Attack" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<property name="Number in Deck" value="1" />
+</template>
+</card>
+
+<card template="mastermind_tactic">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="text_overlay" path="back_underlay.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Mastermind Tactic - Immortal Emperor Zheng Zhu" subnamesize="34" />
+<icon name="Victory" value="VICTORY" />
+<text name="Victory Value" value="0" textsize="40" />
+<icon name="Attack" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<property name="Number in Deck" value="1" />
+</template>
+</card>
+
+<card template="mastermind_transformed">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="text_overlay" path="back_underlay.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<cardname name="Card Name" value="Zheng Zhu The Boosted!" textsize="48" subnameValue="Mastermind, TRANSFORMED" subnamesize="34" />
+<icon name="Victory" value="VICTORY" />
+<text name="Victory Value" value="0" textsize="40" />
+<icon name="Attack" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<property name="Number in Deck" value="1" />
+</template>
+</card>
+
+</cards>
+
+</deck>
+
+
+
+<deck template="hero" name="blablabla">
+
+<template>
+</template>
+
+<cards>
+<card template="hero_common">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" textsize="140" />
+<elementgroup name="Recruit" visible="true">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Attack" visible="true">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Piercing" visible="false">
+<icon name="Piercing Icon" value="PIERCING" />
+<text name="Piercing Value" value="0" textsize="110" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<scrollingtextarea name="Flavor Text" value="" textsize="20" textsizebold="20" />
+<property name="Number in Deck" value="5" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="Fuck!" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="blablabla" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_common">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" textsize="140" />
+<elementgroup name="Recruit" visible="true">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Attack" visible="true">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Piercing" visible="false">
+<icon name="Piercing Icon" value="PIERCING" />
+<text name="Piercing Value" value="0" textsize="110" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<scrollingtextarea name="Flavor Text" value="" textsize="20" textsizebold="20" />
+<property name="Number in Deck" value="5" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="blablabla" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="blablabla" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_rare">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<icon name="Second Power" value="NONE" />
+<text name="Cost" value="0" textsize="140" />
+<elementgroup name="Recruit" visible="true">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Attack" visible="true">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Piercing" visible="false">
+<icon name="Piercing Icon" value="PIERCING" />
+<text name="Piercing Value" value="0" textsize="110" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<scrollingtextarea name="Flavor Text" value="" textsize="20" textsizebold="20" />
+<property name="Number in Deck" value="1" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="blablabla" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="blablabla" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+<card template="hero_uncommon">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<iconbg name="Power" value="NONE" />
+<iconbg name="Second Power" value="NONE" />
+<image name="back_text" path="back_text.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="back_cost" path="back_cost.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<text name="Cost" value="0" textsize="140" />
+<elementgroup name="Recruit" visible="true">
+<icon name="Recruit Icon" value="RECRUIT" />
+<text name="Recruit Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Attack" visible="true">
+<icon name="Attack Icon" value="ATTACK" />
+<text name="Attack Value" value="0" textsize="110" />
+</elementgroup>
+<elementgroup name="Piercing" visible="false">
+<icon name="Piercing Icon" value="PIERCING" />
+<text name="Piercing Value" value="0" textsize="110" />
+</elementgroup>
+<textarea name="Card Text" value="Card Text." textsize="34" textsizebold="34" />
+<scrollingtextarea name="Flavor Text" value="" textsize="20" textsizebold="20" />
+<property name="Number in Deck" value="3" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="blablabla" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="blablabla" subnamesize="34" />
+<icon name="Team" value="NONE" />
+<icon name="Power Overlay" value="NONE" />
+</style>
+</styles>
+</template>
+</card>
+
+</cards>
+
+</deck>
+
+
+
+<card template="scheme">
+<template>
+<bgimage name="Image" path="null" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<image name="text_overlay" path="back_underlay.png" zoom="1.0" imageOffsetX="0" imageOffsetY="0" />
+<scrollingtextarea name="Card Text" value="Some nice scheme text: &amp;lt;g&amp;gt; because we are so nice &amp;lt;g&amp;gt; and because life is a bitch" textsize="34" textsizebold="34" />
+<property name="Number in Deck" value="1" />
+<styles>
+<style name="Villains">
+<cardname name="Card Name" value="This is a really long card name for the purpose of testing line breaks" fontname="Serif" fontstyle="2" textsize="48" subnameValue="" subnamesize="34" />
+</style>
+<style name="Base Set">
+<cardname name="Card Name" value="Card Name" textsize="48" subnameValue="%DECKNAME%" subnamesize="34" />
+</style>
+</styles>
+</template>
+</card>
+
+
+
+</legedititems>
+
+</xml>

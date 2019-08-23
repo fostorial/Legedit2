@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<structure
+ name="character_cards"
+ displayname="Character"
+ defaultstyle="Base"
+ group="characters"
+ nameeditable="true"
+ />
+
+<attributes>
+</attributes>
+
+</xml>
+
