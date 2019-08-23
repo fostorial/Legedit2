@@ -29,32 +29,38 @@ import legedit2.imaging.GaussianFilter;
 
 public class ElementTextArea extends CustomElement {
 	
+	//////////////////////////////////////////////////////////////////
+	/// Editable through template data
+	//////////////////////////////////////////////////////////////////
 	public String defaultValue;
-	public ALIGNMENT alignmentHorizontal = ALIGNMENT.LEFT;
-	public ALIGNMENT alignmentVertical = ALIGNMENT.TOP;
 	public boolean allowChange;
 	public Color colour;
-	public int textSize = 27;
-	public int textSizeBold = 27;
-	public int textSizeHeader = 45;
 	public String fontName;
 	public String fontNameBold;
-	public String fontNameHeader;
-	public int fontStyle;
+	public int textSize = 27;
+	public int textSizeBold = 27;
+	public ALIGNMENT alignmentHorizontal = ALIGNMENT.LEFT;
+	public ALIGNMENT alignmentVertical = ALIGNMENT.TOP;
 	public String rectXArray;
 	public String rectYArray;
 	public boolean debug = false;
-	
-	public double textGapHeight = 0.6d;
-	public double textDefaultGapHeight = 0.2d;
+	public double gapSizeBetweenLines = 0.2d;
+	public double gapSizeBetweenParagraphs = 0.6d;
+	//////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////
+	/// Editable through save file
+	//////////////////////////////////////////////////////////////////
+	public String value;
+	public int fontStyle;	
+	//////////////////////////////////////////////////////////////////
+
+	public int textSizeHeader = 45;
 	public int textIconBlurRadius = 5;
 	public boolean textIconBlurDouble = true;
 	public int expandTextIcon = 0;
 	
 	private Polygon polygon = null;
-	
-	public String value;
-	
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
 	private JComboBox<Icon> iconComboBox;
@@ -244,7 +250,7 @@ public class ElementTextArea extends CustomElement {
 			    			Icon icon = isIcon(s);
 			    			if (gap == true)
 			    			{
-			    				y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight);
+			    				y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs);
 			    				x = getXStart(y);
 			    			}
 			    			else if (icon == null)
@@ -260,7 +266,7 @@ public class ElementTextArea extends CustomElement {
 			    						xEnd = x;
 			    					}
 			    					*/
-			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textDefaultGapHeight);
+			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
 			    					x = getXStart(y);
 			    				}
 			    				g2.drawString(s + " ", x, y);
@@ -279,7 +285,7 @@ public class ElementTextArea extends CustomElement {
 			    						xEnd = x;
 			    					}
 			    					*/
-			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textDefaultGapHeight);
+			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
 			    					x = getXStart(y);
 			    				}
 			    				
@@ -427,7 +433,7 @@ public class ElementTextArea extends CustomElement {
 	    			Icon icon = isIcon(s);
 	    			if (gap == true)
 	    			{
-	    				y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight);
+	    				y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs);
 	    				x = getXStart(y);
 	    			}
 	    			else if (icon == null)
@@ -443,7 +449,7 @@ public class ElementTextArea extends CustomElement {
 	    						xEnd = x;
 	    					}
 	    					*/
-	    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textDefaultGapHeight);
+	    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
 	    					x = getXStart(y);
 	    				}
 	    				g2.drawString(s + " ", x, y);
@@ -462,7 +468,7 @@ public class ElementTextArea extends CustomElement {
 	    						xEnd = x;
 	    					}
 	    					*/
-	    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textDefaultGapHeight);
+	    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
 	    					x = getXStart(y);
 	    				}
 	    				
