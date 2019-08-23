@@ -25,38 +25,41 @@ import legedit2.imaging.GaussianFilter;
 
 public class ElementScrollingTextArea extends CustomElement {
 	
+	//////////////////////////////////////////////////////////////////
+	/// Editable through template data
+	//////////////////////////////////////////////////////////////////
 	public String defaultValue;
-	public ALIGNMENT alignmentHorizontal = ALIGNMENT.LEFT;
-	public ALIGNMENT alignmentVertical = ALIGNMENT.TOP;
 	public boolean allowChange;
 	public Color colour;
-	public int textSize = 27;
-	public int textSizeBold = 27;
-	public int textSizeHeader = 45;
 	public String fontName;
 	public String fontNameBold;
-	public String fontNameHeader;
 	public int fontStyle;
-	public String headerText;
-	public Color headerColour = Color.red;
-
+	public int textSize = 27;
+	public int textSizeBold = 27;
+	public ALIGNMENT alignmentHorizontal = ALIGNMENT.LEFT;
+	public ALIGNMENT alignmentVertical = ALIGNMENT.TOP;
 	public int startX = 0;
 	public int endX = 750;
 	public int startY = 50;
 	public int endY = 1050;
-	
 	public String direction = "up";
-	
 	public boolean debug = false;
+	public double gapSizeBetweenLines = 0.2d;
+	public double gapSizeBetweenParagraphs = 0.6d;
+	//////////////////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////////////////
+	/// Editable through save file
+	//////////////////////////////////////////////////////////////////
+	public String value;
+	//////////////////////////////////////////////////////////////////
 	
-	public double textGapHeight = 0.6d;
-	public double textDefaultGapHeight = 0.2d;
+	public int textSizeHeader = 45;
+	public String headerText;
+	public Color headerColour = Color.red;
 	public int textIconBlurRadius = 5;
 	public boolean textIconBlurDouble = true;
 	public int expandTextIcon = 0;
-
-	
-	public String value;
 	
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
@@ -293,7 +296,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			    			Icon icon = isIcon(s);
 			    			if (gap == true)
 			    			{
-			    				y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight);
+			    				y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs);
 			    				x = getPercentage(startX, getScale());
 			    			}
 			    			else if (icon == null)
@@ -309,7 +312,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			    						xEnd = x;
 			    					}
 			    					*/
-			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textDefaultGapHeight);
+			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
 			    					x = getPercentage(startX, getScale());
 			    				}
 			    				g2.drawString(s + " ", x, y);
@@ -328,7 +331,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			    						xEnd = x;
 			    					}
 			    					*/
-			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), textDefaultGapHeight);
+			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
 			    					x = getPercentage(startX, getScale());
 			    				}
 			    				
@@ -385,9 +388,9 @@ public class ElementScrollingTextArea extends CustomElement {
 	    	if (direction.equalsIgnoreCase("up"))
 			{
 				directionY = getPercentage(endY, getScale()) - (y - getPercentage(startY, getScale()))
-					- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight)
-						- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight)
-						- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), textGapHeight);
+					- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs)
+						- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs)
+						- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs);
 			}
 			else
 			{

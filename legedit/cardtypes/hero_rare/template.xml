@@ -337,7 +337,9 @@
  rectxarray="140,670,670,555,555,140"
  rectyarray="780,780,880,880,1010,1010"
  debug="false"
- />
+ spacebetweenlines="0.2"
+ spacebetweenparagraphs="0.2"
+/>
  
 <scrollingtextarea
  name="Flavor Text"

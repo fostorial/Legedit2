@@ -124,7 +124,9 @@
  imagemaxheight="1050"
  imageallowchange="false"
  imagezoomable="false"
- />
+ spacebetweenlines="0.2"
+ spacebetweenparagraphs="0.2"
+/>
 
 <property
  name="Number in Deck"

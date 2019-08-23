@@ -968,6 +968,16 @@ public class CardType extends ItemType implements Cloneable {
 				element.rotate = Integer.parseInt(node.getAttributes().getNamedItem("rotate").getNodeValue());
 			}
 			
+			if (node.getAttributes().getNamedItem("spacebetweenlines") != null)
+			{
+				element.gapSizeBetweenLines = Double.parseDouble(node.getAttributes().getNamedItem("spacebetweenlines").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("spacebetweenparagraphs") != null)
+			{
+				element.gapSizeBetweenParagraphs = Double.parseDouble(node.getAttributes().getNamedItem("spacebetweenparagraphs").getNodeValue());
+			}
+
 			t.addElement(element, s, group);
 		}
 		
@@ -1081,6 +1091,17 @@ public class CardType extends ItemType implements Cloneable {
 			{
 				element.headerColour = Color.decode(node.getAttributes().getNamedItem("headercolour").getNodeValue());
 			}
+			
+			if (node.getAttributes().getNamedItem("spacebetweenlines") != null)
+			{
+				element.gapSizeBetweenLines = Double.parseDouble(node.getAttributes().getNamedItem("spacebetweenlines").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("spacebetweenparagraphs") != null)
+			{
+				element.gapSizeBetweenParagraphs = Double.parseDouble(node.getAttributes().getNamedItem("spacebetweenparagraphs").getNodeValue());
+			}
+			
 
 			/* Attach a BG image */
 			ElementBackgroundImage bg = new ElementBackgroundImage();
