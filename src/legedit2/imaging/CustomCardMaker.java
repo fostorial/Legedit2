@@ -28,11 +28,6 @@ public class CustomCardMaker {
 	
 	private boolean debug = false;
 	
-	// 2.5 by 3.5 inches - Poker Size
-	public static int cardWidth = 750;
-	public static int cardHeight = 1050;
-	public static int dpi = 300;
-	
 	boolean exportImage = false;
 	public boolean exportToPNG = true;
 	
@@ -78,7 +73,8 @@ public class CustomCardMaker {
 		{
 			type = BufferedImage.TYPE_INT_ARGB;	
 		}
-	    BufferedImage image = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), type);
+
+		BufferedImage image = new BufferedImage(getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()), type);
 	    Graphics2D g = (Graphics2D)image.getGraphics();
 	    
 	    if (debug)
@@ -292,7 +288,7 @@ public class CustomCardMaker {
 	
 	private void drawUnderlay(BufferedImage bi, Graphics g, int type, int x, int y, int blurRadius, boolean doubleBlur, int expandBlackout, Color underlayColour)
 	{
-		BufferedImage blackout = new BufferedImage(cardWidth, cardHeight, type);
+		BufferedImage blackout = new BufferedImage(template.getCardWidth(), template.getCardHeight(), type);
     	blackout.getGraphics().drawImage(bi, x, y, null);
     	
     	blackout = blackoutImage(blackout, underlayColour);
@@ -333,7 +329,7 @@ public class CustomCardMaker {
 	
 	private BufferedImage expandBlackout(BufferedImage image, int expandBlackout, Color blackoutColor)
 	{
-		BufferedImage expand = new BufferedImage(cardWidth, cardHeight, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage expand = new BufferedImage(template.getCardWidth(), template.getCardHeight(), BufferedImage.TYPE_INT_ARGB);
 		
 		int width = image.getWidth();
         int height = image.getHeight();
@@ -385,7 +381,7 @@ public class CustomCardMaker {
 	
 	private BufferedImage createRareBacking(int x, int y, int x2, int y2)
 	{
-		BufferedImage bi = new BufferedImage(cardWidth, cardHeight, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bi = new BufferedImage(template.getCardWidth(), template.getCardHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g2 = bi.getGraphics();
         
         //System.out.println(x +":"+y+":"+x2+":"+y2+":"+(x2-x)+":"+(y2-y));
@@ -451,6 +447,9 @@ public class CustomCardMaker {
 	
 	private BufferedImage getFadedBackground(ImageIcon ii)
 	{
+		int cardWidth = template.getCardWidth();
+		int cardHeight = template.getCardHeight();
+		
 		BufferedImage bi = new BufferedImage(cardWidth, cardHeight, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bi.getGraphics();
 		g.drawImage(ii.getImage(), 0, 0, cardWidth, cardHeight, null);

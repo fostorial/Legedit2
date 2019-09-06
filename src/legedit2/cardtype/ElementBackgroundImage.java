@@ -63,7 +63,7 @@ public class ElementBackgroundImage extends CustomElement {
 				BufferedImage bi = null;
 				if (fullSize)
 				{
-					bi = resizeImage(new ImageIcon(file), getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight,getScale()));				
+					bi = resizeImage(new ImageIcon(file), getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()));				
 				}
 				else
 				{
