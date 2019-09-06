@@ -234,19 +234,16 @@ public class CardType extends ItemType implements Cloneable {
 		{
 			if (node.getAttributes().getNamedItem("cardwidth") != null)
 			{
-				//CustomCardMaker.cardWidth = Integer.parseInt(node.getAttributes().getNamedItem("cardwidth").getNodeValue());
 				t.setCardWidth(Integer.parseInt(node.getAttributes().getNamedItem("cardwidth").getNodeValue()));
 			}
 			
 			if (node.getAttributes().getNamedItem("cardheight") != null)
 			{
-				//CustomCardMaker.cardHeight = Integer.parseInt(node.getAttributes().getNamedItem("cardheight").getNodeValue());
 				t.setCardHeight(Integer.parseInt(node.getAttributes().getNamedItem("cardheight").getNodeValue()));
 			}
 			
 			if (node.getAttributes().getNamedItem("dpi") != null)
 			{
-				//CustomCardMaker.dpi = Integer.parseInt(node.getAttributes().getNamedItem("dpi").getNodeValue());
 				t.setCardDpi(Integer.parseInt(node.getAttributes().getNamedItem("dpi").getNodeValue()));
 			}
 		}
