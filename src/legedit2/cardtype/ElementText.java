@@ -49,7 +49,7 @@ public class ElementText extends CustomElement {
 	{
 		if (getValue() != null && visible == true)
 		{
-			BufferedImage bi = new BufferedImage(getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight,getScale()), BufferedImage.TYPE_INT_ARGB);
+			BufferedImage bi = new BufferedImage(getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = getGraphics(bi);
 			g2 = setGraphicsHints(g2);
 			

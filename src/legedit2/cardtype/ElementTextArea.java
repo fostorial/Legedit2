@@ -24,7 +24,6 @@ import org.w3c.dom.Node;
 import legedit2.card.Card;
 import legedit2.definitions.Icon;
 import legedit2.imaging.BoxBlurFilter;
-import legedit2.imaging.CustomCardMaker;
 import legedit2.imaging.GaussianFilter;
 
 public class ElementTextArea extends CustomElement {
@@ -82,7 +81,10 @@ public class ElementTextArea extends CustomElement {
 	{
 		if (getValue() != null)
 		{
-			BufferedImage bi = new BufferedImage(getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight,getScale()), BufferedImage.TYPE_INT_ARGB);
+			int cardWidth = template.getCardWidth();
+			int cardHeight = template.getCardHeight();
+			
+			BufferedImage bi = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = getGraphics(bi);
 			g2 = setGraphicsHints(g2);
 			
@@ -201,7 +203,7 @@ public class ElementTextArea extends CustomElement {
 		    				{
 		    					y -= lastWordBreakHeight;
 		    				}
-			    			drawHeader(g2, headerStr.toUpperCase(), fontHeader, /*card.cardType.getBgColor()*/ Color.red, y, headerHeight, getPercentage(CustomCardMaker.cardWidth, 0.2d), headerIcon);
+			    			drawHeader(g2, headerStr.toUpperCase(), fontHeader, /*card.cardType.getBgColor()*/ Color.red, y, headerHeight, getPercentage(cardWidth, 0.2d), headerIcon);
 				    		y += headerHeight + metrics.getHeight() + getPercentage(metrics.getHeight(), 0.5d);
 		    			}
 //		    			else
@@ -348,7 +350,10 @@ public class ElementTextArea extends CustomElement {
 	{
 		if (getValue() != null)
 		{
-			BufferedImage bi = new BufferedImage(getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight,getScale()), BufferedImage.TYPE_INT_ARGB);
+			int cardWidth = template.getCardWidth();
+			int cardHeight = template.getCardHeight();
+
+			BufferedImage bi = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = getGraphics(bi);
 			g2 = setGraphicsHints(g2);
 			
@@ -549,7 +554,7 @@ public class ElementTextArea extends CustomElement {
 	{
 		if (alignmentHorizontal.equals(ALIGNMENT.LEFT))
 		{
-			for (int i = 0; i < getPercentage(CustomCardMaker.cardWidth,getScale()); i++)
+			for (int i = 0; i < getPercentage(template.getCardWidth(),getScale()); i++)
 			{
 				if (getPolygon().contains(i, y))
 				{
@@ -567,7 +572,7 @@ public class ElementTextArea extends CustomElement {
 	{
 		if (alignmentVertical.equals(ALIGNMENT.TOP))
 		{
-			for (int i = 0; i < getPercentage(CustomCardMaker.cardHeight,getScale()); i++)
+			for (int i = 0; i < getPercentage(template.getCardHeight(),getScale()); i++)
 			{
 				if (getPolygon().contains(x, i))
 				{
@@ -585,7 +590,7 @@ public class ElementTextArea extends CustomElement {
 	{
 		if (alignmentHorizontal.equals(ALIGNMENT.LEFT))
 		{
-			for (int i = 0; i < getPercentage(CustomCardMaker.cardWidth,getScale()); i++)
+			for (int i = 0; i < getPercentage(template.getCardWidth(),getScale()); i++)
 			{
 				int ypos = getYStart(i);
 				if (ypos > -1)
@@ -687,11 +692,14 @@ public class ElementTextArea extends CustomElement {
 	
 	private void drawHeader(Graphics2D g, String header, Font font, Color color, int y, int height, int blurRadius, HeaderIcon headerIcon)
 	{
-		BufferedImage bi1 = new BufferedImage(getPercentage(CustomCardMaker.cardWidth, getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
+		int cardWidth = template.getCardWidth();
+		int cardHeight = template.getCardHeight();
+
+		BufferedImage bi1 = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = getGraphics(bi1);
 		
 		g2.setColor(color);
-		g2.fillRect(0, y, getPercentage(getPercentage(CustomCardMaker.cardWidth,getScale()), 0.8d), height);
+		g2.fillRect(0, y, getPercentage(getPercentage(cardWidth, getScale()), 0.8d), height);
     	
     	if (blurRadius > 0)
     	{
@@ -707,13 +715,13 @@ public class ElementTextArea extends CustomElement {
     	if (headerIcon != null && headerIcon.icon != null)
 	    {
 	    	BufferedImage bi = getIcon(headerIcon.icon, getPercentage(height, 1.9d), getPercentage(height, 1.9d));
-	    	int iconx = getPercentage(CustomCardMaker.cardWidth,getScale()) - getPercentage(getPercentage(CustomCardMaker.cardWidth,getScale()), 0.09d) - bi.getWidth() + (bi.getWidth() / 2);
+	    	int iconx = getPercentage(cardWidth, getScale()) - getPercentage(getPercentage(cardWidth, getScale()), 0.09d) - bi.getWidth() + (bi.getWidth() / 2);
 	    	int icony = y + (height / 2) - (bi.getWidth() / 2);
 	    	
 	    	g2.drawImage(bi, iconx, icony, null);
 	    }
     	
-    	BufferedImage bi2 = new BufferedImage(getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight,getScale()), BufferedImage.TYPE_INT_ARGB);
+    	BufferedImage bi2 = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g3 = getGraphics(bi2);	
 		
     	g3.setColor(Color.WHITE);
@@ -721,7 +729,7 @@ public class ElementTextArea extends CustomElement {
     	
     	g3 = setGraphicsHints(g3);
     	
-		g3.drawString(header, getPercentage(getPercentage(CustomCardMaker.cardWidth,getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
+		g3.drawString(header, getPercentage(getPercentage(cardWidth, getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
 		
 		if (headerIcon != null && headerIcon.value != null)
 		{
@@ -733,7 +741,7 @@ public class ElementTextArea extends CustomElement {
 			g3 = setGraphicsHints(g3);
 			
 			int stringLength = SwingUtilities.computeStringWidth(g.getFontMetrics(font), headerIcon.value.toUpperCase());
-			g3.drawString(headerIcon.value, getPercentage(CustomCardMaker.cardWidth,getScale()) - getPercentage(getPercentage(CustomCardMaker.cardWidth,getScale()), 0.09d) - stringLength + (stringLength / 2), y + g.getFontMetrics(font).getHeight() - (int)(g.getFontMetrics(font).getHeight() / 2.6d));
+			g3.drawString(headerIcon.value, getPercentage(cardWidth, getScale()) - getPercentage(getPercentage(cardWidth, getScale()), 0.09d) - stringLength + (stringLength / 2), y + g.getFontMetrics(font).getHeight() - (int)(g.getFontMetrics(font).getHeight() / 2.6d));
 			
 			font = originalFont;
 			g3.setFont(originalFont);
@@ -743,7 +751,7 @@ public class ElementTextArea extends CustomElement {
 		
 		drawUnderlay(bi2, g3, BufferedImage.TYPE_INT_ARGB, 0, 0, 5, true, 3);
 		
-		g3.drawString(header, getPercentage(getPercentage(CustomCardMaker.cardWidth,getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
+		g3.drawString(header, getPercentage(getPercentage(cardWidth, getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
 		
 		if (headerIcon != null && headerIcon.value != null)
 		{
@@ -753,7 +761,7 @@ public class ElementTextArea extends CustomElement {
 			g3.setFont(font);
 			g3 = setGraphicsHints(g3);
 			int stringLength = SwingUtilities.computeStringWidth(g.getFontMetrics(font), headerIcon.value.toUpperCase());
-			g3.drawString(headerIcon.value, getPercentage(CustomCardMaker.cardWidth,getScale()) - getPercentage(getPercentage(CustomCardMaker.cardWidth,getScale()), 0.09d) - stringLength + (stringLength / 2), y + g.getFontMetrics(font).getHeight() - (int)(g.getFontMetrics(font).getHeight() / 2.6d));
+			g3.drawString(headerIcon.value, getPercentage(cardWidth, getScale()) - getPercentage(getPercentage(cardWidth, getScale()), 0.09d) - stringLength + (stringLength / 2), y + g.getFontMetrics(font).getHeight() - (int)(g.getFontMetrics(font).getHeight() / 2.6d));
 			
 			font = originalFont;
 			g3.setFont(originalFont);
@@ -769,7 +777,7 @@ public class ElementTextArea extends CustomElement {
 	
 	private void drawUnderlay(BufferedImage bi, Graphics2D g, int type, int x, int y, int blurRadius, boolean doubleBlur, int expandBlackout)
 	{
-		BufferedImage blackout = new BufferedImage(getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight,getScale()), type);
+		BufferedImage blackout = new BufferedImage(getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()), type);
     	getGraphics(blackout).drawImage(bi, x, y, null);
     	
     	blackout = blackoutImage(blackout);
@@ -815,7 +823,7 @@ public class ElementTextArea extends CustomElement {
 	
 	private BufferedImage expandBlackout(BufferedImage image, int expandBlackout)
 	{
-		BufferedImage expand = new BufferedImage(getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight,getScale()), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage expand = new BufferedImage(getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()), BufferedImage.TYPE_INT_ARGB);
 		
 		int width = image.getWidth();
         int height = image.getHeight();

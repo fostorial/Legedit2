@@ -39,6 +39,11 @@ public class CardType extends ItemType implements Cloneable {
 	
 	private Style style;
 	
+	// 2.5 by 3.5 inches - Poker Size
+	private int cardWidth = 750;
+	private int cardHeight = 1050;
+	private int cardDpi = 300;	
+	
 	public String getName()
 	{
 		return templateName;
@@ -229,17 +234,17 @@ public class CardType extends ItemType implements Cloneable {
 		{
 			if (node.getAttributes().getNamedItem("cardwidth") != null)
 			{
-				CustomCardMaker.cardWidth = Integer.parseInt(node.getAttributes().getNamedItem("cardwidth").getNodeValue());
+				t.setCardWidth(Integer.parseInt(node.getAttributes().getNamedItem("cardwidth").getNodeValue()));
 			}
 			
 			if (node.getAttributes().getNamedItem("cardheight") != null)
 			{
-				CustomCardMaker.cardHeight = Integer.parseInt(node.getAttributes().getNamedItem("cardheight").getNodeValue());
+				t.setCardHeight(Integer.parseInt(node.getAttributes().getNamedItem("cardheight").getNodeValue()));
 			}
 			
 			if (node.getAttributes().getNamedItem("dpi") != null)
 			{
-				CustomCardMaker.dpi = Integer.parseInt(node.getAttributes().getNamedItem("dpi").getNodeValue());
+				t.setCardDpi(Integer.parseInt(node.getAttributes().getNamedItem("dpi").getNodeValue()));
 			}
 		}
 		
@@ -1295,6 +1300,30 @@ public class CardType extends ItemType implements Cloneable {
 		this.templateName = templateName;
 	}
 	
+	public void setCardWidth(int width){
+		this.cardWidth = width;
+	}
+
+	public void setCardHeight(int height){
+		this.cardHeight = height;
+	}
+
+	public void setCardDpi(int dpi){
+		this.cardDpi = dpi;
+	}
+	
+	public int getCardWidth(){
+		return this.cardWidth;
+	}
+	
+	public int getCardHeight(){
+		return this.cardHeight;
+	}
+
+	public int getCardDpi(){
+		return this.cardDpi;
+	}
+
 	public static Card generateLegeditItem(CardType type)
 	{
 		Card cc = new Card();

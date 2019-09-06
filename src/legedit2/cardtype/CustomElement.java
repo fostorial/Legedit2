@@ -166,7 +166,7 @@ public class CustomElement implements Cloneable {
 	
 	public void drawUnderlay(BufferedImage bi, Graphics g, int type, int x, int y, int blurRadius, boolean doubleBlur, int expandBlackout, Color underlayColour)
 	{
-		BufferedImage blackout = new BufferedImage(CustomCardMaker.cardWidth, CustomCardMaker.cardHeight, type);
+		BufferedImage blackout = new BufferedImage(template.getCardWidth(), template.getCardHeight(), type);
     	getGraphics(blackout).drawImage(bi, x, y, null);
     	
     	blackout = blackoutImage(blackout, underlayColour);
@@ -207,7 +207,7 @@ public class CustomElement implements Cloneable {
 	
 	public BufferedImage expandBlackout(BufferedImage image, int expandBlackout, Color blackoutColor)
 	{
-		BufferedImage expand = new BufferedImage(CustomCardMaker.cardWidth, CustomCardMaker.cardHeight, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage expand = new BufferedImage(template.getCardWidth(), template.getCardHeight(), BufferedImage.TYPE_INT_ARGB);
 		
 		int width = image.getWidth();
         int height = image.getHeight();

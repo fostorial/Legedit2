@@ -59,15 +59,18 @@ public class ElementIconImage extends CustomElement {
 		
 		
 		if (file != null && new File(file).exists())
-		{	
+		{
+			int cardWidth = template.getCardWidth();
+			int cardHeight = template.getCardHeight();
+			
 			BufferedImage bi = null;
 			if (imageFilter == null)
 			{
-				bi = resizeImage(new ImageIcon(file), getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()));
+				bi = resizeImage(new ImageIcon(file), getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()));
 			}
 			if (imageFilter != null && imageFilter.equalsIgnoreCase("dualclass") && !getIconValue().getEnumName().equals("NONE"))
 			{
-				bi = resizeImage(new ImageIcon(getFadedBackground(new ImageIcon(file))), getPercentage(CustomCardMaker.cardWidth,getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()));
+				bi = resizeImage(new ImageIcon(getFadedBackground(new ImageIcon(file))), getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()));
 			}
 			
 			if (rotate > 0)
@@ -181,14 +184,17 @@ public class ElementIconImage extends CustomElement {
 	
 	private BufferedImage getFadedBackground(ImageIcon ii)
 	{
-		BufferedImage bi = new BufferedImage(CustomCardMaker.cardWidth, CustomCardMaker.cardHeight, BufferedImage.TYPE_INT_ARGB);
+		int cardWidth = template.getCardWidth();
+		int cardHeight = template.getCardHeight();
+
+		BufferedImage bi = new BufferedImage(cardWidth, cardHeight, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bi.getGraphics();
-		g.drawImage(ii.getImage(), 0, 0, CustomCardMaker.cardWidth, CustomCardMaker.cardHeight, null);
+		g.drawImage(ii.getImage(), 0, 0, cardWidth, cardHeight, null);
 		
 		int width = bi.getWidth();
 		int height = bi.getHeight();
 		
-		int fadeHeight = getPercentage(CustomCardMaker.cardHeight, 0.14d);
+		int fadeHeight = getPercentage(cardHeight, 0.14d);
 		double increment = 255d / (double)fadeHeight;
 		
 //		int alpha = 0;
@@ -197,10 +203,10 @@ public class ElementIconImage extends CustomElement {
 //                Color originalColor = new Color(bi.getRGB(xx, yy), true);
 //                if (originalColor.getAlpha() > 0) {
 //                	
-//                	if (yy <= ((CustomCardMaker.cardHeight / 2) + (fadeHeight / 2)))
+//                	if (yy <= ((cardHeight / 2) + (fadeHeight / 2)))
 //                    {
 //                		
-//                    	alpha = (int)((((CustomCardMaker.cardHeight / 2) + (fadeHeight / 2)) - yy) * increment);
+//                    	alpha = (int)((((cardHeight / 2) + (fadeHeight / 2)) - yy) * increment);
 //                    	if (alpha > 255)
 //                    	{
 //                    		alpha = 255;
@@ -226,10 +232,10 @@ public class ElementIconImage extends CustomElement {
                 Color originalColor = new Color(bi.getRGB(xx, yy), true);
                 if (originalColor.getAlpha() > 0) {
                 	
-                	if (yy >= ((CustomCardMaker.cardHeight / 2) - (fadeHeight / 2)))
+                	if (yy >= ((cardHeight / 2) - (fadeHeight / 2)))
                     {
                 		
-                    	alpha = (int)((((CustomCardMaker.cardHeight / 2) + (fadeHeight / 2)) - yyn) * increment);
+                    	alpha = (int)((((cardHeight / 2) + (fadeHeight / 2)) - yyn) * increment);
                     	if (alpha > 255)
                     	{
                     		alpha = 255;

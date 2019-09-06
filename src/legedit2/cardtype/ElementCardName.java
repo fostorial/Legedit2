@@ -19,7 +19,6 @@ import javax.swing.SwingUtilities;
 import org.w3c.dom.Node;
 
 import legedit2.card.Card;
-import legedit2.imaging.CustomCardMaker;
 import legedit2.imaging.MotionBlurOp;
 
 
@@ -170,9 +169,11 @@ public class ElementCardName extends CustomElement implements Cloneable {
         	double scale = getScale();
         	int xScaled = getPercentage(x, scale);
 	        int currentY = getPercentage(y, scale);
-
 	        
-	        BufferedImage bi = new BufferedImage(getPercentage(CustomCardMaker.cardWidth, getScale()), getPercentage(CustomCardMaker.cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
+	        int cardWidth = template.getCardWidth();
+	        int cardHeight = template.getCardHeight();
+	        
+	        BufferedImage bi = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = getGraphics(bi);
 			g2 = setGraphicsHints(g2);
 			
@@ -248,8 +249,8 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        
 	        if (highlight.equals(HIGHLIGHT.BANNER) || highlight.equals(HIGHLIGHT.BANNER_BLUR))
 	        {	        
-	        	int cardWidthScaled = getPercentage(CustomCardMaker.cardWidth, getScale());
-	        	int cardHeightScaled = getPercentage(CustomCardMaker.cardHeight, getScale());
+	        	int cardWidthScaled = getPercentage(cardWidth, getScale());
+	        	int cardHeightScaled = getPercentage(cardHeight, getScale());
 
 	        	int bannerStart = 0;
 	        	LineInformation firstLine = null;
