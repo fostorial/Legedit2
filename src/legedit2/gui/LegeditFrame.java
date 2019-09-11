@@ -59,7 +59,7 @@ public class LegeditFrame extends JFrame {
 		
 		try 
 		{	
-			String fontFolder = "legedit" + File.separator + "fonts";
+			String fontFolder = LegeditHelper.getFontPath("");
 
 			File dir = new File(fontFolder);
 			if (dir.exists())
