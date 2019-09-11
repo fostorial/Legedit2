@@ -99,28 +99,13 @@ public class ElementTextArea extends CustomElement {
 	    	g2.setColor(colour);
 	    	try
 	    	{
-	    		Font font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
-	    		font = font.deriveFont((float)Math.floor(getPercentage(textSize,getScale())));
-	    		if (fontName != null)
-	    		{
-	    			font = new Font(fontName, fontStyle, (int)Math.floor(getPercentage(textSize,getScale())));
-	    		}
-	    		g2.setFont(font);
+				Font font = createFont(fontName, "Swiss 721 Light Condensed.ttf", fontStyle, textSize);
+
+				g2.setFont(font);
 	    		g2 = setGraphicsHints(g2);
 	    		
-	    		Font fontBold = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Black Condensed.ttf"));
-	    		fontBold = fontBold.deriveFont((float)Math.floor(getPercentage(textSizeBold,getScale())));
-	    		if (fontName != null && fontNameBold == null)
-	    		{
-	    			fontBold = new Font(fontName, Font.BOLD, (int)Math.floor(getPercentage(textSizeBold,getScale())));
-	    		}
-	    		if (fontNameBold != null)
-	    		{
-	    			fontBold = new Font(fontNameBold, Font.BOLD, (int)Math.floor(getPercentage(textSizeBold,getScale())));
-	    		}
-	    		
-	    		Font fontHeader = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
-	    		fontHeader = fontHeader.deriveFont((float)Math.floor(getPercentage(textSizeHeader, getScale())));
+				Font fontBold = createFont(fontNameBold != null ? fontNameBold : fontName, "Swiss 721 Black Condensed.ttf", Font.BOLD, textSizeBold);
+				Font fontHeader = createFont(fontNameBold != null ? fontNameBold : fontName, "Percolator.otf", Font.PLAIN, textSizeHeader);
 	    		
 	    		FontMetrics metrics = g2.getFontMetrics(font);
 	    		
@@ -368,26 +353,12 @@ public class ElementTextArea extends CustomElement {
 	    	g2.setColor(colour);
 	    	try
 	    	{
-	    		Font font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
-	    		font = font.deriveFont((float)getPercentage(textSize,getScale()));
-	    		if (fontName != null)
-	    		{
-	    			font = new Font(fontName, fontStyle, getPercentage(textSize,getScale()));
-	    		}
-	    		g2.setFont(font);
+				Font font = createFont(fontName, "Swiss 721 Light Condensed.ttf", fontStyle, textSize);
+
+				g2.setFont(font);
 	    		g2 = setGraphicsHints(g2);
 	    		
-	    		Font fontBold = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Black Condensed.ttf"));
-	    		fontBold = fontBold.deriveFont((float)getPercentage(textSizeBold,getScale()));
-	    		if (fontName != null && fontNameBold == null)
-	    		{
-	    			fontBold = new Font(fontName, Font.BOLD, getPercentage(textSizeBold,getScale()));
-	    		}
-	    		if (fontNameBold != null)
-	    		{
-	    			fontBold = new Font(fontNameBold, Font.BOLD, getPercentage(textSizeBold,getScale()));
-	    		}
-	    		
+				Font fontBold = createFont(fontNameBold != null ? fontNameBold : fontName, "Swiss 721 Black Condensed.ttf", Font.BOLD, textSizeBold);
 	    		FontMetrics metrics = g2.getFontMetrics(font);
 	    		
 	    		int x = -1;

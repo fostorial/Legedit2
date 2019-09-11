@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import org.w3c.dom.Node;
 
 import legedit2.card.Card;
+import legedit2.helpers.LegeditHelper;
 import legedit2.imaging.MotionBlurOp;
 
 
@@ -64,29 +65,6 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	private String subnamePrefix = "";
 	private String subnameSuffix = "";	
 
-	
-	private Font createFont(String fontName, int fontStyle, int textSize)
-	{
-		Font newFont = null;
-    	try
-    	{
-    		newFont = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
-    		newFont = newFont.deriveFont((float)getPercentage(textSize, getScale()));
-    	}
-    	catch (Exception e)
-    	{
-    		e.printStackTrace();
-    		
-    		newFont = new Font("Percolator", Font.PLAIN, getPercentage(textSize, getScale()));
-    	}
-    	
-    	if (fontName != null)
-		{
-    		newFont = new Font(fontName, fontStyle, getPercentage(textSize, getScale()));
-		}
-    	
-    	return newFont;
-    }
 	
 	private int getScreenStartingXPositionForString(String text, FontMetrics metrics)
 	{
@@ -181,7 +159,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 				g2.setColor(colour);
         
 
-			Font font = createFont(fontName, fontStyle, textSize);
+			Font font = createFont(fontName, "Percolator.otf", fontStyle, textSize);
 	        Font fontSubname = null;
 	        
 		
@@ -194,7 +172,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        
 	        if (includeSubname)
 	        {
-	        	fontSubname = createFont(subnameFontName, subnameFontStyle, subnameSize);
+	        	fontSubname = createFont(subnameFontName, "Percolator.otf", subnameFontStyle, subnameSize);
 		        
 	        	LineInformation lastLine = cardNameLines.isEmpty() ? null : cardNameLines.get(cardNameLines.size()-1);
 	        	if (lastLine != null)

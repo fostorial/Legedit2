@@ -19,6 +19,7 @@ import org.w3c.dom.Node;
 
 import legedit2.card.Card;
 import legedit2.definitions.Icon;
+import legedit2.helpers.LegeditHelper;
 import legedit2.imaging.CustomCardMaker;
 
 public class ElementText extends CustomElement {
@@ -58,22 +59,8 @@ public class ElementText extends CustomElement {
 				g2.setColor(colour);
 			}
 			
-			Font font = null;
-	    	try
-	    	{
-	    	font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Sylfaen.ttf"));
-	        font = font.deriveFont(fontStyle, (float)getPercentage(textSize,getScale()));
-	    	}
-	    	catch (Exception e)
-	    	{
-	    		e.printStackTrace();
-	    		
-	    		font = new Font("Sylfaen", Font.PLAIN, getPercentage(textSize,getScale()));
-	    	}
-	    	if (fontName != null)
-    		{
-    			font = new Font(fontName, fontStyle, getPercentage(textSize,getScale()));
-    		}
+			Font font = createFont(fontName, "Sylfaen.ttf", fontStyle, textSize);
+
 	        g2.setFont(font);
 	        FontMetrics metrics = g2.getFontMetrics(font);
 	        int stringLength = SwingUtilities.computeStringWidth(metrics, getValueForDraw());

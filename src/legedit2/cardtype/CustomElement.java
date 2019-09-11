@@ -1,6 +1,7 @@
 package legedit2.cardtype;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -8,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import org.w3c.dom.Node;
 import legedit2.card.Card;
 import legedit2.deck.Deck;
 import legedit2.definitions.Icon;
+import legedit2.helpers.LegeditHelper;
 import legedit2.helpers.ProjectHelper;
 import legedit2.imaging.CustomCardMaker;
 import legedit2.imaging.GaussianFilter;
@@ -40,6 +43,39 @@ public class CustomElement implements Cloneable {
 	{
 		
 	}
+	
+	public Font createFont(String fontName, String fallbackFontName, int fontStyle, int textSize)
+	{
+		if (fallbackFontName == null)
+		{
+			fallbackFontName = "Percolator.otf";
+		}
+		
+		if (fontName != null)
+		{
+			try
+			{
+				return new Font(fontName, fontStyle, getPercentage(textSize, getScale()));
+			}
+			catch (Exception e)
+			{
+	    		e.printStackTrace();
+			}
+		}
+
+		try
+		{
+			Font newFont = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath(fallbackFontName)));
+    		newFont = newFont.deriveFont((float)getPercentage(textSize, getScale()));
+    		return newFont;
+		}
+		catch (Exception e2)
+		{
+    		e2.printStackTrace();
+    		
+    		return new Font("Percolator", Font.PLAIN, getPercentage(textSize, getScale()));
+		}		
+    }	
 	
 	public BufferedImage getIcon(Icon icon, int maxWidth, int maxHeight)
 	{

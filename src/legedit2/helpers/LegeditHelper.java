@@ -1,5 +1,6 @@
 package legedit2.helpers;
 
+import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,6 +40,11 @@ public class LegeditHelper {
 	public static void resetGUI()
 	{
 		LegeditFrame.refreshGUI();
+	}
+	
+	public static String getFontPath(String fontName)
+	{
+		return "." + File.separator + "fonts" + File.separator + fontName;
 	}
 	
 	public static String getFrameName()
@@ -202,5 +208,5 @@ public class LegeditHelper {
 	public static void setProperty(PROPERTIES property, String value)
 	{
 		putProperty(property.name(), value);
-	}
+	}	
 }
