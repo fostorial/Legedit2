@@ -36,7 +36,6 @@ import legedit2.deck.Deck;
 import legedit2.decktype.DeckType;
 import legedit2.definitions.Icon;
 import legedit2.definitions.LegeditItem;
-import legedit2.definitions.Icon.ICON_TYPE;
 import legedit2.gui.LegeditFrame;
 import legedit2.gui.project.CardTypeSelectionPanel;
 import legedit2.imaging.CustomCardMaker;
@@ -137,8 +136,6 @@ public class ProjectHelper {
 							}
 						}
 					}
-					
-					
 				}
 			}
 		}

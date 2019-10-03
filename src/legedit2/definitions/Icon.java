@@ -1,59 +1,83 @@
 package legedit2.definitions;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import legedit2.gui.LegeditFrame;
+import legedit2.helpers.LegeditHelper;
+
+
 public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 	
-	private static List<Icon> icons = null;
+	private static IconDatabase m_icons = null;
 	
-	public enum ICON_TYPE {NONE, ATTRIBUTE, TEAM, POWER, MISC};
+	private String tagName = null;
+	private String imagePath = null;
+	private boolean underlayMinimized = false;
+	private String category = null;
+	private boolean userAddedIcon = false;
 	
-	private String tagName;
-	private String imagePath;
-	private boolean underlayMinimized;
-	private ICON_TYPE type;
-	
-	private static Icon noneIcon = new Icon(null, ICON_TYPE.NONE);
+	public static Icon noneIcon = new Icon();
+	public static String iconFolder = "legedit" + File.separator + "icons";
 	
 	public Icon()
 	{
-		
 	}
 	
-	private Icon(String image, ICON_TYPE type)
+	private Icon(String imagePath)
 	{
-		this.imagePath = image;
-		this.type = type;
+		this.imagePath = imagePath;
 	}
 	
-	public Icon(String tagName, String image, boolean underlayMinimized, ICON_TYPE type)
+	public Icon(String imagePath, boolean underlayMinimized)
 	{
-		this.imagePath = image;
+		this.imagePath = imagePath;
 		this.underlayMinimized = underlayMinimized;
-		this.type = type;
+	}
+	
+	public String getTagName() {
+		return tagName;
+	}
+
+	public void setTagName(String tagName) {
 		this.tagName = tagName;
 	}
-	
-	public String getImagePath()
-	{
+
+	public String getImagePath() {
 		return imagePath;
 	}
 	
-	public boolean isUnderlayMinimized()
-	{
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public boolean isUnderlayMinimized() {
 		return underlayMinimized;
 	}
+
+	public void setUnderlayMinimized(boolean underlayMinimized) {
+		this.underlayMinimized = underlayMinimized;
+	}	
 	
-	public ICON_TYPE getIconType()
-	{
-		return type;
+	public String getCategory() {
+		return category;
+	}
+	
+	public boolean isEditable() {
+		return userAddedIcon;
+	}
+	
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 	public String toString()
@@ -83,158 +107,178 @@ public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 		return name;
 	}
 	
+	private static void loadIconsFromDirectory(String folder, File dir)
+	{
+		if (dir == null)
+		{
+			dir = new File(folder);
+			if (!dir.exists())
+				return;
+		}
+		
+		for (File f : dir.listFiles())
+		{
+			String filename = f.getName().toUpperCase();
+			if (f.isFile())
+			{
+				String extension = "";
+				int index = filename.lastIndexOf(".");
+				if (index > 0)
+					extension = filename.substring(index + 1).toUpperCase();
+				
+				if (extension.equals("XML"))
+				{
+					try
+					{
+						NodeList docNodesList = LegeditHelper.getXMLNodes(f);
+						for (int count = 0; count < docNodesList.getLength(); count++) 
+						{
+							Node node = docNodesList.item(count);
+							String nodeName = node.getNodeName();
+							
+							boolean gotUserIcon = nodeName.equals("user_icon");
+							if (nodeName.equals("icon") || gotUserIcon)
+							{
+								String category = "";
+								String name = "";
+								String iconFilePath = "";
+								
+								Node categoryAttribute = node.getAttributes().getNamedItem("category"); 
+								if (categoryAttribute != null)
+									category = categoryAttribute.getNodeValue().toUpperCase();
+
+								Node nameAttribute = node.getAttributes().getNamedItem("name"); 
+								if (nameAttribute != null)
+									name = nameAttribute.getNodeValue().toUpperCase();
+
+								Node iconFilePathAttribute = node.getAttributes().getNamedItem("file"); 
+								if (iconFilePathAttribute != null)
+									iconFilePath = iconFilePathAttribute.getNodeValue().toUpperCase();
+
+								if (!name.isEmpty() && !iconFilePath.isEmpty())
+								{
+									m_icons.addCategory(category);
+									//System.out.println("Adding Icon type: " + category + " from " + f.getAbsolutePath());
+									
+									Icon i = new Icon(folder + File.separator + iconFilePath);
+									i.setTagName(name);
+									i.userAddedIcon = gotUserIcon;
+									m_icons.addIcon(category, i);
+									//System.out.println("Loaded: " + i.getTagName());
+								}
+							}
+						}
+					}
+					catch (Exception e)
+					{
+						String errorMessage = "Something wrong happened when trying to read " + f.getAbsolutePath() + ". Content from that file may have been ignored.";
+						if (e.getMessage() != null)
+							errorMessage += " Error Message: " + e.getMessage();
+						
+						JOptionPane.showMessageDialog(LegeditFrame.legedit, errorMessage, LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
+						e.printStackTrace();
+					}
+				}
+			}
+			else if (f.isDirectory())
+			{
+				loadIconsFromDirectory(folder + File.separator + filename, null);
+			}
+		}
+	}
+	
 	public static void loadIcons()
 	{
 		//System.out.println("Loading Icons...");
 		
-		icons = new ArrayList<Icon>();
+		m_icons = new IconDatabase(); 
+		m_icons.addCategory("");
+		m_icons.addIcon("", Icon.noneIcon);
 		
-		//System.out.println("Loading Teams...");
-		
-		File file = new File("legedit" + File.separator + "icons" + File.separator + "teams" + File.separator + "teams.txt");
-		if (file.exists())
-		{	
-			try
-			{
-				BufferedReader br = new BufferedReader(new FileReader(file));
-				String line;
-				while ((line = br.readLine()) != null) {
-				   if (line != null && !line.startsWith("#") && !line.isEmpty())
-				   {
-					   try
-					   {
-						   String[] split = line.split(",");
-						   boolean underlay = false;
-						   if (split[2].equals("true"))
-						   {
-							   underlay = true;
-						   }
-						   Icon i = new Icon(split[0], "legedit" + File.separator + "icons" + File.separator +"teams"+File.separator+split[1], underlay, ICON_TYPE.TEAM);
-						   icons.add(i);
-						   //System.out.println("Loaded: " + i.getEnumName()); 
-					   }
-					   catch (Exception e)
-					   {
-						   System.err.println("Failed to load: " + line);
-					   }					   
-				   }
-				}
-				br.close();
-			}
-			catch (Exception e)
-			{
-				System.err.println("Error loading Team Icons");
-				e.printStackTrace();
-			}
-		}
-		
-		//System.out.println("Loading Powers...");
-		
-		file = new File("legedit" + File.separator + "icons" + File.separator + "powers" + File.separator);
-		if (file.exists())
+		File dir = new File(iconFolder);
+		if (dir.exists())
 		{
-			File[] files = file.listFiles();
-			for (File f : files)
-			{
-				if (f.getName().toLowerCase().endsWith(".png"))
-				{
-					
-					Icon i = new Icon(f.getAbsolutePath(), ICON_TYPE.POWER);
-					icons.add(i);
-					//System.out.println("Loaded: " + i.getEnumName());
-				}
-			}
+			loadIconsFromDirectory(iconFolder, dir);
 		}
-		
-		//System.out.println("Loading Attributes...");
-		
-		file = new File("legedit" + File.separator + "icons" + File.separator + "attributes" + File.separator);
-		if (file.exists())
+		else
 		{
-			File[] files = file.listFiles();
-			for (File f : files)
-			{
-				if (f.getName().toLowerCase().endsWith(".png"))
-				{
-					
-					Icon i = new Icon(f.getAbsolutePath(), ICON_TYPE.ATTRIBUTE);
-					icons.add(i);
-					//System.out.println("Loaded: " + i.getEnumName());
-				}
-			}
+			String errorMessage = "Something wrong happened when trying to read " + iconFolder + " . You should not delete or rename that folder. Please re-install LegEdit.";
+			JOptionPane.showMessageDialog(LegeditFrame.legedit, errorMessage, LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
+			return;
 		}
-		
-		//System.out.println("Loading Misc Icons...");
-		
-		file = new File("legedit" + File.separator + "icons" + File.separator + "misc" + File.separator);
-		if (file.exists())
-		{
-			File[] files = file.listFiles();
-			for (File f : files)
-			{
-				if (f.getName().toLowerCase().endsWith(".png"))
-				{
-					
-					Icon i = new Icon(f.getAbsolutePath(), ICON_TYPE.MISC);
-					icons.add(i);
-					//System.out.println("Loaded: " + i.getEnumName());
-				}
-			}
-		}
-		
-		icons.add(Icon.noneIcon);
-		
+	
 		//System.out.println("Icons Loaded...");
 	}
 	
-	public static Icon valueOf(String key)
+	public static Icon valueOf(String tag)
 	{
-		if (icons == null)
+		if (m_icons == null)
 		{
 			loadIcons();
 		}
 		
-		if (key != null && key.equals("NONE"))
+		if (tag != null && tag.equals("NONE"))
 		{
 			return noneIcon;
 		}
 		
-		for (Icon i : icons)
-		{
-			if (key.toUpperCase().equals(i.getEnumName()))
-			{
-				return i;
-			}
-		}
-		return null;
+		return m_icons.getIcon(tag);
 	}
 	
 	public static List<Icon> values()
 	{
-		if (icons == null)
+		if (m_icons == null)
 		{
 			loadIcons();
 		}
 		
+		return m_icons.getAllIcons();
+	}
+	
+	public static List<Icon> sorted_values()
+	{
+		List<Icon> icons = Icon.values();
+		Collections.sort(icons);
 		return icons;
+	}	
+	
+	public static List<String> categories()
+	{
+		if (m_icons == null)
+		{
+			loadIcons();
+		}
+		
+		return m_icons.getAllCategories();
+	}
+	
+	public static void addIcon(String categoryName, Icon icon, boolean userAddedIcon)
+	{
+		icon.userAddedIcon = userAddedIcon;
+		m_icons.addIcon(categoryName, icon);
 	}
 	
 	public static void saveIconDefinitions()
 	{
+		FileWriter fw = null;
 		try
 		{
-			String str = "";
+			String str = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+			str += "<xml>\n\n";
 			
-			for (Icon i : Icon.values())
+			for (Icon i : values())
 			{
-				if (i.type.equals(Icon.ICON_TYPE.TEAM))
+				if (i.userAddedIcon)
 				{
-					str += i.getEnumName() + "," + new File(i.getImagePath()).getName() + "," + i.isUnderlayMinimized() + "\n";
+					File iconFile = new File(i.getImagePath());	// need to store ONLY the filename because when loaded the full path will be stored into the icon object
+					str += "<user_icon category=\"" + i.getCategory() + "\" name=\"" + i.getTagName() + "\" file=\"" + iconFile.getName();
+					str += "\" minimizedUnderlay=\"" + i.isUnderlayMinimized() + "\" />\n";
 				}
 			}
 			
-			File file = new File("legedit" + File.separator + "icons" + File.separator + "teams" + File.separator + "teams.txt");
-			FileWriter fw = new FileWriter(file);
+			str += "\n</xml>";
+			
+			fw = new FileWriter(iconFolder + File.separator + "icons.xml");
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			bw.write(str);
@@ -244,32 +288,24 @@ public final class Icon implements Comparator<Icon>, Comparable<Icon> {
 		}
 		catch (Exception e)
 		{
+			JOptionPane.showMessageDialog(LegeditFrame.legedit, e.getMessage() != null ? e.getMessage() : LegeditHelper.getErrorMessage(), LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
-		}	
-	}
-
-	public String getTagName() {
-		return tagName;
-	}
-
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
-	}
-
-	public ICON_TYPE getType() {
-		return type;
-	}
-
-	public void setType(ICON_TYPE type) {
-		this.type = type;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	public void setUnderlayMinimized(boolean underlayMinimized) {
-		this.underlayMinimized = underlayMinimized;
+		}
+		finally 
+		{
+			if (fw != null)
+			{
+				try
+				{
+					fw.close();
+				}
+				catch (Exception e)
+				{
+					JOptionPane.showMessageDialog(LegeditFrame.legedit, e.getMessage() != null ? e.getMessage() : LegeditHelper.getErrorMessage(), LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override

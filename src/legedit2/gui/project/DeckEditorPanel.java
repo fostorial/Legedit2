@@ -322,9 +322,9 @@ setLayout(new GridBagLayout());
 			c.gridy = row;
 			c.weightx = 0.5;
 			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.values())
+			for (Icon icon : Icon.sorted_values())
 			{
-				if (attr.getIconType() != null && icon.getIconType() != null && (icon.getIconType().name().equalsIgnoreCase(attr.getIconType()) || icon.getEnumName().equalsIgnoreCase("NONE")))
+				if (attr.getIconType() != null && icon.getCategory() != null && (icon.getCategory().equalsIgnoreCase(attr.getIconType()) || icon.getEnumName().equalsIgnoreCase("NONE")))
 				{
 					icons.addItem(icon);
 				}

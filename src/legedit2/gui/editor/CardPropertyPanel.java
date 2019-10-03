@@ -533,7 +533,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			c.gridy = row;
 			c.weightx = 0.5;
 			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.values())
+			for (Icon icon : Icon.sorted_values())
 			{
 				icons.addItem(icon);
 			}
@@ -679,7 +679,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			c.gridy = row;
 			c.weightx = 0.5;
 			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.values())
+			for (Icon icon : Icon.sorted_values())
 			{
 				icons.addItem(icon);
 			}
@@ -852,13 +852,13 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			c.gridy = row;
 			c.weightx = 0.5;
 			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.values())
+			for (Icon icon : Icon.sorted_values())
 			{
-				if (el.iconType != null && icon.getIconType() != null && (icon.getIconType().equals(el.iconType) || icon.getEnumName().equalsIgnoreCase("NONE")))
+				if (el.iconCategory != null && icon.getCategory() != null && (icon.getCategory().equals(el.iconCategory) || icon.getEnumName().equalsIgnoreCase("NONE")))
 				{
 					icons.addItem(icon);
 				}
-				else if (el.iconType == null)
+				else if (el.iconCategory == null)
 				{
 					icons.addItem(icon);
 				}
@@ -892,13 +892,13 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			c.gridy = row;
 			c.weightx = 0.5;
 			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.values())
+			for (Icon icon : Icon.sorted_values())
 			{
-				if (el.iconType != null && icon.getIconType() != null && (icon.getIconType().equals(el.iconType) || icon.getEnumName().equalsIgnoreCase("NONE")))
+				if (el.iconCategory != null && icon.getCategory() != null && (icon.getCategory().equals(el.iconCategory) || icon.getEnumName().equalsIgnoreCase("NONE")))
 				{
 					icons.addItem(icon);
 				}
-				else if (el.iconType == null)
+				else if (el.iconCategory == null)
 				{
 					icons.addItem(icon);
 				}

@@ -27,7 +27,6 @@ import javax.swing.JToolBar;
 import javax.swing.SpringLayout;
 
 import legedit2.definitions.Icon;
-import legedit2.definitions.Icon.ICON_TYPE;
 import legedit2.gui.LegeditFrame;
 import legedit2.gui.config.IconManager;
 import legedit2.helpers.LegeditHelper;
@@ -44,7 +43,7 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 	private Icon selectedItem;
 	
 	private JLabel iconTypeDropDownLabel;
-	private JComboBox<ICON_TYPE> iconTypeDropDown;
+	private JComboBox<String> iconTypeDropDown;
 	
 	private JLabel fileNameLabel;
 	private JButton fileBrowse;
@@ -86,15 +85,9 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 		layout.putConstraint(SpringLayout.WEST, iconTypeDropDownLabel, 5, SpringLayout.WEST, panel);
 		layout.putConstraint(SpringLayout.NORTH, iconTypeDropDownLabel, 5, SpringLayout.NORTH, panel);
 		
-		List<ICON_TYPE> iconTypes = new ArrayList<>();
-		for (ICON_TYPE it : ICON_TYPE.values())
-		{
-			if (!it.equals(ICON_TYPE.NONE))
-			{
-				iconTypes.add(it);
-			}
-		}
-		iconTypeDropDown = new JComboBox<>(iconTypes.toArray(new ICON_TYPE[0]));
+		List<String> iconCategories = Icon.categories();
+		
+		iconTypeDropDown = new JComboBox<>(iconCategories.toArray(new String[0]));
 		iconTypeDropDown.addItemListener(this);
 		panel.add(iconTypeDropDown);
 		layout.putConstraint(SpringLayout.EAST, iconTypeDropDown, 5, SpringLayout.EAST, padLabel);
@@ -182,14 +175,17 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 			fileBrowse.setVisible(true);
 			fileNameLabel.setVisible(true);
 			
-			if (selectedItem != null)
+			if (selectedItem != null && addMode == false)
 			{
 				tagNameField.setText(selectedItem.getEnumName());
-				iconTypeDropDown.setSelectedItem(selectedItem.getIconType());
+				iconTypeDropDown.setSelectedItem(selectedItem.getCategory());
 				drawUnderlayField.setSelected(selectedItem.isUnderlayMinimized());
-				fileBrowse.setVisible(false);
 				fileNameLabel.setText("File: " + new File(selectedItem.getImagePath()).getName());
+
 				iconTypeDropDown.setEnabled(false);
+				tagNameField.setEnabled(selectedItem.isEditable());
+				drawUnderlayField.setEnabled(selectedItem.isEditable());
+				fileBrowse.setVisible(selectedItem.isEditable());
 			}
 			else
 			{
@@ -205,39 +201,13 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 		if (!addMode)
 		{
 			iconTypeDropDown.setEnabled(false);
-			if (selectedItem != null && selectedItem.getIconType().equals(ICON_TYPE.TEAM))
-			{
-				saveButton.setVisible(true);
-			}
-			else
-			{
-				saveButton.setVisible(false);
-			}
+			saveButton.setVisible(true);
 			addButton.setVisible(false);
 		}
 		else
 		{
 			saveButton.setVisible(false);
 			addButton.setVisible(true);
-		}
-		
-		if (selectedItem != null && selectedItem.getIconType().equals(ICON_TYPE.TEAM))
-		{
-			tagNameField.setEnabled(true);
-			tagNameField.setVisible(true);
-			tagNameLabel.setVisible(true);
-			drawUnderlayField.setEnabled(true);
-			drawUnderlayField.setVisible(true);
-			drawUnderlayLabel.setVisible(true);
-		}
-		else
-		{
-			tagNameField.setEnabled(false);
-			tagNameField.setVisible(false);
-			tagNameLabel.setVisible(false);
-			drawUnderlayField.setEnabled(false);
-			drawUnderlayField.setVisible(false);
-			drawUnderlayLabel.setVisible(false);
 		}
 	}
 
@@ -274,7 +244,8 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		if (e.getSource().equals(fileBrowse))
 		{
 			iconFile = null;
@@ -293,7 +264,7 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 			if (selectedItem != null)
 			{
 				boolean validated = true;
-				if (selectedItem.getIconType().equals(ICON_TYPE.TEAM) && tagNameField.getText() == null || tagNameField.getText().isEmpty())
+				if (selectedItem.getCategory().equals("TEAM") && tagNameField.getText() == null || tagNameField.getText().isEmpty())
 				{
 					JOptionPane.showMessageDialog(LegeditFrame.legedit, "Tag must be populated!", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
 					validated = false;
@@ -301,7 +272,7 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 				
 				if (validated)
 				{
-					if (selectedItem.getIconType().equals(ICON_TYPE.TEAM))
+					if (selectedItem.getCategory().equals("TEAM"))
 					{
 						String tagName = tagNameField.getText().toUpperCase().replace(" ", "_");
 						selectedItem.setTagName(tagName);
@@ -312,7 +283,7 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 					
 					if (iconFile != null)
 					{
-						File newFile = new File("legendary"+File.separator+selectedItem.getIconType().name()+File.separator+iconFile.getName());
+						File newFile = new File("legendary" + File.separator + selectedItem.getCategory() + File.separator + iconFile.getName());
 						try {
 							if (!newFile.exists())
 							{
@@ -339,7 +310,7 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 				validated = false;
 			}
 
-			if (iconTypeDropDown.getSelectedItem().equals(ICON_TYPE.TEAM) && (tagNameField.getText() == null || tagNameField.getText().isEmpty()))
+			if (iconTypeDropDown.getSelectedItem().equals("TEAM") && (tagNameField.getText() == null || tagNameField.getText().isEmpty()))
 			{
 				JOptionPane.showMessageDialog(LegeditFrame.legedit, "Tag must be populated!", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
 				validated = false;
@@ -353,47 +324,23 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 			
 			if (validated)
 			{
-				selectedItem = new Icon();
+				selectedItem = new Icon("legedit" + File.separator + "icons" + File.separator + iconFile.getName(), drawUnderlayField.isSelected());
+				selectedItem.setTagName(tagNameField.getText().toUpperCase().replace(" ", "_"));
 				
-				selectedItem.setType(((ICON_TYPE)iconTypeDropDown.getSelectedItem()));
-				
-				String type = "";
-				switch (((ICON_TYPE)iconTypeDropDown.getSelectedItem()))
+				File newFile = new File(selectedItem.getImagePath());
+				try 
 				{
-				case ATTRIBUTE: type = "attributes";
-					break;
-				case MISC: type = "misc";
-					break;
-				case NONE: type = "none";
-					break;
-				case POWER: type = "powers";
-					break;
-				case TEAM: type = "teams";
-					break;
-				default:
-					break;
-				
-				}
-				File newFile = new File("legedit"+File.separator+"icons"+File.separator+type+File.separator+iconFile.getName());
-				try {
 					copyFile(iconFile, newFile);
-				} catch (IOException e1) {
+				} 
+				catch (IOException e1) 
+				{
 					JOptionPane.showMessageDialog(LegeditFrame.legedit, "Couldnt add icon!", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 					return;
 				}
 				
-				selectedItem.setImagePath(newFile.getAbsolutePath());
-				
-				if (selectedItem.getIconType().equals(ICON_TYPE.TEAM))
-				{
-					String tagName = tagNameField.getText().toUpperCase().replace(" ", "_");
-					selectedItem.setTagName(tagName);
-					selectedItem.setUnderlayMinimized(drawUnderlayField.isSelected());
-				}
-				
-				Icon.values().add(selectedItem);
-				
+				selectedItem.setImagePath(iconFile.getName());
+				Icon.addIcon((String)iconTypeDropDown.getSelectedItem(), selectedItem, true);				
 				Icon.saveIconDefinitions();
 				
 				getIconManager().resetIcons();
@@ -403,38 +350,20 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 		}
 	}
 
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		if (iconTypeDropDown.getSelectedItem() != null && iconTypeDropDown.getSelectedItem().equals(ICON_TYPE.TEAM))
-		{
-			tagNameField.setEnabled(true);
-			tagNameField.setVisible(true);
-			tagNameLabel.setVisible(true);
-			drawUnderlayField.setEnabled(true);
-			drawUnderlayField.setVisible(true);
-			drawUnderlayLabel.setVisible(true);
-		}
-		else
-		{
-			tagNameField.setEnabled(false);
-			tagNameField.setVisible(false);
-			tagNameLabel.setVisible(false);
-			drawUnderlayField.setEnabled(false);
-			drawUnderlayField.setVisible(false);
-			drawUnderlayLabel.setVisible(false);
-		}
-	}
-
-	public IconManager getIconManager() {
+	public IconManager getIconManager() 
+	{
 		return iconManager;
 	}
 
-	public void setIconManager(IconManager iconManager) {
+	public void setIconManager(IconManager iconManager) 
+	{
 		this.iconManager = iconManager;
 	}
 	
-	public static void copyFile(File sourceFile, File destFile) throws IOException {
-	    if(!destFile.exists()) {
+	public static void copyFile(File sourceFile, File destFile) throws IOException 
+	{
+	    if(!destFile.exists()) 
+	    {
 	        destFile.createNewFile();
 	    }
 	    else
@@ -446,18 +375,28 @@ public class ManageIconPanel extends JPanel implements ActionListener, ItemListe
 	    FileChannel source = null;
 	    FileChannel destination = null;
 
-	    try {
+	    try 
+	    {
 	        source = new FileInputStream(sourceFile).getChannel();
 	        destination = new FileOutputStream(destFile).getChannel();
 	        destination.transferFrom(source, 0, source.size());
 	    }
-	    finally {
-	        if(source != null) {
+	    finally 
+	    {
+	        if(source != null) 
+	        {
 	            source.close();
 	        }
-	        if(destination != null) {
+	        
+	        if(destination != null) 
+	        {
 	            destination.close();
 	        }
 	    }
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// nothing to do but must override for some reason....		
 	}
 }
