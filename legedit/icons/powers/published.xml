@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<icon category="POWER" name="COVERT" file="covert.png" minimizedUnderlay="false" />
+<icon category="POWER" name="INSTINCT" file="instinct.png" minimizedUnderlay="false" />
+<icon category="POWER" name="RANGE" file="range.png" minimizedUnderlay="false" />
+<icon category="POWER" name="STRENGTH" file="strength.png" minimizedUnderlay="false" />
+<icon category="POWER" name="TECH" file="tech.png" minimizedUnderlay="false" />
+
+</xml>

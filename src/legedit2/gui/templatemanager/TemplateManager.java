@@ -3,15 +3,8 @@ package legedit2.gui.templatemanager;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Collections;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,11 +15,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import legedit2.cardtype.CardType;
-import legedit2.definitions.Icon;
-import legedit2.definitions.Icon.ICON_TYPE;
-import legedit2.gui.LegeditFrame;
-import legedit2.gui.dialogs.ManageIconPanel;
-import legedit2.gui.dialogs.ManageTemplatesPanel;
+//import legedit2.gui.LegeditFrame;
 import legedit2.gui.project.LegeditItemPreviewPanel;
 
 public class TemplateManager extends JPanel implements ActionListener, ListSelectionListener {
@@ -79,14 +68,17 @@ public class TemplateManager extends JPanel implements ActionListener, ListSelec
 		scroll.setViewportView(iconList);
 		iconListPanel.add(scroll, BorderLayout.CENTER);
 		
-		iconList.addMouseListener(new MouseAdapter(){
+		// not a real use for this atm considering you can't really edit the template AND it's broken because you can't come back from editing the template so...
+		/*iconList.addMouseListener(new MouseAdapter()
+		{
 		    @Override
-		    public void mouseClicked(MouseEvent e){
+		    public void mouseClicked(MouseEvent e)
+		    {
 		        if(e.getClickCount()==2){
 		            selectCardTypeForEdit();
 		        }
 		    }
-		});
+		});*/
 		
 		iconList.addListSelectionListener(this);
 		
@@ -107,16 +99,15 @@ public class TemplateManager extends JPanel implements ActionListener, ListSelec
 		iconList.setSelectedValue(CardType.getCardTypes().get(0), true);
 	}
 	
-	private void selectCardTypeForEdit()
+	/*private void selectCardTypeForEdit()
 	{
 		LegeditFrame.legedit.selectCardForEdit(iconList.getSelectedValue());
-	}
+	}*/
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(newIconButton))
-		{
-			
+		{			
 		}
 	}
 	

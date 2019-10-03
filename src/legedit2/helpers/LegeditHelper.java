@@ -1,5 +1,6 @@
 package legedit2.helpers;
 
+import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,10 +12,17 @@ import java.util.Random;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import legedit2.card.Card;
 import legedit2.deck.Deck;
 import legedit2.gui.LegeditFrame;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+
 
 public class LegeditHelper {
 	
@@ -39,6 +47,11 @@ public class LegeditHelper {
 	public static void resetGUI()
 	{
 		LegeditFrame.refreshGUI();
+	}
+	
+	public static String getFontPath(String fontName)
+	{
+		return "." + File.separator + "fonts" + File.separator + fontName;
 	}
 	
 	public static String getFrameName()
@@ -202,5 +215,31 @@ public class LegeditHelper {
 	public static void setProperty(PROPERTIES property, String value)
 	{
 		putProperty(property.name(), value);
+	}
+	
+	public static NodeList getXMLNodes(File inputFile)
+	{
+		NodeList nodes = null;
+		
+		try
+		{
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(inputFile);
+			
+			doc.getDocumentElement().normalize();
+	
+			if (doc.hasChildNodes() && doc.getChildNodes().item(0).hasChildNodes()) 
+			{
+				nodes = doc.getChildNodes().item(0).getChildNodes();
+			}
+		}
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(LegeditFrame.legedit, e.getMessage() != null ? e.getMessage() : LegeditHelper.getErrorMessage(), LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+		return nodes;
 	}
 }

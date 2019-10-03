@@ -27,14 +27,15 @@ import javax.swing.JToolBar;
 import javax.swing.SpringLayout;
 
 import legedit2.definitions.Icon;
-import legedit2.definitions.Icon.ICON_TYPE;
 import legedit2.gui.LegeditFrame;
 import legedit2.gui.config.IconManager;
 import legedit2.helpers.LegeditHelper;
 
 public class ManageTemplatesPanel extends JPanel implements ActionListener, ItemListener {
 
-	private static final long serialVersionUID = -3477281344351970710L;
+	// COMMENTED OUT THIS CODE SINCE IT DOESN'T SEEM TO BE USED IN ANY WAY AND IT'S ALMOST A COPY/PASTE OF MANAGEICONPANEL.JAVA
+	// THE TEMPLATE MANAGER UI IS ACTUALLY IMPLEMENTED IN gui/templatemanager/templatemanager.java
+	/*private static final long serialVersionUID = -3477281344351970710L;
 	
 	private JScrollPane scroll = new JScrollPane();
 	private JPanel panel = new JPanel();
@@ -44,7 +45,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 	private Icon selectedItem;
 	
 	private JLabel iconTypeDropDownLabel;
-	private JComboBox<ICON_TYPE> iconTypeDropDown;
+	private JComboBox<String> iconTypeDropDown;
 	
 	private JLabel fileNameLabel;
 	private JButton fileBrowse;
@@ -59,11 +60,11 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 	private JButton addButton;
 	private JButton saveButton;
 	
-	private IconManager iconManager;
+	private IconManager iconManager;*/
 
 	public ManageTemplatesPanel() {
 		
-		setLayout(new BorderLayout(0, 0));
+		/*setLayout(new BorderLayout(0, 0));
 		
 		scroll.setBorder(null);
 		this.add(scroll);
@@ -86,15 +87,9 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 		layout.putConstraint(SpringLayout.WEST, iconTypeDropDownLabel, 5, SpringLayout.WEST, panel);
 		layout.putConstraint(SpringLayout.NORTH, iconTypeDropDownLabel, 5, SpringLayout.NORTH, panel);
 		
-		List<ICON_TYPE> iconTypes = new ArrayList<>();
-		for (ICON_TYPE it : ICON_TYPE.values())
-		{
-			if (!it.equals(ICON_TYPE.NONE))
-			{
-				iconTypes.add(it);
-			}
-		}
-		iconTypeDropDown = new JComboBox<>(iconTypes.toArray(new ICON_TYPE[0]));
+		List<String> iconCategories = Icon.categories();
+		
+		iconTypeDropDown = new JComboBox<>(iconCategories.toArray(new String[0]));
 		iconTypeDropDown.addItemListener(this);
 		panel.add(iconTypeDropDown);
 		layout.putConstraint(SpringLayout.EAST, iconTypeDropDown, 5, SpringLayout.EAST, padLabel);
@@ -153,12 +148,12 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 		addButton.addActionListener(this);
 		tb.add(addButton);
 		
-		add(tb, BorderLayout.PAGE_END);
+		add(tb, BorderLayout.PAGE_END);*/
 		
-		resetFields();
+		//resetFields();
 	}
 	
-	public void resetFields()
+	/*public void resetFields()
 	{
 		if (selectedItem == null && addMode == false)
 		{
@@ -185,7 +180,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 			if (selectedItem != null)
 			{
 				tagNameField.setText(selectedItem.getEnumName());
-				iconTypeDropDown.setSelectedItem(selectedItem.getIconType());
+				iconTypeDropDown.setSelectedItem(selectedItem.getCategory());
 				drawUnderlayField.setSelected(selectedItem.isUnderlayMinimized());
 				fileBrowse.setVisible(false);
 				fileNameLabel.setText("File: " + new File(selectedItem.getImagePath()).getName());
@@ -205,7 +200,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 		if (!addMode)
 		{
 			iconTypeDropDown.setEnabled(false);
-			if (selectedItem != null && selectedItem.getIconType().equals(ICON_TYPE.TEAM))
+			if (selectedItem != null && selectedItem.getCategory().equals("TEAM"))
 			{
 				saveButton.setVisible(true);
 			}
@@ -221,7 +216,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 			addButton.setVisible(true);
 		}
 		
-		if (selectedItem != null && selectedItem.getIconType().equals(ICON_TYPE.TEAM))
+		if (selectedItem != null && selectedItem.getCategory().equals("TEAM"))
 		{
 			tagNameField.setEnabled(true);
 			tagNameField.setVisible(true);
@@ -271,11 +266,12 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 
 	public void setTagNameField(JTextField tagNameField) {
 		this.tagNameField = tagNameField;
-	}
+	}*/
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(fileBrowse))
+	public void actionPerformed(ActionEvent e) 
+	{
+		/*if (e.getSource().equals(fileBrowse))
 		{
 			iconFile = null;
 			
@@ -293,7 +289,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 			if (selectedItem != null)
 			{
 				boolean validated = true;
-				if (selectedItem.getIconType().equals(ICON_TYPE.TEAM) && tagNameField.getText() == null || tagNameField.getText().isEmpty())
+				if (selectedItem.getCategory().equals("TEAM") && tagNameField.getText() == null || tagNameField.getText().isEmpty())
 				{
 					JOptionPane.showMessageDialog(LegeditFrame.legedit, "Tag must be populated!", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
 					validated = false;
@@ -301,7 +297,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 				
 				if (validated)
 				{
-					if (selectedItem.getIconType().equals(ICON_TYPE.TEAM))
+					if (selectedItem.getCategory().equals("TEAM"))
 					{
 						String tagName = tagNameField.getText().toUpperCase().replace(" ", "_");
 						selectedItem.setTagName(tagName);
@@ -326,7 +322,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 				validated = false;
 			}
 
-			if (iconTypeDropDown.getSelectedItem().equals(ICON_TYPE.TEAM) && (tagNameField.getText() == null || tagNameField.getText().isEmpty()))
+			if (iconTypeDropDown.getSelectedItem().equals("TEAM") && (tagNameField.getText() == null || tagNameField.getText().isEmpty()))
 			{
 				JOptionPane.showMessageDialog(LegeditFrame.legedit, "Tag must be populated!", LegeditHelper.getErrorMessage(), JOptionPane.ERROR_MESSAGE);
 				validated = false;
@@ -342,7 +338,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 			{
 				selectedItem = new Icon();
 				
-				selectedItem.setType(((ICON_TYPE)iconTypeDropDown.getSelectedItem()));
+				selectedItem.setCategory((String)iconTypeDropDown.getSelectedItem());
 				
 				String type = "";
 				switch (((ICON_TYPE)iconTypeDropDown.getSelectedItem()))
@@ -372,7 +368,7 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 				
 				selectedItem.setImagePath(newFile.getAbsolutePath());
 				
-				if (selectedItem.getIconType().equals(ICON_TYPE.TEAM))
+				if (selectedItem.getCategory().equals("TEAM"))
 				{
 					String tagName = tagNameField.getText().toUpperCase().replace(" ", "_");
 					selectedItem.setTagName(tagName);
@@ -387,12 +383,13 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 				
 				selectedItem = null;
 			}
-		}
+		}*/
 	}
 
 	@Override
-	public void itemStateChanged(ItemEvent e) {
-		if (iconTypeDropDown.getSelectedItem() != null && iconTypeDropDown.getSelectedItem().equals(ICON_TYPE.TEAM))
+	public void itemStateChanged(ItemEvent e) 
+	{
+		/*if (iconTypeDropDown.getSelectedItem() != null && iconTypeDropDown.getSelectedItem().equals("TEAM"))
 		{
 			tagNameField.setEnabled(true);
 			tagNameField.setVisible(true);
@@ -409,10 +406,10 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 			drawUnderlayField.setEnabled(false);
 			drawUnderlayField.setVisible(false);
 			drawUnderlayLabel.setVisible(false);
-		}
+		}*/
 	}
 
-	public IconManager getIconManager() {
+	/*public IconManager getIconManager() {
 		return iconManager;
 	}
 
@@ -446,5 +443,5 @@ public class ManageTemplatesPanel extends JPanel implements ActionListener, Item
 	            destination.close();
 	        }
 	    }
-	}
+	}*/
 }

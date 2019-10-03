@@ -420,7 +420,7 @@ public class CardTypePropertyPanel extends JPanel implements ActionListener, Ite
 			c.gridy = row;
 			c.weightx = 0.5;
 			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.values())
+			for (Icon icon : Icon.sorted_values())
 			{
 				icons.addItem(icon);
 			}
@@ -550,7 +550,7 @@ public class CardTypePropertyPanel extends JPanel implements ActionListener, Ite
 			c.gridy = row;
 			c.weightx = 0.5;
 			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.values())
+			for (Icon icon : Icon.sorted_values())
 			{
 				icons.addItem(icon);
 			}
@@ -583,7 +583,7 @@ public class CardTypePropertyPanel extends JPanel implements ActionListener, Ite
 			c.gridy = row;
 			c.weightx = 0.5;
 			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.values())
+			for (Icon icon : Icon.sorted_values())
 			{
 				icons.addItem(icon);
 			}

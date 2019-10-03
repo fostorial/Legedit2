@@ -27,7 +27,7 @@ public class IconCellRenderer extends DefaultListCellRenderer {
         label.setIcon(new ImageIcon(getImageSummary(villain)));
         label.setHorizontalTextPosition(JLabel.RIGHT);
         
-        String s = villain.getEnumName() + " (" + villain.getType().name() + ")";
+        String s = villain.getEnumName() + " (" + villain.getCategory() + ")";
         label.setText(s);
         
         return label;

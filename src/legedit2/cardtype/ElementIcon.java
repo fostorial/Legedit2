@@ -13,7 +13,6 @@ import org.w3c.dom.Node;
 
 import legedit2.card.Card;
 import legedit2.definitions.Icon;
-import legedit2.definitions.Icon.ICON_TYPE;
 
 public class ElementIcon extends CustomElement {
 	
@@ -29,7 +28,7 @@ public class ElementIcon extends CustomElement {
 	public boolean blurDouble;
 	public int blurExpand;
 	public Color blurColour;
-	public ICON_TYPE iconType;
+	public String iconCategory = null;
 	public String valueFrom;
 	
 	//User values

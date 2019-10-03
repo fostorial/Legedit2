@@ -16,7 +16,6 @@ import org.w3c.dom.NodeList;
 import legedit2.card.Card;
 import legedit2.cardtype.ElementCardName.HIGHLIGHT;
 import legedit2.definitions.Icon;
-import legedit2.definitions.Icon.ICON_TYPE;
 import legedit2.imaging.CustomCardMaker;
 import legedit2.definitions.ItemType;
 
@@ -334,7 +333,7 @@ public class CardType extends ItemType implements Cloneable {
 			
 			if (node.getAttributes().getNamedItem("icontype") != null)
 			{
-				elementIcon.iconType = ICON_TYPE.valueOf(node.getAttributes().getNamedItem("icontype").getNodeValue().toUpperCase());
+				elementIcon.iconCategory = node.getAttributes().getNamedItem("icontype").getNodeValue().toUpperCase();
 			}
 			
 			if (node.getAttributes().getNamedItem("allowchange") != null)
@@ -428,7 +427,7 @@ public class CardType extends ItemType implements Cloneable {
 			
 			if (node.getAttributes().getNamedItem("icontype") != null)
 			{
-				elementIcon.iconType = ICON_TYPE.valueOf(node.getAttributes().getNamedItem("icontype").getNodeValue().toUpperCase());
+				elementIcon.iconCategory = node.getAttributes().getNamedItem("icontype").getNodeValue().toUpperCase();
 			}
 			
 			if (node.getAttributes().getNamedItem("allowchange") != null)

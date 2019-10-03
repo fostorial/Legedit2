@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<icon category="ATTRIBUTE" name="ATTACK" file="attack.png" minimizedUnderlay="false" />
+<icon category="ATTRIBUTE" name="CARDS" file="cards.png" minimizedUnderlay="false" />
+<icon category="ATTRIBUTE" name="COST" file="cost.png" minimizedUnderlay="false" />
+<icon category="ATTRIBUTE" name="PIERCING" file="piercing.png" minimizedUnderlay="false" />
+<icon category="ATTRIBUTE" name="RECRUIT" file="recruit.png" minimizedUnderlay="false" />
+<icon category="ATTRIBUTE" name="VICTORY" file="victory.png" minimizedUnderlay="false" />
+
+</xml>
