@@ -2,8 +2,8 @@
 <xml>
 
 <template
- name="scheme"
- displayname="Scheme"
+ name="operation"
+ displayname="Operation"
  group="bystanders"
  />
 
@@ -104,7 +104,7 @@
  alignmenthorizontal="left"
  alignmentvertical="top"
  allowchange="true"
- headertext="SCHEME"
+ headertext="OPERATION"
  headercolour="#60f788"
  defaultvalue="Card Text."
  colour="#000000"

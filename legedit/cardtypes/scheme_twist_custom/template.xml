@@ -2,9 +2,9 @@
 <xml>
 
 <template
- name="bindings"
- displayname="Bindings"
- group="bystanders"
+ name="scheme_twist_Custom"
+ displayname="Custom Scheme Twist"
+ group="misc"
  />
 
 <cardsize
@@ -23,9 +23,9 @@
  />
 
 <image
- name="wound_underlay"
+ name="text_overlay"
  templatefile="true"
- path="wound_underlay.png"
+ path="plot_twist.png"
  fullsize="true"
  x="0"
  y="0"
@@ -34,32 +34,41 @@
  allowchange="false"
  zoomable="false"
  />
+<styles>
 
-<cardname 
- name="Wound Card Type"
- defaultvalue="Bindings"
- allowchange="false"
+
+
+ <style
+  name="Base Set">
+
+ <cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
  includesubname="false"
+ subnameeditable="false"
  highlight="blur"
  highlightcolour="#000000"
  uppercase="true"
- alignment="left"
- x="100"
- y="730"
- colour="#FFFFFF"
- textsize="60"
- subnamesize="40"
- blurradius="5"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#FBD246"
+ textsize="48"
+ blurradius="15"
  bluedouble="false"
- blurexpand="3"
+ blurexpand="4"
  />
 
+ </style>
+
+</styles>
 <textarea
- name="Wound Card Text"
+ name="Custom Scheme Twsit Card Text"
  alignmenthorizontal="left"
  alignmentvertical="top"
  allowchange="true"
- defaultvalue="&lt;k&gt;Betrayal: &lt;r&gt;If you don't recruit any Allies or defeat any Adversaries or Commanders on your turn, you may KO a Bindings from your hand. If you do, the player to your right gains all the other Bindings from your hand."
+ defaultvalue=""
  colour="#000000"
  textsize="34"
  rectxarray="120,735,735,500,347,180"
