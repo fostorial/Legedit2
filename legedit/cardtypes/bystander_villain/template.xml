@@ -2,8 +2,8 @@
 <xml>
 
 <template
- name="recruitable_bystander"
- displayname="Recruitable Bystander"
+ name="bystander_villain"
+ displayname="Bystander Villain"
  group="bystanders"
  />
 
@@ -20,6 +20,19 @@
  y="0"
  allowchange="true"
  zoomable="true"
+ />
+
+<image
+ name="bystander_underlay"
+ templatefile="true"
+ path="bystander_underlay.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
  />
 
 <cardname 
@@ -40,49 +53,13 @@
  blurexpand="4"
  />
 
-
-<image
- name="text_overlay"
- templatefile="true"
- path="back_underlay.png"
- fullsize="true"
- x="0"
- y="0"
- maxwidth="750"
- maxheight="1050"
- allowchange="false"
- zoomable="false"
- />
-
-<cardname 
- name="Card Type"
- defaultvalue="Bystander"
- allowchange="false"
- includesubname="false"
- highlight="blur"
- highlightcolour="#000000"
- uppercase="true"
- alignment="left"
- x="130"
- y="745"
- colour="#FFFFFF"
- textsize="60"
- subnamesize="40"
- blurradius="5"
- bluedouble="false"
- blurexpand="3"
- />
-
-<elementgroup 
- name="Victory">
-
 <icon
  name="Victory"
  defaultvalue="victory"
  allowchange="false"
  optional="true"
  x="695"
- y="760"
+ y="740"
  maxwidth="60"
  maxheight="60"
  drawunderlay="false"
@@ -99,7 +76,7 @@
  allowchange="true"
  defaultvalue="0"
  x="695"
- y="760"
+ y="740"
  colour="#FFFFFF"
  textsize="40"
  uppercase="true"
@@ -110,59 +87,34 @@
  blurcolour="#000000"
  />
 
-</elementgroup>
-
-<elementgroup 
- name="Recruit">
-
-<icon
- name="Recruit"
- defaultvalue="recruit"
- allowchange="true"
- optional="true"
- x="65"
- y="820"
- maxwidth="120"
- maxheight="120"
- drawunderlay="true"
- blurradius="3"
- bluedouble="false"
- blurexpand="0"
- blurcolour="#000000"
- />
-
-<text
- name="Recruit Value"
- linkedelement="Recruit"
- alignment="center"
- allowchange="true"
- defaultvalue="0"
- x="65"
- y="820"
- colour="#FFFFFF"
- textsize="100"
+<cardname 
+ name="Bystander Card Type"
+ defaultvalue="Bystander"
+ allowchange="false"
+ includesubname="false"
+ highlight="blur"
+ highlightcolour="#000000"
  uppercase="true"
- drawunderlay="true"
- blurradius="2"
+ alignment="left"
+ x="100"
+ y="730"
+ colour="#FFFFFF"
+ textsize="60"
+ subnamesize="40"
+ blurradius="5"
  bluedouble="false"
  blurexpand="3"
- blurcolour="#000000"
  />
-
-</elementgroup>
-
-<elementgroup 
- name="Attack">
 
 <icon
  name="Attack"
  defaultvalue="attack"
  allowchange="true"
  optional="true"
- x="65"
+ x="645"
  y="950"
- maxwidth="120"
- maxheight="120"
+ maxwidth="160"
+ maxheight="160"
  drawunderlay="true"
  blurradius="3"
  bluedouble="false"
@@ -176,10 +128,10 @@
  alignment="center"
  allowchange="true"
  defaultvalue="0"
- x="65"
+ x="645"
  y="950"
  colour="#FFFFFF"
- textsize="100"
+ textsize="110"
  uppercase="true"
  drawunderlay="true"
  blurradius="2"
@@ -187,19 +139,17 @@
  blurexpand="3"
  blurcolour="#000000"
  />
-
-</elementgroup>
-
-<textarea
- name="Card Text"
+ 
+ <textarea
+ name="Bystander Card Text"
  alignmenthorizontal="left"
  alignmentvertical="top"
  allowchange="true"
- defaultvalue="Card Text."
+ defaultvalue="When this bystander is rescued, it instead enters the city."
  colour="#000000"
- textsize="28"
- rectxarray="120,690,690,500,347,180"
- rectyarray="855,855,1040,1040,1000,909"
+ textsize="34"
+ rectxarray="120,735,735,500,347,180"
+ rectyarray="845,845,1040,1040,1000,909"
  debug="false"
  />
 
