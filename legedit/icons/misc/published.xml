@@ -2,5 +2,6 @@
 <xml>
 
 <icon category="MISC" name="FOCUS" file="focus.png" minimizedUnderlay="false" />
+<icon category="MISC" name="TOKEN" file="token.png" minimizedUnderlay="false" />
 
 </xml>

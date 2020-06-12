@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<template
+ name="villain_token"
+ displayname="Villain Token"
+ deck="villain"
+ defaultsindeck="false"
+ />
+
+<cardsize
+ cardwidth="750"
+ cardheight="1050"
+ dpi="300"
+ />
+
+<bgimage
+ name="Image"
+ fullsize="false"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="true"
+ zoomable="true"
+ />
+
+<image
+ name="text_overlay"
+ templatefile="true"
+ path="back_underlay.png"
+ fullsize="true"
+ x="0"
+ y="0"
+ maxwidth="750"
+ maxheight="1050"
+ allowchange="false"
+ zoomable="false"
+ />
+
+<styles>
+
+<style name="Villains">
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="true"
+ highlight="banner"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#e9dc98"
+ textsize="48"
+ subnametext="%DECKNAME%"
+ subnameprefix="Villain - "
+ subnamesize="34"
+ subnamegap="15"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="4"
+/>
+
+<!-- I need to put this in the style else the highliht from the cardname displays over the icon -->
+<icon
+ name="Token Icon"
+ defaultvalue="token"
+ allowchange="false"
+ optional="false"
+ x="662"
+ y="145"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="false"
+ blurradius="1"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+</style>
+
+<style name="Base Set">
+
+<cardname 
+ name="Card Name"
+ defaultvalue="Card Name"
+ allowchange="true"
+ includesubname="true"
+ highlight="blur"
+ highlightcolour="#111111"
+ uppercase="true"
+ alignment="center"
+ x="375"
+ y="40"
+ colour="#FBD246"
+ textsize="48"
+ subnametext="%DECKNAME%"
+ subnameprefix="Villain - "
+subnameeditable="false"
+ subnamesize="34"
+ subnamegap="15"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="4"
+ />
+
+<!-- I need to put this in the style else the highliht from the cardname displays over the icon -->
+<icon
+ name="Token Icon"
+ defaultvalue="token"
+ allowchange="false"
+ optional="false"
+ x="662"
+ y="145"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="false"
+ blurradius="1"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+ 
+ </style>
+
+</styles>
+
+<icon
+ name="Victory"
+ defaultvalue="victory"
+ allowchange="false"
+ optional="true"
+ x="662"
+ y="696"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="false"
+ blurradius="1"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Victory Value"
+ linkedelement="Victory"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="662"
+ y="696"
+ colour="#FFFFFF"
+ textsize="40"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+<icon
+ name="Villain Team"
+ defaultvalue="none"
+ icontype="team"
+ allowchange="true"
+ optional="true"
+ x="720"
+ y="696"
+ maxwidth="50"
+ maxheight="50"
+ drawunderlay="false"
+ blurradius="15"
+ bluedouble="true"
+ blurexpand="0"
+ blurcolour="#FFFFFF"
+ />
+
+
+<icon
+ name="Attack"
+ defaultvalue="attack"
+ allowchange="true"
+ optional="true"
+ x="645"
+ y="950"
+ maxwidth="160"
+ maxheight="160"
+ drawunderlay="true"
+ blurradius="3"
+ bluedouble="false"
+ blurexpand="0"
+ blurcolour="#000000"
+ />
+
+<text
+ name="Attack Value"
+ linkedelement="Attack"
+ alignment="center"
+ allowchange="true"
+ defaultvalue="0"
+ x="645"
+ y="950"
+ colour="#FFFFFF"
+ textsize="110"
+ uppercase="true"
+ drawunderlay="true"
+ blurradius="2"
+ bluedouble="false"
+ blurexpand="3"
+ blurcolour="#000000"
+ />
+
+<textarea
+ name="Card Text"
+ alignmenthorizontal="left"
+ alignmentvertical="top"
+ allowchange="true"
+ defaultvalue="Card Text."
+ colour="#000000"
+ textsize="34"
+ rectxarray="90,670,670,560,560,90"
+ rectyarray="785,785,885,885,1020,1020"
+ debug="false"
+ />
+ 
+<property
+ name="Number in Deck"
+ property="numberindeck"
+ defaultvalue="2"
+ />
+
+</xml>
+
