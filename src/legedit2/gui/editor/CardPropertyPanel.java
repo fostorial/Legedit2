@@ -477,7 +477,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
+						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Swiss 721 Light Condensed.ttf")));						
 						font = font.deriveFont(el.fontStyle, (float)el.textSize);
 						
 						if (el.fontName != null)
@@ -605,7 +605,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
+						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Swiss 721 Light Condensed.ttf")));
 						font = font.deriveFont((float)el.textSize);
 						
 						if (el.fontName != null)
@@ -751,7 +751,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Swiss 721 Light Condensed.ttf"));
+						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Swiss 721 Light Condensed.ttf")));
 						font = font.deriveFont(el.fontStyle, (float)el.textSize);
 						
 						if (el.fontName != null)
@@ -949,7 +949,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
+						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Percolator.otf")));
 						font = font.deriveFont((float)el.textSize);
 						
 						if (el.fontName != null)
@@ -989,7 +989,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File("legedit" + File.separator + "fonts" + File.separator + "Percolator.otf"));
+						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Percolator.otf")));
 						font = font.deriveFont((float)el.subnameSize);
 						
 						if (el.subnameFontName != null)
