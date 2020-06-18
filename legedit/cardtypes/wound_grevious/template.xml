@@ -4,7 +4,7 @@
 <template
  name="wound_grevious"
  displayname="Wound (Grevious)"
- group="wound_binding"
+ deck="wound"
  defaultsindeck="false"
  />
 
@@ -104,7 +104,7 @@
  uppercase="true"
  alignment="left"
  x="70"
- y="725"
+ y="715"
  colour="#FFFFFF"
  textsize="60"
  subnamesize="40"
