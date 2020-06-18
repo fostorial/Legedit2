@@ -4,7 +4,8 @@
 <template
  name="bystander_wound"
  displayname="Bystander/Wound"
- group="bystanders"
+ deck="bystanders"
+ defaultsindeck="false"
  />
 
 <cardsize
@@ -93,7 +94,7 @@
  uppercase="true"
  alignment="left"
  x="100"
- y="730"
+ y="715"
  colour="#FFFFFF"
  textsize="60"
  subnamesize="40"
@@ -112,7 +113,7 @@
  uppercase="true"
  alignment="left"
  x="100"
- y="725"
+ y="715"
  colour="#FFFFFF"
  textsize="60"
  subnamesize="40"

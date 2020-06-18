@@ -64,6 +64,8 @@
  subnameeditable="true"
  highlight="banner"
  highlightcolour="#111111"
+ bannerextratop="10"
+ bannerextrabottom="15"
  uppercase="true"
  alignment="center"
  x="375"

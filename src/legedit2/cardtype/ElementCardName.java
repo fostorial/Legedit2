@@ -46,6 +46,8 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	public boolean uppercase;
 	public HIGHLIGHT highlight = HIGHLIGHT.NONE;
 	public int subnameGap = -1;
+	public int bannerExtraSizeTop = 10; // set to 10 only for backward compatibility
+	public int bannerExtraSizeBottom = 15; // set to 15 only for backward compatibility
 	private JTextField cardNameField;
 	private JTextField cardSubNameField;
 	
@@ -86,8 +88,8 @@ public class ElementCardName extends CustomElement implements Cloneable {
         	x -= stringLength;
 
     	LineMetrics lm = metrics.getLineMetrics(text, g);
-
-    	return new LineInformation(text, x, y + (int)((lm.getAscent() - lm.getDescent())), (int)(lm.getDescent() * 1.5));
+    	float height = (lm.getAscent() - lm.getDescent()) * 1.05f;
+    	return new LineInformation(text, x, (int)(y + height), (int)height);
 	}
 	
 	private List<LineInformation> prepareTextLines(String text, Graphics2D g, Font font, int xStart, int yStart)
@@ -146,7 +148,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		{
         	double scale = getScale();
         	int xScaled = getPercentage(x, scale);
-	        int currentY = getPercentage(y, scale);
+	        int currentYScaled = getPercentage(y, scale);
 	        
 	        int cardWidth = template.getCardWidth();
 	        int cardHeight = template.getCardHeight();
@@ -160,6 +162,8 @@ public class ElementCardName extends CustomElement implements Cloneable {
         
 
 			Font font = createFont(fontName, "Percolator.otf", fontStyle, textSize);
+	        g2.setFont(font);
+
 	        Font fontSubname = null;
 	        
 		
@@ -167,7 +171,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        // Prep up by breaking out our lines for card name and subname
 	        ////////////////////////////////////////////////////////
 	        
-	        List<LineInformation> cardNameLines = prepareTextLines(getValueForDraw(), g2, font, xScaled, currentY);
+	        List<LineInformation> cardNameLines = prepareTextLines(getValueForDraw(), g2, font, xScaled, currentYScaled);
 	        List<LineInformation> subNameLines = null;
 	        
 	        if (includeSubname)
@@ -176,15 +180,13 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        
 	        	LineInformation lastLine = cardNameLines.isEmpty() ? null : cardNameLines.get(cardNameLines.size()-1);
 	        	if (lastLine != null)
-		        	currentY = lastLine.drawYPosition + lastLine.lineThickness;
+	        		currentYScaled += lastLine.lineThickness;
 	        	
 	        	int subnameGapScaled = getPercentage(subnameGap, getScale());
 		        if (subnameGapScaled >= 0 )
-		        	currentY += subnameGapScaled;
+		        	currentYScaled += subnameGapScaled;
 		        
-	        	subNameLines = prepareTextLines(getSubnameValueForDraw(), g2, fontSubname, xScaled, currentY);
-	        	
-		        g2.setFont(font);
+	        	subNameLines = prepareTextLines(getSubnameValueForDraw(), g2, fontSubname, xScaled, currentYScaled);
 	        }
 	        
 	        ////////////////////////////////////////////////////////
@@ -195,6 +197,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        {
 	        	// We want the underlay to be applied to the text, that means we need it to had been drawn prior but before 
 	        	// the banner (else its just a big blob of blackness). So draw here first (yes text will be drawn twice but thats life)
+		        g2.setFont(font);
 		        g2.setColor(colour);
 		        for (LineInformation line: cardNameLines)
 		        {
@@ -207,16 +210,15 @@ public class ElementCardName extends CustomElement implements Cloneable {
 			        g2.setFont(fontSubname);
 			        for (LineInformation line: subNameLines)
 				    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
-			        g2.setFont(font);
 		        }
 		        
 		        g2.setColor(colour);	// just in case
 		    	drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, getPercentage(blurRadius, getScale()), blurDouble, getPercentage(blurExpand, getScale()), highlightColour);
-	        }
-	        
-	        /*
-	        g.setColor(Color.GREEN);
-	        g.drawLine(0, yModified - (int)lm.getAscent() + (int)lm.getDescent(), 750, yModified - (int)lm.getAscent() + (int)lm.getDescent());
+	        }	        
+
+        	/*
+        	g.setColor(Color.GREEN);
+        	g.drawLine(0, yModified, 750, yModified);
 	        
 	        g.setColor(Color.RED);
 	        g.drawLine(0, yModified, 750, yModified);
@@ -236,7 +238,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        	firstLine = cardNameLines.get(0);
 		        else if (subNameLines != null && !subNameLines.isEmpty())
 		        	firstLine = subNameLines.get(0);
-	        	bannerStart = getPercentage(y, scale) - getPercentage(cardHeightScaled, 0.01d);
+	        	bannerStart = getPercentage(y, scale) - getPercentage(bannerExtraSizeTop, getScale());
 	
 	        	int bannerEnd = 0;
 	        	LineInformation lastLine = null;
@@ -244,16 +246,17 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        	lastLine = subNameLines.get(subNameLines.size()-1);
 		        else if (!cardNameLines.isEmpty())
 		        	lastLine = cardNameLines.get(cardNameLines.size()-1);
-	        	bannerEnd = lastLine.drawYPosition + lastLine.lineThickness + getPercentage(cardHeightScaled, 0.015d);
-
-		        if (firstLine != null && lastLine != null)
+	        	bannerEnd = lastLine.drawYPosition;
+	        	bannerEnd += getPercentage(bannerExtraSizeBottom, getScale());
+	        	
+		        if (bannerEnd > bannerStart)
 		        {
 		        	BufferedImage bi2 = new BufferedImage(cardWidthScaled, cardHeightScaled, BufferedImage.TYPE_INT_ARGB);
 			        Graphics g3 = bi2.getGraphics();
 			        
 		        	int bannerHeight = bannerEnd - bannerStart;
 					g3.setColor(highlightColour);
-					g3.fillRect(cardWidthScaled / 2, bannerStart - getPercentage(cardHeightScaled, 0.005d), getPercentage(cardWidthScaled, 0.15d), bannerHeight);
+					g3.fillRect(cardWidthScaled / 2, bannerStart, getPercentage(cardWidthScaled, 0.15d), bannerHeight);
 			    	
 					MotionBlurOp op = new MotionBlurOp();
 					op.setDistance(200f);
@@ -269,7 +272,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 					AffineTransformOp aop = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 					bi2 = aop.filter(bi2, null);
 					
-					g2.drawImage(bi2, 0, 0, null);		        	
+					g2.drawImage(bi2, 0, 0, null);	        	
 		        }
 	        }
 	        
@@ -277,11 +280,10 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        // Now we can draw our lines	
 	        ////////////////////////////////////////////////////////
 	        
+	        g2.setFont(font);
 	        g2.setColor(colour);
 	        for (LineInformation line: cardNameLines)
-	        {
 		    	g2.drawString(line.text, line.drawXPosition, line.drawYPosition);
-	        }
 	        
 	        if (includeSubname)
 	        {
@@ -342,11 +344,12 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	
 	private String getSubnameValueForDraw()
 	{
-		if (uppercase && getSubnameValue() != null)
+		String valueForDraw = getSubnamePrefix() + getSubnameValue() + getSubnameSuffix();
+		if (uppercase && valueForDraw != null)
 		{
-			return getSubnamePrefix().toUpperCase() + getSubnameValue().toUpperCase() + getSubnameSuffix().toUpperCase();
+			return valueForDraw.toUpperCase();
 		}
-		return getSubnamePrefix() + getSubnameValue() + getSubnameSuffix();
+		return valueForDraw;
 	}
 	
 	private BufferedImage makeTransparent(BufferedImage bi, double percent)

@@ -873,6 +873,16 @@ public class CardType extends ItemType implements Cloneable {
 				element.highlight = HIGHLIGHT.valueOf(node.getAttributes().getNamedItem("highlight").getNodeValue().toUpperCase());
 			}
 			
+			if (node.getAttributes().getNamedItem("bannerextratop") != null)
+			{
+				element.bannerExtraSizeTop = Integer.parseInt(node.getAttributes().getNamedItem("bannerextratop").getNodeValue());
+			}
+
+			if (node.getAttributes().getNamedItem("bannerextrabottom") != null)
+			{
+				element.bannerExtraSizeBottom = Integer.parseInt(node.getAttributes().getNamedItem("bannerextrabottom").getNodeValue());
+			}
+
 			if (node.getAttributes().getNamedItem("visible") != null)
 			{
 				element.visible = Boolean.parseBoolean(node.getAttributes().getNamedItem("visible").getNodeValue());

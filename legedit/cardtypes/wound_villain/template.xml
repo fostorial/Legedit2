@@ -4,7 +4,6 @@
 <template
  name="wound_villain"
  displayname="Wound (Villain)"
- group="villain"
  deck="villain"
  defaultsindeck="false"
  />
@@ -107,7 +106,7 @@
  uppercase="true"
  alignment="left"
  x="100"
- y="730"
+ y="715"
  colour="#FFFFFF"
  textsize="60"
  subnamesize="40"
