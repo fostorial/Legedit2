@@ -94,14 +94,41 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	
 	private List<LineInformation> prepareTextLines(String text, Graphics2D g, Font font, int xStart, int yStart)
 	{
+		///////////////////////////////////////////////////////////////
+		/// Manually convert end lines so that calling split finds them
+		if (text.length() > 1)
+		{
+			for (int i = 0; i < text.length() - 2; i++) 
+			{
+				if ((text.charAt(i) == '\\') && (text.charAt(i+1) == 'N'))
+				{
+					text = text.substring(0,i) + '\n' + text.substring(i+2);
+				}
+			}
+		}
+		///////////////////////////////////////////////////////////////
+		
+		///////////////////////////////////////////////////////////////
+		/// Break the strings in regards to all the end lines manually entered by the user
+        String[] linesToProcess = text.split("\n");
+        if (linesToProcess.length > 1)
+        {
+    		List<LineInformation> linesToReturn = new ArrayList<LineInformation>();
+            for (String line : linesToProcess)
+            {
+           		linesToReturn.addAll(prepareTextLines(line, g, font, xStart, yStart));
+           		LineInformation lastLine = linesToReturn.get(linesToReturn.size()-1);
+           		yStart = lastLine.drawYPosition + lastLine.lineThickness;
+            }
+            return linesToReturn;
+        }
+		///////////////////////////////////////////////////////////////
+
         g.setFont(font);
         FontMetrics metrics = g.getFontMetrics(font);
 
 		List<LineInformation> lines = new ArrayList<LineInformation>();
-		//String tmpText = text.replaceAll("\\N", " ");
-		//Boolean mustBreak = !text.contentEquals(tmpText);
-		
-		if (/*!mustBreak && */getScreenStartingXPositionForString(/*tmpText*/text, metrics) > 0)
+		if (getScreenStartingXPositionForString(text, metrics) > 0)
 		{
 			// no need to break anything up, it fits already
 			lines.add(createLineInformation(text, g, metrics, xStart, yStart));
@@ -111,7 +138,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 			// its too long, we need to break it down
 			String newLine = "";
 			int currentY = yStart;
-	        for (String word : /*tmpText*/text.split("\\s+"))
+	        for (String word : text.split("\\s+"))
 	        {
 	        	String testLine = newLine + " " + word;
 	        	if (getScreenStartingXPositionForString(testLine, metrics) > 0)
@@ -180,7 +207,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        
 	        	LineInformation lastLine = cardNameLines.isEmpty() ? null : cardNameLines.get(cardNameLines.size()-1);
 	        	if (lastLine != null)
-	        		currentYScaled += lastLine.lineThickness;
+	        		currentYScaled = lastLine.drawYPosition;
 	        	
 	        	int subnameGapScaled = getPercentage(subnameGap, getScale());
 		        if (subnameGapScaled >= 0 )
@@ -233,11 +260,11 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        	int cardHeightScaled = getPercentage(cardHeight, getScale());
 
 	        	int bannerStart = 0;
-	        	LineInformation firstLine = null;
+	        	/*LineInformation firstLine = null;
 		        if (!cardNameLines.isEmpty())
 		        	firstLine = cardNameLines.get(0);
 		        else if (subNameLines != null && !subNameLines.isEmpty())
-		        	firstLine = subNameLines.get(0);
+		        	firstLine = subNameLines.get(0);*/
 	        	bannerStart = getPercentage(y, scale) - getPercentage(bannerExtraSizeTop, getScale());
 	
 	        	int bannerEnd = 0;
