@@ -9,26 +9,23 @@ import javax.swing.ImageIcon;
 
 import legedit2.card.Card;
 import legedit2.decktype.DeckType;
+import legedit2.decktype.DeckTypeAttribute;
 import legedit2.definitions.LegeditItem;
 
 public class Deck extends LegeditItem implements Comparator<Deck>, Comparable<Deck> {
 	
 	private String name;
-
 	private String templateName;
-	private DeckType template;
-	
+	private DeckType template;	
 	private ImageIcon imageSummary;
 	
-	private boolean changed;
-	
+	private boolean changed;	
 	private List<Card> cards = new ArrayList<>();
-	
+	private List<DeckTypeAttribute> attributes = new ArrayList<>();
 	private static Deck staticDeck;
 	
 	public String getLegeditName()
-	{
-		
+	{		
 		return getDeckName() + " - " + template.getDisplayName() + " (" + getDeckTotal() + " Cards)";
 	}
 	
@@ -128,8 +125,17 @@ public class Deck extends LegeditItem implements Comparator<Deck>, Comparable<De
 		return template;
 	}
 
-	public void setTemplate(DeckType template) {
+	public void setTemplate(DeckType template) 
+	{
 		this.template = template;
+		
+		attributes.clear();
+		for (DeckTypeAttribute attribute : template.getAttributes())
+		{
+			DeckTypeAttribute attributeCopy = new DeckTypeAttribute();
+			attributeCopy.copy(attribute);
+			attributes.add(attributeCopy);
+		}
 	}
 
 	public void setName(String name) {
@@ -150,6 +156,18 @@ public class Deck extends LegeditItem implements Comparator<Deck>, Comparable<De
 
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
+	}
+	
+	public List<DeckTypeAttribute> getAttributes() {
+		return attributes;
+	}
+	
+	public DeckTypeAttribute getAttribute(String attribName) {
+		for (DeckTypeAttribute attrib : getAttributes()) {
+			if (attrib.getName().equalsIgnoreCase(attribName))
+				return attrib;
+		}
+		return null;
 	}
 	
 	public int getDistinctCardCount()
@@ -175,15 +193,26 @@ public class Deck extends LegeditItem implements Comparator<Deck>, Comparable<De
 		Deck.staticDeck = staticDeck;
 	}
 	
+	/////////////////////////////////////////////////////////
+	// Called when the project is being saved to file
+	// This generates the xml text that will be stored into the project file
+	/////////////////////////////////////////////////////////
 	public String getDifferenceXML()
 	{
 		String str = "";
 		
 		str += "<deck template=\"" + getTemplate().getName() + "\" name=\"" + name + "\">\n\n";
 		
-		str += "<template>\n";
-		
-		str += "</template>\n\n";
+		if (attributes != null && !attributes.isEmpty())
+		{
+			str += "<attributes>\n";
+			for(DeckTypeAttribute attribute : attributes)
+			{
+				if (attribute.isUserEditable())
+					str += "<attribute name=\"" + attribute.getName() + "\" value=\"" + attribute.getValue() + "\" />\n";
+			}
+			str += "</attributes>\n\n";
+		}
 		
 		str += "<cards>\n";
 		
@@ -198,4 +227,21 @@ public class Deck extends LegeditItem implements Comparator<Deck>, Comparable<De
 		
 		return str;
 	}
+	
+	public String resolveAttributes(String s)
+	{
+		String newString = s;
+		
+		for (DeckTypeAttribute attrib : attributes)
+		{
+			String attribTag = "%" + attrib.getName().toUpperCase() + "%";
+			newString = newString.replace(attribTag, attrib.getValue());
+		}
+		
+		// TODO Make this data driven
+		newString = newString.replace("%DECKNAME%", getDeckName());
+		
+		return newString;
+	}
+	
 }

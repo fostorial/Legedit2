@@ -12,10 +12,12 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import javafx.util.Pair;
 import legedit2.card.Card;
 import legedit2.cardtype.CardType;
 import legedit2.cardtype.CustomElement;
@@ -42,14 +44,16 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 	
 	private ProjectPanel projectPanel;
 	
-	public DeckEditorPanel()
-	{
+	private List<Pair<DeckTypeAttribute, JComponent>> editableAttributes = new ArrayList<>();
+
+	
+	public DeckEditorPanel() {
 		setGui();
 	}
 	
 	private void setGui()
 	{
-setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout());
 		
 		nameLabel = new JLabel("Name");
 		GridBagConstraints c = new GridBagConstraints();
@@ -93,12 +97,31 @@ setLayout(new GridBagLayout());
 		int row = 2;
 		if (selectedDeck != null && selectedDeck.getTemplate() != null && selectedDeck.getTemplate().getAttributes() != null)
 		{
+			// Properties from the Deck Template
 			for (DeckTypeAttribute attr : selectedDeck.getTemplate().getAttributes())
 			{
+				// TODO only supports Icons for now, should change
 				if (attr.getType() != null && attr.getType().equals("icon"))
 				{
-					addIconItems(attr, 2);
-					row++;
+					String attrType = attr.getType().toLowerCase();					
+					if (attrType.equals("icon"))
+					{
+						row = addIconItems(attr, row);
+					}
+				}
+			}
+			
+			// Editable attributes stored on the deck
+			for (DeckTypeAttribute attr : selectedDeck.getAttributes())
+			{
+				if (attr.getType() != null)
+				{
+					// TODO only supports value for now, should be expanded
+					String attrType = attr.getType().toLowerCase();
+					if (attrType.equals("value"))
+					{
+						row = addStringItem(attr, row);
+					}
 				}
 			}			
 		}
@@ -121,6 +144,7 @@ setLayout(new GridBagLayout());
 	}
 
 	public void setSelectedDeck(Deck selectedDeck) {
+		editableAttributes.clear();
 		this.selectedDeck = selectedDeck;
 		
 		this.removeAll();
@@ -146,13 +170,13 @@ setLayout(new GridBagLayout());
 			
 			if (doStylesExist())
 			{
-				styleList.setVisible(true);
+				styleLabel.setVisible(true);
 				styleList.setVisible(true);
 				visible = true;
 			}
 			else
 			{
-				styleList.setVisible(false);
+				styleLabel.setVisible(false);
 				styleList.setVisible(false);
 			}
 			
@@ -164,8 +188,7 @@ setLayout(new GridBagLayout());
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 	
 	private void resetStyleMenu()
@@ -174,7 +197,6 @@ setLayout(new GridBagLayout());
 		
 		if (selectedDeck != null)
 		{
-			Style selected = null;
 			DeckType dt = selectedDeck.getTemplate();
 			List<String> usedStyles = new ArrayList<>(); 
 			for (CardType ct : dt.getCardTypes())
@@ -221,8 +243,40 @@ setLayout(new GridBagLayout());
 				selectedDeck.setName(nameField.getText());
 			}
 			
+			///////////////////////////////////////////
+			// Update Global deck attributes
+			///////////////////////////////////////////
+			
+			for (Pair<DeckTypeAttribute, JComponent> attrib : editableAttributes)
+			{
+				DeckTypeAttribute deckAttrib = attrib.getKey();
+				JComponent uiAttrib = attrib.getValue();
+				if (uiAttrib instanceof JComboBox)
+				{
+					// TODO Implement appropriate support here
+				}
+				else if (uiAttrib instanceof JTextField)
+				{
+					JTextField uiText = (JTextField)uiAttrib;
+					deckAttrib.setValue(uiText.getText());
+				}
+			}			
+			
+			
+			///////////////////////////////////////////
+			// Here the code will forcibly update values on cards, based of the "deck" UI values
+			// I feel like this could all be simplified by keeping the values on the deck itself and then have the cards
+			// retrieve the info when it needs it. Just like its doing for Global deck attributes
+			// TODO SHOULD BE REFACTORED
+			///////////////////////////////////////////
+
 			for (Card c : selectedDeck.getCards())
 			{
+				///////////////////////////////////////////
+				// Update the drop down values coming from the deck type template (which is pretty much only for Teams atm
+				// TODO NEEDS TO BE REFACTORED
+				///////////////////////////////////////////
+
 				for (DeckTypeAttribute attr : selectedDeck.getTemplate().getAttributes())
 				{
 					for (CustomElement el : c.getTemplate().elements)
@@ -250,6 +304,11 @@ setLayout(new GridBagLayout());
 					}					
 				}
 				
+				///////////////////////////////////////////
+				// Update the drop down values representing the style of the card
+				// TODO SHOULD BE REFACTORED
+				///////////////////////////////////////////
+
 				for (Style s : c.getTemplate().getStyles())
 				{
 					for (DeckTypeAttribute attr : selectedDeck.getTemplate().getAttributes())
@@ -302,46 +361,68 @@ setLayout(new GridBagLayout());
 	}
 	
 	private int addIconItems(DeckTypeAttribute attr, int row)
-	{
+	{		
+		JLabel nameLabel = new JLabel(attr.getDisplayName());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = row;
+		this.add(nameLabel, c);
 		
+		JComboBox<Icon> icons = new JComboBox<Icon>();
+		icons.setName("icondropdown_"+attr.getName());
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 3;
+		c.gridx = 1;
+		c.gridy = row;
+		c.weightx = 0.5;
+		icons.setRenderer(new IconListRenderer());
+		for (Icon icon : Icon.sorted_values())
 		{
-			JLabel nameLabel = new JLabel(attr.getName());
-			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 1;
-			c.gridx = 0;
-			c.gridy = row;
-			this.add(nameLabel, c);
-			
-			JComboBox<Icon> icons = new JComboBox<Icon>();
-			icons.setName("icondropdown_"+attr.getName());
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 3;
-			c.gridx = 1;
-			c.gridy = row;
-			c.weightx = 0.5;
-			icons.setRenderer(new IconListRenderer());
-			for (Icon icon : Icon.sorted_values())
+			if (attr.getValue() != null && icon.getCategory() != null && (icon.getCategory().equalsIgnoreCase(attr.getValue()) || icon.getEnumName().equalsIgnoreCase("NONE")))
 			{
-				if (attr.getIconType() != null && icon.getCategory() != null && (icon.getCategory().equalsIgnoreCase(attr.getIconType()) || icon.getEnumName().equalsIgnoreCase("NONE")))
-				{
-					icons.addItem(icon);
-				}
-				else if (attr.getIconType() == null)
-				{
-					icons.addItem(icon);
-				}
-				
-				if (icon.getEnumName().equalsIgnoreCase("NONE"))
-				{
-					icons.setSelectedItem(icon);
-				}
+				icons.addItem(icon);
 			}
-			this.add(icons, c);
+			else if (attr.getValue() == null)
+			{
+				icons.addItem(icon);
+			}
 			
-			row++;
+			if (icon.getEnumName().equalsIgnoreCase("NONE"))
+			{
+				icons.setSelectedItem(icon);
+			}
 		}
-		return row;
+		this.add(icons, c);
+		
+		return row + 1;
+	}
+	
+	private int addStringItem(DeckTypeAttribute attr, int row)
+	{
+		JLabel nameLabel = new JLabel(attr.getDisplayName());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = row;
+		this.add(nameLabel, c);
+
+		JTextField nameField = new JTextField(attr.getValue());
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 2;
+		c.gridx = 1;
+		c.gridy = row;
+		c.weightx = 0.5;
+		nameField.setEnabled(attr.isUserEditable());
+		this.add(nameField, c);
+		
+		if (attr.isUserEditable())
+			editableAttributes.add(new Pair<>(attr, nameField));
+		
+		return row + 1;
 	}
 }

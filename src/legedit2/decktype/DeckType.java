@@ -24,13 +24,12 @@ public class DeckType extends ItemType implements Cloneable {
 	private Boolean nameEditable = Boolean.FALSE;
 	
 	private static List<DeckType> deckTypes = null;
-	private List<CardType> cardTypes = new ArrayList<>();
-	
+	private List<CardType> cardTypes = new ArrayList<>();	
 	private List<DeckTypeAttribute> attributes = new ArrayList<>();
 	
+	
 	public DeckType()
-	{
-		
+	{		
 	}
 	
 	public static List<DeckType> getDeckTypes()
@@ -134,16 +133,32 @@ public class DeckType extends ItemType implements Cloneable {
 									attribute.setName(node2.getAttributes().getNamedItem("name").getNodeValue());
 								}
 								
+								if (node2.getAttributes() != null && node2.getAttributes().getNamedItem("displayname") != null)
+								{
+									attribute.setDisplayName(node2.getAttributes().getNamedItem("displayname").getNodeValue());
+								}
+
 								if (node2.getAttributes() != null && node2.getAttributes().getNamedItem("type") != null)
 								{
 									attribute.setType(node2.getAttributes().getNamedItem("type").getNodeValue());
 								}
 								
+								// kept for backwards compatibility
 								if (node2.getAttributes() != null && node2.getAttributes().getNamedItem("icontype") != null)
 								{
-									attribute.setIconType(node2.getAttributes().getNamedItem("icontype").getNodeValue());
+									attribute.setValue(node2.getAttributes().getNamedItem("icontype").getNodeValue());
 								}
 								
+								if (node2.getAttributes() != null && node2.getAttributes().getNamedItem("value") != null)
+								{
+									attribute.setValue(node2.getAttributes().getNamedItem("value").getNodeValue());
+								}
+
+								if (node2.getAttributes() != null && node2.getAttributes().getNamedItem("iseditable") != null)
+								{
+									attribute.setUserEditable(Boolean.parseBoolean(node2.getAttributes().getNamedItem("iseditable").getNodeValue()));
+								}
+
 								if (attribute.getName() != null)
 								{
 									t.getAttributes().add(attribute);
@@ -190,6 +205,12 @@ public class DeckType extends ItemType implements Cloneable {
 		this.defaultStyle = defaultStyle;
 	}
 	
+	/////////////////////////////////////////////////////////
+	// This is called whenever a new Deck needs to be created
+	// The caller will specify which type of deck is meant to be created
+	// This code solely checks the deckType template data
+	// It does not in any way possibly check any data stored into the project file
+	/////////////////////////////////////////////////////////
 	public static Deck generateLegeditItem(DeckType type)
 	{
 		Deck cc = new Deck();
@@ -215,6 +236,7 @@ public class DeckType extends ItemType implements Cloneable {
 				   for (int i = 0; i < ct.getDefaultCopiesInDeck(); i++)
 				   {
 					   Card c = CardType.generateLegeditItem(ct);
+					   c.setOwner(cc);
 					   cc.getCards().add(c);
 					   
 					   if (cc.getTemplate().getDefaultStyle() != null 

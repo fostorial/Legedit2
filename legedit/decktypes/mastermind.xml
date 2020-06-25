@@ -7,7 +7,12 @@
  defaultstyle="Base"
  group="masterminds_and_commanders"
  nameeditable="true"
- />
+/>
+ 
+<attributes>
+ <attribute name="VP" displayname="Victory Point" type="value" value="5" iseditable="true" />
+ <attribute name="DEFATTACK" displayname="Default Attack" type="value" value="6" iseditable="true" />
+</attributes>
 
 </xml>
 

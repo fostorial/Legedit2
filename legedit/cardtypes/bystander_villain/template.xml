@@ -75,7 +75,7 @@
  linkedelement="Victory"
  alignment="center"
  allowchange="true"
- defaultvalue="0"
+ defaultvalue="1"
  x="695"
  y="740"
  colour="#FFFFFF"

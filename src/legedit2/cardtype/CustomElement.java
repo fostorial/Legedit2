@@ -40,8 +40,7 @@ public class CustomElement implements Cloneable {
 	private JCheckBox visibleCheckbox;
 	
 	public void drawElement(Graphics2D g)
-	{
-		
+	{		
 	}
 	
 	public Font createFont(String fontName, String fallbackFontName, int fontStyle, int textSize)
@@ -360,52 +359,30 @@ public class CustomElement implements Cloneable {
 		this.scale = scale;
 	}
 	
-	public void updateCardValues()
-	{
-		
+	public void updateCardValues() {		
 	}
 	
-	public String populateVariables(String s, CustomElement ce)
+	public String resolveAttributes(String s, CustomElement ce)
 	{
 		if (s == null)
 		{
 			return s;
 		}
 		
-//		if (Deck.getStaticDeck() != null && s != null)
-//		{
-//			s = s.replace("%DECKNAME%", Deck.getStaticDeck().getDeckName());
-//		}
+		String newString = s;
 		
-		for (Deck d : ProjectHelper.getDecks())
+		Card owningCard = template.getOwner();
+		if (owningCard != null) 
 		{
-			for (Card c : d.getCards())
-			{
-				if (c.getTemplate() != null)
-				{
-					for (CustomElement e : c.getTemplate().elements)
-					{
-						if (e.equals(ce))
-						{
-							s = s.replace("%DECKNAME%", d.getDeckName());
-						}
-					}
-					
-					for (Style st : c.getTemplate().getStyles())
-					{
-						for (CustomElement e : st.getElements())
-						{
-							if (e.equals(ce))
-							{
-								s = s.replace("%DECKNAME%", d.getDeckName());
-							}
-						}
-					}
-				}
+			newString = owningCard.resolveAttributes(newString); 
+
+			Deck owningDeck = owningCard.getOwner();
+			if (owningDeck != null) {
+				newString = owningDeck.resolveAttributes(newString);
 			}
 		}
 		
-		return s;
+		return newString;
 	}
 	
 	public String getDifferenceXML()
@@ -413,9 +390,7 @@ public class CustomElement implements Cloneable {
 		return "\n";
 	}
 	
-	public void loadValues(Node node, Card card)
-	{
-		
+	public void loadValues(Node node, Card card) {		
 	}
 	
 	public String replaceNonXMLCharacters(String str)

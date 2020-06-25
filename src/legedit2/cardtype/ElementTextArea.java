@@ -72,6 +72,15 @@ public class ElementTextArea extends CustomElement {
 	{
 		if (value != null)
 		{
+			return resolveAttributes(value, this);
+		}
+		return resolveAttributes(defaultValue, this);
+	}
+
+	public String getValueRaw()
+	{
+		if (value != null)
+		{
 			return value;
 		}
 		return defaultValue;
@@ -888,7 +897,21 @@ public class ElementTextArea extends CustomElement {
 	{
 		String str = "";
 		
-		str += "<textarea name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(getValue())+"\" "
+		/////////////////////////////////////////////////////////////////
+		// for global attributes to really work (ie, if the value changes, then it changes for all using cards),
+		// we need to keep the original "attribute" like text around so it can continue to be interpreted when
+		// needed. So here we check the formatted text with the raw version, if they are not identical, then
+		// it means that something got interpreted by a Global attribute, hence we keep its raw value to 
+		// keep the attribute around.
+		/////////////////////////////////////////////////////////////////
+		
+		String value = "";
+		if (getValue().equalsIgnoreCase(getValueRaw()))
+			value = getValue();
+		else
+			value = getValueRaw();
+		
+		str += "<textarea name=\"" + replaceNonXMLCharacters(name) + "\" value=\""+replaceNonXMLCharacters(value)+"\" "
 				+ (fontName == null ? "" : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
 				+ (fontNameBold == null ? "" : "fontnamebold=\""+replaceNonXMLCharacters(fontNameBold)+"\" ")
 				+ (fontName == null ? "" : "fontstyle=\""+fontStyle+"\" ")

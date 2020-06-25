@@ -11,12 +11,14 @@ import legedit2.cardtype.CustomProperties;
 import legedit2.cardtype.ElementCardName;
 import legedit2.cardtype.ElementProperty;
 import legedit2.cardtype.Style;
+import legedit2.deck.Deck;
 import legedit2.definitions.LegeditItem;
 
 public class Card extends LegeditItem implements Comparator<Card>, Comparable<Card> {
 	private String templateName;
 	private CardType template;
 	private String style;
+	private Deck owner = null;
 	
 	private ImageIcon imageSummary;
 	
@@ -219,6 +221,14 @@ public class Card extends LegeditItem implements Comparator<Card>, Comparable<Ca
 		this.templateName = templateName;
 	}
 	
+	public void setOwner(Deck deck) {
+		this.owner = deck;
+	}
+	
+	public Deck getOwner() {
+		return this.owner;
+	}
+	
 	public int getDistinctCardCount()
 	{	
 		return 1;
@@ -318,5 +328,9 @@ public class Card extends LegeditItem implements Comparator<Card>, Comparable<Ca
 
 	public void setStyle(String style) {
 		this.style = style;
+	}
+	
+	public String resolveAttributes(String s) {
+		return s;	// TODO not yet implemented
 	}
 }
