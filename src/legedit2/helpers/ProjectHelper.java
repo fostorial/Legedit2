@@ -34,6 +34,7 @@ import legedit2.cardtype.Style;
 import legedit2.cardtype.ElementCardName.HIGHLIGHT;
 import legedit2.deck.Deck;
 import legedit2.decktype.DeckType;
+import legedit2.decktype.DeckTypeAttribute;
 import legedit2.definitions.Icon;
 import legedit2.definitions.LegeditItem;
 import legedit2.gui.LegeditFrame;
@@ -202,10 +203,37 @@ public class ProjectHelper {
 				}
 			}
 			
-			for (int count = 0; count < node.getChildNodes().getLength(); count++) {
+			for (int count = 0; count < node.getChildNodes().getLength(); count++) 
+			{
 				Node node1 = node.getChildNodes().item(count);
 				
-				if (node1.getNodeName().equals("cards"))
+				if (node1.getNodeName().equals("attributes"))
+				{
+					for (int count1 = 0; count1 < node1.getChildNodes().getLength(); count1++) 
+					{
+						Node node2 = node1.getChildNodes().item(count1);
+						if (node2.getNodeName().equals("attribute"))
+						{
+							DeckTypeAttribute attrib = null;
+							
+							// TODO the loading of the data of DeckTypeAttribute should be contained within that class
+							String value = "";
+							if (node2.getAttributes().getNamedItem("name") != null)
+							{
+								attrib = deck.getAttribute(node2.getAttributes().getNamedItem("name").getNodeValue());
+							}
+							
+							if (node2.getAttributes().getNamedItem("value") != null)
+							{
+								value = node2.getAttributes().getNamedItem("value").getNodeValue();
+							}
+							
+							if (attrib != null)
+								attrib.setValue(value);
+						}
+					}
+				}
+				else if (node1.getNodeName().equals("cards"))
 				{
 					for (int count1 = 0; count1 < node1.getChildNodes().getLength(); count1++) {
 						Node node2 = node1.getChildNodes().item(count1);
@@ -245,6 +273,7 @@ public class ProjectHelper {
 	{
 		Card card = new Card();
 		card.setTemplateName("Unknown");
+		card.setOwner(deck);
 
 		try 
 		{
@@ -255,8 +284,10 @@ public class ProjectHelper {
 				{
 					if (type.getName().equals(card.getTemplateName()))
 					{
-						card.setTemplateName(type.getName());
-						card.setTemplate(type.getCopy());
+						CardType templateClone = type.getCopy();
+						card.setTemplateName(templateClone.getName());						
+						card.setTemplate(templateClone);
+						templateClone.setOwner(card);
 						break;
 					}
 				}

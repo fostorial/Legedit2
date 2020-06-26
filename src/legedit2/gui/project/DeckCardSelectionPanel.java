@@ -132,7 +132,9 @@ public class DeckCardSelectionPanel extends JPanel implements ActionListener, It
 							
 							if (item instanceof Card)
 							{
-								Card.setStaticCard((Card)item);
+								Card newCard = (Card)item;
+								newCard.setOwner(getSelectedDeck());
+								Card.setStaticCard(newCard);
 							}
 						}					
 					}

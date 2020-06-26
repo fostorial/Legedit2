@@ -460,7 +460,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			c.gridx = 1;
 			c.gridy = row;
 			c.weightx = 0.5;
-			nameField.setText(el.getValue());			
+			nameField.setText(el.getValueRaw());			
 			el.setTextField(nameField);
 			panel.add(nameField, c);
 			
@@ -646,7 +646,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			c.gridy = row;
 			c.weightx = 0.5;
 			panel.add(scrollPane, c);
-			textArea.setText(el.getValue());
+			textArea.setText(el.getValueRaw());
 			scrollPane.setViewportView(textArea);
 			
 			el.setTextArea(textArea);
@@ -919,29 +919,29 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			JLabel nameLabel = new JLabel("Name");
 			GridBagConstraints c = new GridBagConstraints();
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 1;
 			c.gridx = 0;
 			c.gridy = row;
+			c.gridwidth = 1;
 			panel.add(nameLabel, c);
 			
 			JTextField nameField = new JTextField();
 			c = new GridBagConstraints();
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 1;
 			c.gridx = 1;
 			c.gridy = row;
+			c.gridwidth = 2;
 			c.weightx = 0.5;
 			panel.add(nameField, c);
-			nameField.setText(el.getValue());
+			nameField.setText(el.getValueRaw());
 			
 			el.setCardNameField(nameField);
 			
 			JButton fontButton = new JButton("Name Font");
 			c = new GridBagConstraints();
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 1;
-			c.gridx = 2;
+			c.gridx = 3;
 			c.gridy = row;
+			c.gridwidth = 1;
 			fontButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -976,12 +976,38 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			});
 			panel.add(fontButton, c);
 			
+			row++;
+		}
+		
+		if (el.includeSubname)
+		{
+			JLabel subnameLabel = new JLabel("Sub Name");
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = row;
+			c.gridwidth = 1;
+			panel.add(subnameLabel, c);
+			
+			JTextField subnameField = new JTextField();
+			c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 1;
+			c.gridy = row;
+			c.gridwidth = 2;
+			c.weightx = 0.5;
+			panel.add(subnameField, c);
+			subnameField.setText(el.getSubnameValueRaw());
+			subnameField.setEnabled(!el.subnameEditable);
+			
+			el.setCardSubNameField(subnameField);
+			
 			JButton subfontButton = new JButton("Subname Font");
 			c = new GridBagConstraints();
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 1;
 			c.gridx = 3;
 			c.gridy = row;
+			c.gridwidth = 1;
 			subfontButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -1016,30 +1042,6 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			});
 			panel.add(subfontButton, c);
 			
-			row++;
-		}
-		
-		if (el.includeSubname && el.subnameEditable)
-		{
-			JLabel subnameLabel = new JLabel("Sub Name");
-			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 1;
-			c.gridx = 0;
-			c.gridy = row;
-			panel.add(subnameLabel, c);
-			
-			JTextField subnameField = new JTextField();
-			c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridwidth = 3;
-			c.gridx = 1;
-			c.gridy = row;
-			c.weightx = 0.5;
-			panel.add(subnameField, c);
-			subnameField.setText(el.getSubnameValue());
-			
-			el.setCardSubNameField(subnameField);
 			row++;
 		}
 		

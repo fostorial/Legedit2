@@ -19,6 +19,9 @@ import legedit2.definitions.Icon;
 import legedit2.imaging.CustomCardMaker;
 import legedit2.definitions.ItemType;
 
+///////////////////////////////////////////////////////////
+// This could actually be called CardTemplate, feels like it would make it clearer
+///////////////////////////////////////////////////////////
 public class CardType extends ItemType implements Cloneable {
 
 	private String templateName;
@@ -26,16 +29,15 @@ public class CardType extends ItemType implements Cloneable {
 	public HashMap<String, CustomElement> elementsHash = new HashMap<String, CustomElement>();
 	public List<CustomElement> elements = new ArrayList<CustomElement>();
 	private List<Style> styles = new ArrayList<>();
+	private Card owner = null;
 	
-	public static List<CardType> cardTypes = null;
-	
+	public static List<CardType> cardTypes = null;	
 	public static List<CardType> failedTemplates = new ArrayList<>();
 	private Exception exception;
 	
 	private boolean defaultsInDeck = false;
-	private int defaultCopiesInDeck = 1;
-	private String deck;
-	
+	private int defaultCopiesInDeck = 1;	
+	private String deck;	
 	private Style style;
 	
 	// 2.5 by 3.5 inches - Poker Size
@@ -46,6 +48,14 @@ public class CardType extends ItemType implements Cloneable {
 	public String getName()
 	{
 		return templateName;
+	}
+	
+	public void setOwner(Card owner) {
+		this.owner = owner;
+	}
+	
+	public Card getOwner() {
+		return this.owner;
 	}
 	
 	public void addElement(CustomElement element, Style s, ElementGroup group)
@@ -185,6 +195,9 @@ public class CardType extends ItemType implements Cloneable {
 		t.getStyles().add(style);
 	}
 	
+	///////////////////////////////////////////////////////////
+	// This reads a card template from the provided xml node
+	///////////////////////////////////////////////////////////
 	public static void parseNode(Node node, CardType t, Style s, ElementGroup group) throws Exception
 	{
 		if (node.getNodeName().equals("styles"))
@@ -247,6 +260,12 @@ public class CardType extends ItemType implements Cloneable {
 			}
 		}
 		
+		/////////////////////////////////////////////////////////////////////
+		// TODO Refactor
+		// All these elements already have their own independent definitions (class files)
+		// There's no real reason to keep this code locally here, every element should be responsible for reading
+		// its own data
+		/////////////////////////////////////////////////////////////////////
 		if (node.getNodeName().equals("bgimage"))
 		{
 			ElementBackgroundImage element = new ElementBackgroundImage();
@@ -1221,7 +1240,7 @@ public class CardType extends ItemType implements Cloneable {
 	public CardType getCopy()
 	{
 		try {
-			CardType template = (CardType) clone();
+			CardType template = (CardType)clone();
 			List<CustomElement> elements = new ArrayList<CustomElement>();
 			for (CustomElement e : template.elements)
 			{
@@ -1340,8 +1359,10 @@ public class CardType extends ItemType implements Cloneable {
 		   {
 			   if (t.getTemplateName().equals(type.getTemplateName()))
 			   {
+				   CardType templateClone = t.getCopy();
 				   cc.setTemplateName(type.getTemplateName());
-				   cc.setTemplate(t.getCopy());
+				   cc.setTemplate(templateClone);
+				   templateClone.setOwner(cc);
 				   break;
 			   }
 		   }

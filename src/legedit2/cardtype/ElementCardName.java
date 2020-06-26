@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import org.w3c.dom.Node;
 
 import legedit2.card.Card;
+import legedit2.deck.Deck;
 import legedit2.helpers.LegeditHelper;
 import legedit2.imaging.MotionBlurOp;
 
@@ -258,16 +259,9 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        {	        
 	        	int cardWidthScaled = getPercentage(cardWidth, getScale());
 	        	int cardHeightScaled = getPercentage(cardHeight, getScale());
-
-	        	int bannerStart = 0;
-	        	/*LineInformation firstLine = null;
-		        if (!cardNameLines.isEmpty())
-		        	firstLine = cardNameLines.get(0);
-		        else if (subNameLines != null && !subNameLines.isEmpty())
-		        	firstLine = subNameLines.get(0);*/
-	        	bannerStart = getPercentage(y, scale) - getPercentage(bannerExtraSizeTop, getScale());
-	
+	        	int bannerStart = getPercentage(y, scale) - getPercentage(bannerExtraSizeTop, getScale());	
 	        	int bannerEnd = 0;
+	        	
 	        	LineInformation lastLine = null;
 		        if (subNameLines != null && !subNameLines.isEmpty())
 		        	lastLine = subNameLines.get(subNameLines.size()-1);
@@ -345,11 +339,19 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	{
 		if (value != null)
 		{
-			return populateVariables(value, this);
+			return resolveAttributes(value, this);
 		}
-		return populateVariables(defaultValue, this);
+		return resolveAttributes(defaultValue, this);
 	}
 	
+	public String getValueRaw()
+	{
+		if (value != null) {
+			return value;
+		}		
+		return defaultValue;
+	}
+
 	private String getValueForDraw()
 	{
 		String valueForDraw = getNamePrefix() + getValue() + getNameSuffix();
@@ -364,11 +366,19 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	{
 		if (subnameValue != null)
 		{
-			return populateVariables(subnameValue, this);
+			return resolveAttributes(subnameValue, this);
 		}
-		return populateVariables(subnameText, this);
+		return resolveAttributes(subnameText, this);
 	}
 	
+	public String getSubnameValueRaw()
+	{
+		if (subnameValue != null) {
+			return subnameValue;
+		}
+		return subnameText;
+	}
+
 	private String getSubnameValueForDraw()
 	{
 		String valueForDraw = getSubnamePrefix() + getSubnameValue() + getSubnameSuffix();
@@ -483,12 +493,32 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	{
 		String str = "";
 		
+		/////////////////////////////////////////////////////////////////
+		// for global attributes to really work (ie, if the value changes, then it changes for all using cards),
+		// we need to keep the original "attribute" like text around so it can continue to be interpreted when
+		// needed. So here we check the formatted text with the raw version, if they are not identical, then
+		// it means that something got interpreted by a Global attribute, hence we keep its raw value to 
+		// keep the attribute around.
+		/////////////////////////////////////////////////////////////////
+		
+		String cardNameValue = "";
+		if (getValue().equalsIgnoreCase(getValueRaw()))
+			cardNameValue = getValue();
+		else
+			cardNameValue = getValueRaw();
+
+		String subnameValue = "";
+		if (getSubnameValue().equalsIgnoreCase(getSubnameValueRaw()))
+			subnameValue = getSubnameValue();
+		else
+			subnameValue = getSubnameValueRaw();
+
 		str += "<cardname name=\"" + replaceNonXMLCharacters(name) + "\" "
-				+ "value=\""+replaceNonXMLCharacters(getValue())+"\" "
+				+ "value=\""+replaceNonXMLCharacters(cardNameValue)+"\" "
 				+ (fontName == null ? "" : "fontname=\""+replaceNonXMLCharacters(fontName)+"\" ")
 				+ (fontName == null ? "" : "fontstyle=\""+fontStyle+"\" ")
-				+ "textsize=\""+textSize+"\" "
-				+ "subnameValue=\"" + replaceNonXMLCharacters(getSubnameValue()) + "\" "
+				+ "textsize=\""+textSize+"\" "		
+				+ "subnameValue=\"" + replaceNonXMLCharacters(subnameValue) + "\" "
 				+ (subnameFontName == null ? "" : "subnamefontname=\""+replaceNonXMLCharacters(subnameFontName)+"\" ")
 				+ (subnameFontName == null ? "" : "subnamefontstyle=\""+subnameFontStyle+"\" ")
 				+ "subnamesize=\""+subnameSize+"\" />\n";

@@ -6,16 +6,31 @@ public class DeckTypeAttribute implements Serializable {
 
 	private String name;
 	
+	private String displayName;
+	
 	private String type;
 	
-	private String iconType;
-
+	private String value;
+	
+	private Boolean isEditable = false;
+	
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDisplayName() {
+		if (displayName == null || displayName.isEmpty())
+			return getName();
+		
+		return displayName;
+	}
+
+	public void setDisplayName(String name) {
+		this.displayName = name;
 	}
 
 	public String getType() {
@@ -26,11 +41,27 @@ public class DeckTypeAttribute implements Serializable {
 		this.type = type;
 	}
 
-	public String getIconType() {
-		return iconType;
+	public String getValue() {
+		return value;
 	}
 
-	public void setIconType(String iconType) {
-		this.iconType = iconType;
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
+	public Boolean isUserEditable() {
+		return isEditable;
+	}
+
+	public void setUserEditable(Boolean isEditable) {
+		this.isEditable = isEditable;
+	}
+
+	public void copy(DeckTypeAttribute attribute) {
+		this.setName(attribute.getName());
+		this.setDisplayName(attribute.getDisplayName());
+		this.setType(attribute.getType());
+		this.setValue(attribute.getValue());
+		this.setUserEditable(attribute.isUserEditable());
 	}
 }
