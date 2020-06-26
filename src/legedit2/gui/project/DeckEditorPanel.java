@@ -43,8 +43,19 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 	private JButton updateButton = new JButton("Update");
 	
 	private ProjectPanel projectPanel;
+
+	private class AttributePair
+	{
+		public DeckTypeAttribute attribute = null;
+		public JComponent component = null;
+		
+		public AttributePair(DeckTypeAttribute attr, JComponent comp) {
+			this.attribute = attr;
+			this.component = comp;
+		}
+	};
 	
-	private List<Pair<DeckTypeAttribute, JComponent>> editableAttributes = new ArrayList<>();
+	private List<AttributePair> editableAttributes = new ArrayList<>();
 
 	
 	public DeckEditorPanel() {
@@ -247,10 +258,10 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 			// Update Global deck attributes
 			///////////////////////////////////////////
 			
-			for (Pair<DeckTypeAttribute, JComponent> attrib : editableAttributes)
+			for (AttributePair attrib : editableAttributes)
 			{
-				DeckTypeAttribute deckAttrib = attrib.getKey();
-				JComponent uiAttrib = attrib.getValue();
+				DeckTypeAttribute deckAttrib = attrib.attribute;
+				JComponent uiAttrib = attrib.component;
 				if (uiAttrib instanceof JComboBox)
 				{
 					// TODO Implement appropriate support here
@@ -260,7 +271,7 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 					JTextField uiText = (JTextField)uiAttrib;
 					deckAttrib.setValue(uiText.getText());
 				}
-			}			
+			}
 			
 			
 			///////////////////////////////////////////
@@ -421,7 +432,7 @@ public class DeckEditorPanel extends JPanel implements ItemListener, ActionListe
 		this.add(nameField, c);
 		
 		if (attr.isUserEditable())
-			editableAttributes.add(new Pair<>(attr, nameField));
+			editableAttributes.add(new AttributePair(attr, nameField));
 		
 		return row + 1;
 	}
