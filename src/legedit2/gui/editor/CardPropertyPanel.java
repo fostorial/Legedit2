@@ -974,7 +974,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 			c.weightx = 0.5;
 			panel.add(subnameField, c);
 			subnameField.setText(el.getSubnameValueRaw());
-			subnameField.setEnabled(!el.subnameEditable);
+			subnameField.setEnabled(el.subnameEditable);
 			
 			el.setCardSubNameField(subnameField);
 			
