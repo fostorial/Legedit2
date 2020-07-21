@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -16,6 +18,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import legedit2.card.Card;
+import legedit2.cardtype.CustomElement;
 import legedit2.deck.Deck;
 import legedit2.gui.LegeditFrame;
 
@@ -39,6 +42,34 @@ public class LegeditHelper {
 	
 	private static Properties applicationProps = new Properties();
 	
+	private static class FontFamilyOverride
+	{
+		int fontStyle;
+		String fontFile;
+	}
+	
+	private static class FontFamily
+	{
+		String family;
+		String defaultFontFile;
+		public List<FontFamilyOverride> fontOverrides = new ArrayList<FontFamilyOverride>();
+		
+		public FontFamily(String family) {
+			this.family = family;
+		}
+		
+		public FontFamilyOverride getOverride(int fontStyle) {
+			for (FontFamilyOverride fontOverride : fontOverrides) {
+				if (fontOverride.fontStyle == fontStyle)
+					return fontOverride;
+			}
+			
+			return null;
+		}
+	}
+
+	private static List<FontFamily> familyFonts = new ArrayList<FontFamily>();
+
 	public static LegeditFrame getLegeditFrame()
 	{
 		return LegeditFrame.legedit;
@@ -242,4 +273,103 @@ public class LegeditHelper {
 
 		return nodes;
 	}
+	
+	public static int getPercentage(int size, double scale)
+	{
+		return (int)(((double)size * (double)scale));
+	}	
+	
+	private static FontFamily GetFontFamily(String familyName)
+	{
+		for (FontFamily family : familyFonts) {
+			if (family.family.equalsIgnoreCase(familyName))
+				return family;
+		}
+
+		return null;
+	}
+	
+	public static void AddFontFamily(String filename, Font newFont)
+	{
+		// TODO Should consider storing the font itself and then simply calling deriveFont on it, would technically
+		// save on reloading the font from disk everytime
+
+		String familyName = newFont.getFamily();
+		FontFamily fontFamily = GetFontFamily(familyName);
+		if (fontFamily == null)
+		{
+			fontFamily = new FontFamily(familyName);
+			fontFamily.defaultFontFile = filename;
+			familyFonts.add(fontFamily);
+		}
+
+		filename = filename.toUpperCase();
+		if (filename.contains("PLAIN") || filename.contains("BOLD") || filename.contains("ITALIC"))
+		{
+			FontFamilyOverride newOverride = new FontFamilyOverride();
+			newOverride.fontFile = filename;
+
+			if (filename.contains("PLAIN"))
+				newOverride.fontStyle = 0;
+			else if (filename.contains("BOLD"))
+				newOverride.fontStyle = Font.BOLD;
+			else if (filename.contains("ITAlIC"))
+				newOverride.fontStyle = Font.ITALIC;
+			
+			fontFamily.fontOverrides.add(newOverride);
+		}
+	}
+	
+	public static String GetFontFilename(String fontName, int fontStyle)
+	{
+		FontFamily fontFamily = GetFontFamily(fontName);
+		if (fontFamily != null)
+		{
+			FontFamilyOverride fontOverride = fontFamily.getOverride(fontStyle);
+			if (fontOverride != null)
+				return fontOverride.fontFile;
+			
+			return fontFamily.defaultFontFile;
+		}
+		
+		return fontName;
+	}
+	
+	public static Font createFont(String fontName, String fallbackFontName, int fontStyle, int textSize, double scale)
+	{
+		// TODO Should consider storing the font itself and then simply calling deriveFont on it, would technically
+		// save on reloading the font from disk everytime
+
+		if (fallbackFontName == null)
+		{
+			fallbackFontName = "Percolator";
+		}		
+	
+		String fontNameToUse = fontName;
+		if (fontName == null || fontName.isEmpty())
+			fontNameToUse = fallbackFontName;
+
+		try
+		{
+			FontFamily fontFamily = GetFontFamily(fontNameToUse);
+			if (fontFamily == null)
+			{
+				// since we didn't find any family for it, it means its a system provided font
+				// and since its a system provided font, we don't need to create it
+				return new Font(fontNameToUse, fontStyle, getPercentage(textSize, scale));
+			}
+			
+			// font provided and loaded by Legedit
+			// we need to create it and then derive it to have the proper style and size
+			Font newFont = Font.createFont(Font.TRUETYPE_FONT, new File(GetFontFilename(fontNameToUse, fontStyle)));
+    		newFont = newFont.deriveFont(fontStyle, (float)getPercentage(textSize, scale));
+    		return newFont;
+		}
+		catch (Exception e2)
+		{
+    		e2.printStackTrace();
+    		
+    		return new Font("Percolator", Font.PLAIN, getPercentage(textSize, scale));
+		}	
+	}	
 }

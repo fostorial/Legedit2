@@ -50,7 +50,7 @@ public class ElementText extends CustomElement {
 	{
 		if (getValue() != null && visible == true)
 		{
-			BufferedImage bi = new BufferedImage(getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()), BufferedImage.TYPE_INT_ARGB);
+			BufferedImage bi = new BufferedImage(LegeditHelper.getPercentage(template.getCardWidth(), getScale()), LegeditHelper.getPercentage(template.getCardHeight(), getScale()), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = getGraphics(bi);
 			g2 = setGraphicsHints(g2);
 			
@@ -59,7 +59,7 @@ public class ElementText extends CustomElement {
 				g2.setColor(colour);
 			}
 			
-			Font font = createFont(fontName, "Sylfaen.ttf", fontStyle, textSize);
+			Font font = LegeditHelper.createFont(fontName, "Sylfaen", fontStyle, textSize, getScale());
 
 	        g2.setFont(font);
 	        FontMetrics metrics = g2.getFontMetrics(font);
@@ -67,23 +67,23 @@ public class ElementText extends CustomElement {
 	        
 	        g2 = setGraphicsHints(g2);
 	        
-	        int newx = getPercentage(x,getScale());
+	        int newx = LegeditHelper.getPercentage(x,getScale());
 	        if (alignment.equals(ALIGNMENT.CENTER))
 	        {
-	        	newx = getPercentage(x,getScale()) - (stringLength / 2);
+	        	newx = LegeditHelper.getPercentage(x,getScale()) - (stringLength / 2);
 	        }
 	        if (alignment.equals(ALIGNMENT.RIGHT))
 	        {
-	        	newx = getPercentage(x,getScale()) - stringLength;
+	        	newx = LegeditHelper.getPercentage(x,getScale()) - stringLength;
 	        }
 	        
 	        LineMetrics lm = metrics.getLineMetrics(getValueForDraw(), g2);
-	        int yModified = getPercentage(y,getScale()) + (int)((lm.getAscent() - lm.getDescent()) / 2);
+	        int yModified = LegeditHelper.getPercentage(y,getScale()) + (int)((lm.getAscent() - lm.getDescent()) / 2);
 	        
 	        g2.drawString(getValueForDraw(), newx, yModified);
 	    	if (drawUnderlay)
 	    	{
-	    		drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, getPercentage(blurRadius,getScale()), blurDouble, getPercentage(blurExpand,getScale()), blurColour);
+	    		drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, LegeditHelper.getPercentage(blurRadius,getScale()), blurDouble, LegeditHelper.getPercentage(blurExpand,getScale()), blurColour);
 	    	}
 	    	
 	    	g2.drawString(getValueForDraw(), newx, yModified);

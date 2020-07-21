@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 
 import legedit2.card.Card;
 import legedit2.definitions.Icon;
+import legedit2.helpers.LegeditHelper;
 import legedit2.imaging.CustomCardMaker;
 
 public class ElementImage extends CustomElement {
@@ -57,12 +58,12 @@ public class ElementImage extends CustomElement {
 			BufferedImage bi = null;
 			if (fullSize)
 			{
-				bi = resizeImage(new ImageIcon(file), getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()));
+				bi = resizeImage(new ImageIcon(file), LegeditHelper.getPercentage(template.getCardWidth(), getScale()), LegeditHelper.getPercentage(template.getCardHeight(), getScale()));
 			}
 			else
 			{
 				ImageIcon ii = new ImageIcon(file);
-				bi = resizeImage(new ImageIcon(file), getPercentage(ii.getIconWidth(), getScale()), getPercentage(ii.getIconHeight(), getScale()));
+				bi = resizeImage(new ImageIcon(file), LegeditHelper.getPercentage(ii.getIconWidth(), getScale()), LegeditHelper.getPercentage(ii.getIconHeight(), getScale()));
 			}
 			
 			if (rotate > 0)
@@ -75,7 +76,7 @@ public class ElementImage extends CustomElement {
 				bi = op.filter(bi, null);
 			}
 			
-			g.drawImage(bi, getPercentage(x,getScale()), getPercentage(y,getScale()), null);
+			g.drawImage(bi, LegeditHelper.getPercentage(x,getScale()), LegeditHelper.getPercentage(y,getScale()), null);
 		}
 	}
 	

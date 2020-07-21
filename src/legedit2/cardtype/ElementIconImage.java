@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 
 import legedit2.card.Card;
 import legedit2.definitions.Icon;
+import legedit2.helpers.LegeditHelper;
 import legedit2.imaging.CustomCardMaker;
 
 public class ElementIconImage extends CustomElement {
@@ -65,11 +66,11 @@ public class ElementIconImage extends CustomElement {
 			BufferedImage bi = null;
 			if (imageFilter == null)
 			{
-				bi = resizeImage(new ImageIcon(file), getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()));
+				bi = resizeImage(new ImageIcon(file), LegeditHelper.getPercentage(cardWidth, getScale()), LegeditHelper.getPercentage(cardHeight, getScale()));
 			}
 			if (imageFilter != null && imageFilter.equalsIgnoreCase("dualclass") && !getIconValue().getEnumName().equals("NONE"))
 			{
-				bi = resizeImage(new ImageIcon(getFadedBackground(new ImageIcon(file))), getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()));
+				bi = resizeImage(new ImageIcon(getFadedBackground(new ImageIcon(file))), LegeditHelper.getPercentage(cardWidth, getScale()), LegeditHelper.getPercentage(cardHeight, getScale()));
 			}
 			
 			if (rotate > 0)
@@ -82,19 +83,19 @@ public class ElementIconImage extends CustomElement {
 				bi = op.filter(bi, null);
 			}
 			
-			g.drawImage(bi, getPercentage(imageX,getScale()), getPercentage(imageY,getScale()), null);
+			g.drawImage(bi, LegeditHelper.getPercentage(imageX,getScale()), LegeditHelper.getPercentage(imageY,getScale()), null);
 		}
 		
 		// Draw Icon
 		if (visible && getIconValue().getImagePath() != null)
 		{
-			BufferedImage bi = getIcon(getIconValue(), getPercentage(maxWidth,getScale()), getPercentage(maxHeight,getScale()));
-			int xStart = getPercentage(x,getScale()) - (bi.getWidth() / 2);
-	    	int yStart = getPercentage(y,getScale()) - (bi.getHeight() / 2);
+			BufferedImage bi = getIcon(getIconValue(), LegeditHelper.getPercentage(maxWidth,getScale()), LegeditHelper.getPercentage(maxHeight,getScale()));
+			int xStart = LegeditHelper.getPercentage(x,getScale()) - (bi.getWidth() / 2);
+	    	int yStart = LegeditHelper.getPercentage(y,getScale()) - (bi.getHeight() / 2);
 	    	
 	    	if (drawUnderlay)
 	    	{
-	    		drawUnderlay(bi, g, BufferedImage.TYPE_INT_ARGB, xStart, yStart, getPercentage(blurRadius,getScale()), blurDouble, getPercentage(blurExpand,getScale()), blurColour);
+	    		drawUnderlay(bi, g, BufferedImage.TYPE_INT_ARGB, xStart, yStart, LegeditHelper.getPercentage(blurRadius,getScale()), blurDouble, LegeditHelper.getPercentage(blurExpand,getScale()), blurColour);
 	    	}
 	    	
 	    	if (rotate > 0)
@@ -193,7 +194,7 @@ public class ElementIconImage extends CustomElement {
 		int width = bi.getWidth();
 		int height = bi.getHeight();
 		
-		int fadeHeight = getPercentage(cardHeight, 0.14d);
+		int fadeHeight = LegeditHelper.getPercentage(cardHeight, 0.14d);
 		double increment = 255d / (double)fadeHeight;
 		
 //		int alpha = 0;

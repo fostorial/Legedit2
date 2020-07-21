@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import org.w3c.dom.Node;
 
 import legedit2.card.Card;
+import legedit2.helpers.LegeditHelper;
 import legedit2.imaging.CustomCardMaker;
 
 public class ElementBackgroundImage extends CustomElement {
@@ -63,12 +64,12 @@ public class ElementBackgroundImage extends CustomElement {
 				BufferedImage bi = null;
 				if (fullSize)
 				{
-					bi = resizeImage(new ImageIcon(file), getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()));				
+					bi = resizeImage(new ImageIcon(file), LegeditHelper.getPercentage(template.getCardWidth(), getScale()), LegeditHelper.getPercentage(template.getCardHeight(), getScale()));				
 				}
 				else
 				{
 					ImageIcon ii = new ImageIcon(file);
-					bi = resizeImage(new ImageIcon(file), (int)(getPercentage(ii.getIconWidth(),getScale()) * zoom), (int)(getPercentage(ii.getIconHeight(),getScale()) * zoom));
+					bi = resizeImage(new ImageIcon(file), (int)(LegeditHelper.getPercentage(ii.getIconWidth(),getScale()) * zoom), (int)(LegeditHelper.getPercentage(ii.getIconHeight(),getScale()) * zoom));
 				}
 				
 				if (rotate > 0)
@@ -81,7 +82,7 @@ public class ElementBackgroundImage extends CustomElement {
 					bi = op.filter(bi, null);
 				}
 				
-				g.drawImage(bi, getPercentage(x + imageOffsetX,getScale()), getPercentage(y + imageOffsetY,getScale()), null);
+				g.drawImage(bi, LegeditHelper.getPercentage(x + imageOffsetX,getScale()), LegeditHelper.getPercentage(y + imageOffsetY,getScale()), null);
 			}
 		}
 	}
