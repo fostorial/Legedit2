@@ -88,14 +88,14 @@ public class ElementScrollingTextArea extends CustomElement {
 			int cardWidth = template.getCardWidth();
 			int cardHeight = template.getCardHeight();
 			
-			BufferedImage bi = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
+			BufferedImage bi = new BufferedImage(LegeditHelper.getPercentage(cardWidth, getScale()), LegeditHelper.getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = getGraphics(bi);
 			g2 = setGraphicsHints(g2);
 			
 			if (debug)
 			{
 				g2.setColor(Color.BLACK);
-				g2.fillRect(getPercentage(startX, getScale()), getPercentage(startY, getScale()), getPercentage(endX - startX, getScale()), getPercentage(cardHeight, getScale()));
+				g2.fillRect(LegeditHelper.getPercentage(startX, getScale()), LegeditHelper.getPercentage(startY, getScale()), LegeditHelper.getPercentage(endX - startX, getScale()), LegeditHelper.getPercentage(cardHeight, getScale()));
 			}
 			
 	    	g2.setColor(colour);
@@ -107,20 +107,20 @@ public class ElementScrollingTextArea extends CustomElement {
 
 	    	try
 	    	{
-				font = createFont(fontName, "Swiss 721 Light Condensed.ttf", fontStyle, textSize);
+				font = LegeditHelper.createFont(fontName, "Swiss 721", fontStyle, textSize, getScale());
 
 				g2.setFont(font);
 	    		g2 = setGraphicsHints(g2);
 
-				Font fontBold = createFont(fontNameBold != null ? fontNameBold : fontName, "Swiss 721 Black Condensed.ttf", Font.BOLD, textSizeBold);
-				Font fontHeader = createFont(fontNameBold != null ? fontNameBold : fontName, "Percolator.otf", Font.BOLD, textSizeHeader);
+				Font fontBold = LegeditHelper.createFont(fontNameBold != null ? fontNameBold : fontName, "Swiss 721", Font.BOLD, textSizeBold, getScale());
+				Font fontHeader = LegeditHelper.createFont(fontNameBold != null ? fontNameBold : fontName, "Percolator", Font.BOLD, textSizeHeader, getScale());
 
 				FontMetrics metrics = g2.getFontMetrics(font);
 	    		
 	    		//TODO other alignments
 
-				x = getPercentage(startX, getScale());
-				y = getPercentage(startY, getScale()) + g2.getFontMetrics(font).getHeight();
+				x = LegeditHelper.getPercentage(startX, getScale());
+				y = LegeditHelper.getPercentage(startY, getScale()) + g2.getFontMetrics(font).getHeight();
 
 				/* Draw Element Header */
 				if (headerText != null)
@@ -161,7 +161,7 @@ public class ElementScrollingTextArea extends CustomElement {
 					if (headerText != null && !headerText.isEmpty())
 					{
 						int headerHeight = (int)((double)g.getFontMetrics(fontHeader).getHeight() * 1.3d);
-						drawHeader(g2, headerText.toUpperCase(), fontHeader, headerColour, y - (headerHeight*2) + (int)(headerHeight*0.1d), headerHeight, getPercentage(cardWidth, 0.2d), headerIcon);
+						drawHeader(g2, headerText.toUpperCase(), fontHeader, headerColour, y - (headerHeight*2) + (int)(headerHeight*0.1d), headerHeight, LegeditHelper.getPercentage(cardWidth, 0.2d), headerIcon);
 					}
 				}
 	    		
@@ -235,8 +235,8 @@ public class ElementScrollingTextArea extends CustomElement {
 		    				{
 		    					y -= lastWordBreakHeight;
 		    				}
-			    			drawHeader(g2, headerStr.toUpperCase(), fontHeader, /*card.cardType.getBgColor()*/ Color.red, y, headerHeight, getPercentage(cardWidth, 0.2d), headerIcon);
-				    		y += headerHeight + metrics.getHeight() + getPercentage(metrics.getHeight(), 0.5d);
+			    			drawHeader(g2, headerStr.toUpperCase(), fontHeader, /*card.cardType.getBgColor()*/ Color.red, y, headerHeight, LegeditHelper.getPercentage(cardWidth, 0.2d), headerIcon);
+				    		y += headerHeight + metrics.getHeight() + LegeditHelper.getPercentage(metrics.getHeight(), 0.5d);
 		    			}
 //		    			else
 //		    			{
@@ -284,14 +284,14 @@ public class ElementScrollingTextArea extends CustomElement {
 			    			Icon icon = isIcon(s);
 			    			if (gap == true)
 			    			{
-			    				y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs);
-			    				x = getPercentage(startX, getScale());
+			    				y += g2.getFontMetrics(font).getHeight() + LegeditHelper.getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs);
+			    				x = LegeditHelper.getPercentage(startX, getScale());
 			    			}
 			    			else if (icon == null)
 			    			{
 			    				int stringLength = SwingUtilities.computeStringWidth(metrics, s);
 
-			    				if (x + stringLength > getPercentage(endX, getScale()))
+			    				if (x + stringLength > LegeditHelper.getPercentage(endX, getScale()))
 			    				{
 			    					//TODO Restore for rare backing?
 			    					/*
@@ -300,17 +300,17 @@ public class ElementScrollingTextArea extends CustomElement {
 			    						xEnd = x;
 			    					}
 			    					*/
-			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
-			    					x = getPercentage(startX, getScale());
+			    					y += g2.getFontMetrics(font).getHeight() + LegeditHelper.getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
+			    					x = LegeditHelper.getPercentage(startX, getScale());
 			    				}
 			    				g2.drawString(s + " ", x, y);
 			    				x += stringLength + SwingUtilities.computeStringWidth(metrics, spaceChar);
 			    			}
 			    			else if (icon != null)
 			    			{
-			    				BufferedImage i = getIconMaxHeight(icon, getPercentage(metrics.getHeight(), 1.2d));
+			    				BufferedImage i = getIconMaxHeight(icon, LegeditHelper.getPercentage(metrics.getHeight(), 1.2d));
 
-			    				if (x + i.getWidth() > getPercentage(endX, getScale()))
+			    				if (x + i.getWidth() > LegeditHelper.getPercentage(endX, getScale()))
 			    				{
 			    					//TODO Restore for rare backing?
 			    					/*
@@ -319,8 +319,8 @@ public class ElementScrollingTextArea extends CustomElement {
 			    						xEnd = x;
 			    					}
 			    					*/
-			    					y += g2.getFontMetrics(font).getHeight() + getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
-			    					x = getPercentage(startX, getScale());
+			    					y += g2.getFontMetrics(font).getHeight() + LegeditHelper.getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenLines);
+			    					x = LegeditHelper.getPercentage(startX, getScale());
 			    				}
 			    				
 			    				int modifiedY = (int)(y - i.getHeight() + metrics.getDescent());
@@ -375,10 +375,10 @@ public class ElementScrollingTextArea extends CustomElement {
 			int directionY = 0;
 	    	if (direction.equalsIgnoreCase("up"))
 			{
-				directionY = getPercentage(endY, getScale()) - (y - getPercentage(startY, getScale()))
-					- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs)
-						- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs)
-						- g2.getFontMetrics(font).getHeight() - getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs);
+				directionY = LegeditHelper.getPercentage(endY, getScale()) - (y - LegeditHelper.getPercentage(startY, getScale()))
+					- g2.getFontMetrics(font).getHeight() - LegeditHelper.getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs)
+						- g2.getFontMetrics(font).getHeight() - LegeditHelper.getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs)
+						- g2.getFontMetrics(font).getHeight() - LegeditHelper.getPercentage(g2.getFontMetrics(font).getHeight(), gapSizeBetweenParagraphs);
 			}
 			else
 			{
@@ -408,12 +408,12 @@ public class ElementScrollingTextArea extends CustomElement {
 						BufferedImage bi2 = null;
 						if (bg.fullSize)
 						{
-							bi2 = resizeImage(new ImageIcon(file), getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()));
+							bi2 = resizeImage(new ImageIcon(file), LegeditHelper.getPercentage(cardWidth, getScale()), LegeditHelper.getPercentage(cardHeight, getScale()));
 						}
 						else
 						{
 							ImageIcon ii = new ImageIcon(file);
-							bi2 = resizeImage(new ImageIcon(file), (int)(getPercentage(ii.getIconWidth(),getScale()) * bg.zoom), (int)(getPercentage(ii.getIconHeight(),getScale()) * bg.zoom));
+							bi2 = resizeImage(new ImageIcon(file), (int)(LegeditHelper.getPercentage(ii.getIconWidth(),getScale()) * bg.zoom), (int)(LegeditHelper.getPercentage(ii.getIconHeight(),getScale()) * bg.zoom));
 						}
 
 						if (rotate > 0)
@@ -426,7 +426,7 @@ public class ElementScrollingTextArea extends CustomElement {
 							bi2 = op.filter(bi, null);
 						}
 
-						g.drawImage(bi2, getPercentage(bg.x + bg.imageOffsetX,getScale()), directionY + getPercentage( bg.y + bg.imageOffsetY,getScale()), null);
+						g.drawImage(bi2, LegeditHelper.getPercentage(bg.x + bg.imageOffsetX,getScale()), directionY + LegeditHelper.getPercentage( bg.y + bg.imageOffsetY,getScale()), null);
 					}
 				}
 			}
@@ -528,11 +528,11 @@ public class ElementScrollingTextArea extends CustomElement {
 		int cardWidth = template.getCardWidth();
 		int cardHeight = template.getCardHeight();
 
-		BufferedImage bi1 = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bi1 = new BufferedImage(LegeditHelper.getPercentage(cardWidth, getScale()), LegeditHelper.getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = getGraphics(bi1);
 		
 		g2.setColor(color);
-		g2.fillRect(0, y, getPercentage(getPercentage(cardWidth,getScale()), 0.8d), height);
+		g2.fillRect(0, y, LegeditHelper.getPercentage(LegeditHelper.getPercentage(cardWidth,getScale()), 0.8d), height);
     	
     	if (blurRadius > 0)
     	{
@@ -547,14 +547,14 @@ public class ElementScrollingTextArea extends CustomElement {
     	
     	if (headerIcon != null && headerIcon.icon != null)
 	    {
-	    	BufferedImage bi = getIcon(headerIcon.icon, getPercentage(height, 1.9d), getPercentage(height, 1.9d));
-	    	int iconx = getPercentage(cardWidth, getScale()) - getPercentage(getPercentage(cardWidth,getScale()), 0.09d) - bi.getWidth() + (bi.getWidth() / 2);
+	    	BufferedImage bi = getIcon(headerIcon.icon, LegeditHelper.getPercentage(height, 1.9d), LegeditHelper.getPercentage(height, 1.9d));
+	    	int iconx = LegeditHelper.getPercentage(cardWidth, getScale()) - LegeditHelper.getPercentage(LegeditHelper.getPercentage(cardWidth,getScale()), 0.09d) - bi.getWidth() + (bi.getWidth() / 2);
 	    	int icony = y + (height / 2) - (bi.getWidth() / 2);
 	    	
 	    	g2.drawImage(bi, iconx, icony, null);
 	    }
     	
-    	BufferedImage bi2 = new BufferedImage(getPercentage(cardWidth,getScale()), getPercentage(cardHeight,getScale()), BufferedImage.TYPE_INT_ARGB);
+    	BufferedImage bi2 = new BufferedImage(LegeditHelper.getPercentage(cardWidth,getScale()), LegeditHelper.getPercentage(cardHeight,getScale()), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g3 = getGraphics(bi2);	
 		
     	g3.setColor(Color.WHITE);
@@ -562,7 +562,7 @@ public class ElementScrollingTextArea extends CustomElement {
     	
     	g3 = setGraphicsHints(g3);
     	
-		g3.drawString(header, getPercentage(getPercentage(cardWidth,getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
+		g3.drawString(header, LegeditHelper.getPercentage(LegeditHelper.getPercentage(cardWidth,getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
 		
 		if (headerIcon != null && headerIcon.value != null)
 		{
@@ -574,7 +574,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			g3 = setGraphicsHints(g3);
 			
 			int stringLength = SwingUtilities.computeStringWidth(g.getFontMetrics(font), headerIcon.value.toUpperCase());
-			g3.drawString(headerIcon.value, getPercentage(cardWidth,getScale()) - getPercentage(getPercentage(cardWidth,getScale()), 0.09d) - stringLength + (stringLength / 2), y + g.getFontMetrics(font).getHeight() - (int)(g.getFontMetrics(font).getHeight() / 2.6d));
+			g3.drawString(headerIcon.value, LegeditHelper.getPercentage(cardWidth,getScale()) - LegeditHelper.getPercentage(LegeditHelper.getPercentage(cardWidth,getScale()), 0.09d) - stringLength + (stringLength / 2), y + g.getFontMetrics(font).getHeight() - (int)(g.getFontMetrics(font).getHeight() / 2.6d));
 			
 			font = originalFont;
 			g3.setFont(originalFont);
@@ -584,7 +584,7 @@ public class ElementScrollingTextArea extends CustomElement {
 		
 		drawUnderlay(bi2, g3, BufferedImage.TYPE_INT_ARGB, 0, 0, 7, false, 2);
 		
-		g3.drawString(header, getPercentage(getPercentage(cardWidth,getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
+		g3.drawString(header, LegeditHelper.getPercentage(LegeditHelper.getPercentage(cardWidth,getScale()), 0.04d), y + g.getFontMetrics(font).getHeight() - (g.getFontMetrics(font).getHeight() / 6));
 		
 		if (headerIcon != null && headerIcon.value != null)
 		{
@@ -594,7 +594,7 @@ public class ElementScrollingTextArea extends CustomElement {
 			g3.setFont(font);
 			g3 = setGraphicsHints(g3);
 			int stringLength = SwingUtilities.computeStringWidth(g.getFontMetrics(font), headerIcon.value.toUpperCase());
-			g3.drawString(headerIcon.value, getPercentage(cardWidth,getScale()) - getPercentage(getPercentage(cardWidth,getScale()), 0.09d) - stringLength + (stringLength / 2), y + g.getFontMetrics(font).getHeight() - (int)(g.getFontMetrics(font).getHeight() / 2.6d));
+			g3.drawString(headerIcon.value, LegeditHelper.getPercentage(cardWidth,getScale()) - LegeditHelper.getPercentage(LegeditHelper.getPercentage(cardWidth,getScale()), 0.09d) - stringLength + (stringLength / 2), y + g.getFontMetrics(font).getHeight() - (int)(g.getFontMetrics(font).getHeight() / 2.6d));
 			
 			font = originalFont;
 			g3.setFont(originalFont);
@@ -610,7 +610,7 @@ public class ElementScrollingTextArea extends CustomElement {
 	
 	private void drawUnderlay(BufferedImage bi, Graphics2D g, int type, int x, int y, int blurRadius, boolean doubleBlur, int expandBlackout)
 	{
-		BufferedImage blackout = new BufferedImage(getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()), type);
+		BufferedImage blackout = new BufferedImage(LegeditHelper.getPercentage(template.getCardWidth(), getScale()), LegeditHelper.getPercentage(template.getCardHeight(), getScale()), type);
     	getGraphics(blackout).drawImage(bi, x, y, null);
     	
     	blackout = blackoutImage(blackout);
@@ -656,7 +656,7 @@ public class ElementScrollingTextArea extends CustomElement {
 	
 	private BufferedImage expandBlackout(BufferedImage image, int expandBlackout)
 	{
-		BufferedImage expand = new BufferedImage(getPercentage(template.getCardWidth(), getScale()), getPercentage(template.getCardHeight(), getScale()), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage expand = new BufferedImage(LegeditHelper.getPercentage(template.getCardWidth(), getScale()), LegeditHelper.getPercentage(template.getCardHeight(), getScale()), BufferedImage.TYPE_INT_ARGB);
 		
 		int width = image.getWidth();
         int height = image.getHeight();
@@ -697,7 +697,7 @@ public class ElementScrollingTextArea extends CustomElement {
             for (int yy = 0; yy < height; yy++) {
                 Color originalColor = new Color(bi.getRGB(xx, yy), true);
                 if (originalColor.getAlpha() > 0) {
-                    int col = (getPercentage(originalColor.getAlpha(), percent) << 24) | (originalColor.getRed() << 16) | (originalColor.getGreen() << 8) | originalColor.getBlue();
+                    int col = (LegeditHelper.getPercentage(originalColor.getAlpha(), percent) << 24) | (originalColor.getRed() << 16) | (originalColor.getGreen() << 8) | originalColor.getBlue();
                     bi.setRGB(xx, yy, col);
                 }
             }

@@ -72,6 +72,7 @@ public class LegeditFrame extends JFrame {
 					if (f.getName().toLowerCase().endsWith(".otf") || f.getName().toLowerCase().endsWith(".ttf"))
 					{
 						Font font = Font.createFont(Font.TRUETYPE_FONT, f);
+						LegeditHelper.AddFontFamily(f.getPath(), font);
 						env.registerFont(font);
 					}
 				}

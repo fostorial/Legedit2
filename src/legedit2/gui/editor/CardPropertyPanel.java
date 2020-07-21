@@ -477,13 +477,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Swiss 721 Light Condensed.ttf")));						
-						font = font.deriveFont(el.fontStyle, (float)el.textSize);
-						
-						if (el.fontName != null)
-			    		{
-			    			font = new Font(el.fontName, el.fontStyle, el.textSize);
-			    		}
+						font = LegeditHelper.createFont(el.fontName, "Swiss 721", el.fontStyle, el.textSize, 1.0);
 						
 						chooser.setFont(font);
 						chooser.setSelectedFont(font);
@@ -605,13 +599,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Swiss 721 Light Condensed.ttf")));
-						font = font.deriveFont((float)el.textSize);
-						
-						if (el.fontName != null)
-			    		{
-			    			font = new Font(el.fontName, el.fontStyle, el.textSize);
-			    		}
+						font = LegeditHelper.createFont(el.fontName, "Swiss 721", el.fontStyle, el.textSize, 1.0);
 						
 						chooser.setFont(font);
 						chooser.setSelectedFont(font);
@@ -751,13 +739,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Swiss 721 Light Condensed.ttf")));
-						font = font.deriveFont(el.fontStyle, (float)el.textSize);
-						
-						if (el.fontName != null)
-			    		{
-			    			font = new Font(el.fontName, el.fontStyle, el.textSize);
-			    		}
+						font = LegeditHelper.createFont(el.fontName, "Swiss 721", el.fontStyle, el.textSize, 1.0);
 						
 						chooser.setFont(font);
 						chooser.setSelectedFont(font);
@@ -949,13 +931,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Percolator.otf")));
-						font = font.deriveFont((float)el.textSize);
-						
-						if (el.fontName != null)
-			    		{
-			    			font = new Font(el.fontName, el.fontStyle, el.textSize);
-			    		}
+						font = LegeditHelper.createFont(el.fontName, "Percolator", el.fontStyle, el.textSize, 1.0);
 						
 						chooser.setFont(font);
 						chooser.setSelectedFont(font);
@@ -1015,13 +991,7 @@ public class CardPropertyPanel extends JPanel implements ActionListener {
 					
 					Font font;
 					try {
-						font = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath("Percolator.otf")));
-						font = font.deriveFont((float)el.subnameSize);
-						
-						if (el.subnameFontName != null)
-			    		{
-			    			font = new Font(el.subnameFontName, el.subnameFontStyle, el.subnameSize);
-			    		}
+						font = LegeditHelper.createFont(el.subnameFontName, "Percolator", el.subnameFontStyle, el.subnameSize, 1.0);
 						
 						chooser.setFont(font);
 						chooser.setSelectedFont(font);

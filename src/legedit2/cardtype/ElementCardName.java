@@ -76,7 +76,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
         if (alignment.equals(ALIGNMENT.CENTER))
         	stringLength /= 2;
         
-    	return getPercentage(x, getScale()) - stringLength;
+    	return LegeditHelper.getPercentage(x, getScale()) - stringLength;
 	}
 	
 	private LineInformation createLineInformation(String text, Graphics2D g, FontMetrics metrics, int x, int y)
@@ -175,13 +175,13 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		if (getValue() != null)
 		{
         	double scale = getScale();
-        	int xScaled = getPercentage(x, scale);
-	        int currentYScaled = getPercentage(y, scale);
+        	int xScaled = LegeditHelper.getPercentage(x, scale);
+	        int currentYScaled = LegeditHelper.getPercentage(y, scale);
 	        
 	        int cardWidth = template.getCardWidth();
 	        int cardHeight = template.getCardHeight();
 	        
-	        BufferedImage bi = new BufferedImage(getPercentage(cardWidth, getScale()), getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
+	        BufferedImage bi = new BufferedImage(LegeditHelper.getPercentage(cardWidth, getScale()), LegeditHelper.getPercentage(cardHeight, getScale()), BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = getGraphics(bi);
 			g2 = setGraphicsHints(g2);
 			
@@ -189,7 +189,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 				g2.setColor(colour);
         
 
-			Font font = createFont(fontName, "Percolator.otf", fontStyle, textSize);
+			Font font = LegeditHelper.createFont(fontName, "Percolator", fontStyle, textSize, getScale());
 	        g2.setFont(font);
 
 	        Font fontSubname = null;
@@ -204,13 +204,13 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        
 	        if (includeSubname)
 	        {
-	        	fontSubname = createFont(subnameFontName, "Percolator.otf", subnameFontStyle, subnameSize);
+	        	fontSubname = LegeditHelper.createFont(subnameFontName, "Percolator", subnameFontStyle, subnameSize, getScale());
 		        
 	        	LineInformation lastLine = cardNameLines.isEmpty() ? null : cardNameLines.get(cardNameLines.size()-1);
 	        	if (lastLine != null)
 	        		currentYScaled = lastLine.drawYPosition;
 	        	
-	        	int subnameGapScaled = getPercentage(subnameGap, getScale());
+	        	int subnameGapScaled = LegeditHelper.getPercentage(subnameGap, getScale());
 		        if (subnameGapScaled >= 0 )
 		        	currentYScaled += subnameGapScaled;
 		        
@@ -241,7 +241,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        }
 		        
 		        g2.setColor(colour);	// just in case
-		    	drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, getPercentage(blurRadius, getScale()), blurDouble, getPercentage(blurExpand, getScale()), highlightColour);
+		    	drawUnderlay(bi, g2, BufferedImage.TYPE_INT_ARGB, 0, 0, LegeditHelper.getPercentage(blurRadius, getScale()), blurDouble, LegeditHelper.getPercentage(blurExpand, getScale()), highlightColour);
 	        }	        
 
         	/*
@@ -257,9 +257,9 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	        
 	        if (highlight.equals(HIGHLIGHT.BANNER) || highlight.equals(HIGHLIGHT.BANNER_BLUR))
 	        {	        
-	        	int cardWidthScaled = getPercentage(cardWidth, getScale());
-	        	int cardHeightScaled = getPercentage(cardHeight, getScale());
-	        	int bannerStart = getPercentage(y, scale) - getPercentage(bannerExtraSizeTop, getScale());	
+	        	int cardWidthScaled = LegeditHelper.getPercentage(cardWidth, getScale());
+	        	int cardHeightScaled = LegeditHelper.getPercentage(cardHeight, getScale());
+	        	int bannerStart = LegeditHelper.getPercentage(y, scale) - LegeditHelper.getPercentage(bannerExtraSizeTop, getScale());	
 	        	int bannerEnd = 0;
 	        	
 	        	LineInformation lastLine = null;
@@ -268,7 +268,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		        else if (!cardNameLines.isEmpty())
 		        	lastLine = cardNameLines.get(cardNameLines.size()-1);
 	        	bannerEnd = lastLine.drawYPosition;
-	        	bannerEnd += getPercentage(bannerExtraSizeBottom, getScale());
+	        	bannerEnd += LegeditHelper.getPercentage(bannerExtraSizeBottom, getScale());
 	        	
 		        if (bannerEnd > bannerStart)
 		        {
@@ -277,7 +277,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
 			        
 		        	int bannerHeight = bannerEnd - bannerStart;
 					g3.setColor(highlightColour);
-					g3.fillRect(cardWidthScaled / 2, bannerStart, getPercentage(cardWidthScaled, 0.15d), bannerHeight);
+					g3.fillRect(cardWidthScaled / 2, bannerStart, LegeditHelper.getPercentage(cardWidthScaled, 0.15d), bannerHeight);
 			    	
 					MotionBlurOp op = new MotionBlurOp();
 					op.setDistance(200f);
@@ -364,11 +364,13 @@ public class ElementCardName extends CustomElement implements Cloneable {
 	
 	public String getSubnameValue()
 	{
-		if (subnameValue != null)
-		{
+		if (subnameValue != null){
 			return resolveAttributes(subnameValue, this);
 		}
-		return resolveAttributes(subnameText, this);
+		if (subnameText != null) {
+			return resolveAttributes(subnameText, this);
+		}
+		return "";
 	}
 	
 	public String getSubnameValueRaw()
@@ -376,7 +378,10 @@ public class ElementCardName extends CustomElement implements Cloneable {
 		if (subnameValue != null) {
 			return subnameValue;
 		}
-		return subnameText;
+		if (subnameText != null) {
+			return subnameText;
+		}
+		return "";
 	}
 
 	private String getSubnameValueForDraw()
@@ -398,7 +403,7 @@ public class ElementCardName extends CustomElement implements Cloneable {
             for (int yy = 0; yy < height; yy++) {
                 Color originalColor = new Color(bi.getRGB(xx, yy), true);
                 if (originalColor.getAlpha() > 0) {
-                    int col = (getPercentage(originalColor.getAlpha(), percent) << 24) | (originalColor.getRed() << 16) | (originalColor.getGreen() << 8) | originalColor.getBlue();
+                    int col = (LegeditHelper.getPercentage(originalColor.getAlpha(), percent) << 24) | (originalColor.getRed() << 16) | (originalColor.getGreen() << 8) | originalColor.getBlue();
                     bi.setRGB(xx, yy, col);
                 }
             }

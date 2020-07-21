@@ -43,39 +43,6 @@ public class CustomElement implements Cloneable {
 	{		
 	}
 	
-	public Font createFont(String fontName, String fallbackFontName, int fontStyle, int textSize)
-	{
-		if (fallbackFontName == null)
-		{
-			fallbackFontName = "Percolator.otf";
-		}
-		
-		if (fontName != null)
-		{
-			try
-			{
-				return new Font(fontName, fontStyle, getPercentage(textSize, getScale()));
-			}
-			catch (Exception e)
-			{
-	    		e.printStackTrace();
-			}
-		}
-
-		try
-		{
-			Font newFont = Font.createFont(Font.TRUETYPE_FONT, new File(LegeditHelper.getFontPath(fallbackFontName)));
-    		newFont = newFont.deriveFont((float)getPercentage(textSize, getScale()));
-    		return newFont;
-		}
-		catch (Exception e2)
-		{
-    		e2.printStackTrace();
-    		
-    		return new Font("Percolator", Font.PLAIN, getPercentage(textSize, getScale()));
-		}		
-    }	
-	
 	public BufferedImage getIcon(Icon icon, int maxWidth, int maxHeight)
 	{
 		ImageIcon ii = new ImageIcon(icon.getImagePath());
@@ -105,11 +72,6 @@ public class CustomElement implements Cloneable {
 	public int getPercentageValue(int value, int max)
 	{
 		return (int)Math.round((double)(((double)value / (double)max) * 100d));
-	}
-	
-	public int getPercentage(int size, double scale)
-	{
-		return (int)(((double)size * (double)scale));
 	}
 	
 	public BufferedImage resizeImage(ImageIcon imageIcon, double scale)

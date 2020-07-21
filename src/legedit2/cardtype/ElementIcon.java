@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 
 import legedit2.card.Card;
 import legedit2.definitions.Icon;
+import legedit2.helpers.LegeditHelper;
 
 public class ElementIcon extends CustomElement {
 	
@@ -40,13 +41,13 @@ public class ElementIcon extends CustomElement {
 	{
 		if (visible && getIconValue().getImagePath() != null)
 		{
-			BufferedImage bi = getIcon(getIconValue(), getPercentage(maxWidth,getScale()), getPercentage(maxHeight,getScale()));
-			int xStart = getPercentage(x,getScale()) - (bi.getWidth() / 2);
-	    	int yStart = getPercentage(y,getScale()) - (bi.getHeight() / 2);
+			BufferedImage bi = getIcon(getIconValue(), LegeditHelper.getPercentage(maxWidth,getScale()), LegeditHelper.getPercentage(maxHeight,getScale()));
+			int xStart = LegeditHelper.getPercentage(x,getScale()) - (bi.getWidth() / 2);
+	    	int yStart = LegeditHelper.getPercentage(y,getScale()) - (bi.getHeight() / 2);
 	    	
 	    	if (drawUnderlay)
 	    	{
-	    		drawUnderlay(bi, g, BufferedImage.TYPE_INT_ARGB, xStart, yStart, getPercentage(blurRadius,getScale()), blurDouble, getPercentage(blurExpand,getScale()), blurColour);
+	    		drawUnderlay(bi, g, BufferedImage.TYPE_INT_ARGB, xStart, yStart, LegeditHelper.getPercentage(blurRadius,getScale()), blurDouble, LegeditHelper.getPercentage(blurExpand,getScale()), blurColour);
 	    	}
 	    	
 	    	if (rotate > 0)
