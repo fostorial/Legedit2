@@ -57,10 +57,10 @@
  y="190"
  maxwidth="60"
  maxheight="60"
- drawunderlay="true"
- blurradius="10"
+ drawunderlay="false"
+ blurradius="1"
  bluedouble="false"
- blurexpand="2"
+ blurexpand="0"
  blurcolour="#000000"
  imagex="0"
  imagey="0"
@@ -158,6 +158,22 @@
  valuefrom="Power"
  />
 
+<icon
+ name="Second Power Overlay"
+ defaultvalue="none"
+ allowchange="false"
+ x="50"
+ y="190"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ valuefrom="Second Power"
+ />
+
   </style>
 
 <style name="Base Set">
@@ -215,6 +231,22 @@
  blurexpand="2"
  blurcolour="#000000"
  valuefrom="Power"
+ />
+
+<icon
+ name="Second Power Overlay"
+ defaultvalue="none"
+ allowchange="false"
+ x="50"
+ y="190"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ valuefrom="Second Power"
  />
 
   </style>
