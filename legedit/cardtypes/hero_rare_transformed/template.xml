@@ -113,7 +113,23 @@
  blurcolour="#000000"
  />
 
-  </style>
+<icon
+ name="Second Power"
+ defaultvalue="none"
+ allowchange="true"
+ icontype="power"
+ x="50"
+ y="190"
+ maxwidth="60"
+ maxheight="60"
+ drawunderlay="true"
+ blurradius="10"
+ bluedouble="false"
+ blurexpand="2"
+ blurcolour="#000000"
+ />
+
+ </style>
 
 <style name="Base Set">
 
@@ -172,10 +188,6 @@
  blurcolour="#000000"
  />
 
-  </style>
-
-</styles>
-
 <icon
  name="Second Power"
  defaultvalue="none"
@@ -191,6 +203,10 @@
  blurexpand="2"
  blurcolour="#000000"
  />
+
+ </style>
+
+</styles>
 
 <text
  name="Cost"
