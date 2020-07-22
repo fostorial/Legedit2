@@ -190,23 +190,22 @@ public class CardTypeSelectionPanel extends JPanel implements ActionListener, It
 	
 	private void selectCardForDelete()
 	{
-		if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Deck)
+		if (cardList.getSelectedValue() != null)
 		{
-			if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Deck)
-			{
-				Deck.setStaticDeck(null);
-				ProjectHelper.getDecks().remove(cardList.getSelectedValue());
-				LegeditFrame.refreshGUI();
+			int selectedIndex = cardList.getSelectedIndex();
+			LegeditItem selectedCard = cardList.getSelectedValue();
+
+			cardListModel.removeElement(selectedCard);
+
+			if (selectedCard instanceof Deck) {				
+				ProjectHelper.getDecks().remove(selectedCard);
 			}
-		}
-		else if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Card)
-		{
-			if (cardList.getSelectedValue() != null && cardList.getSelectedValue() instanceof Card)
-			{
-				Card.setStaticCard(null);
-				ProjectHelper.getCards().remove(cardList.getSelectedValue());
-				LegeditFrame.refreshGUI();
+			else if (selectedCard instanceof Card) {
+				ProjectHelper.getCards().remove(selectedCard);
 			}
+
+			cardList.setSelectedIndex(selectedIndex > 0 ? selectedIndex - 1 : 0);
+			selectCardForEdit();
 		}
 	}
 
