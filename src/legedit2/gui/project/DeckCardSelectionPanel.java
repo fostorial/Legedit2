@@ -36,7 +36,6 @@ public class DeckCardSelectionPanel extends JPanel implements ActionListener, It
 
 	private static final long serialVersionUID = 2441581697840723279L;
 	
-	private JComboBox<CardGroup> cardGroupFilter;
 	private JButton newLegeditItem = new JButton(" + ");
 	private JButton deleteLegeditItem = new JButton(" - ");
 	
@@ -271,9 +270,13 @@ public class DeckCardSelectionPanel extends JPanel implements ActionListener, It
 		{
 			selectedDeck.setChanged(true);
 			
-			Card.setStaticCard(null);
-			selectedDeck.getCards().remove(cardList.getSelectedValue());
-			LegeditFrame.refreshGUI();
+			int selectedIndex = cardList.getSelectedIndex();
+			LegeditItem selectedCard = cardList.getSelectedValue();
+			cardListModel.removeElement(selectedCard);
+			selectedDeck.getCards().remove(selectedCard);
+			
+			cardList.setSelectedIndex(selectedIndex > 0 ? selectedIndex - 1 : 0);
+			Card.setStaticCard((Card)cardList.getSelectedValue());
 		}
 	}
 }
