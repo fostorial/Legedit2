@@ -282,6 +282,11 @@ public class CardTypeSelectionPanel extends JPanel implements ActionListener, It
 			}
 			else
 			{
+				if (getDeckPanel() != null)
+				{
+					getDeckPanel().setSelectedDeck(null);
+				}
+
 				/* Its a card */
 				previewPanel.setSelectedItem(cardList.getSelectedValue());
 				previewPanel.resetPreviewPanel();
