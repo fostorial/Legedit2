@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import javafx.util.Pair;
 import legedit2.card.Card;
 import legedit2.cardtype.CardType;
 import legedit2.cardtype.CustomElement;

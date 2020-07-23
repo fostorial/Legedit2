@@ -109,12 +109,12 @@ public class ElementTextArea extends CustomElement {
 	    	g2.setColor(colour);
 	    	try
 	    	{
-				Font font = LegeditHelper.createFont(fontName, "Swiss 721", fontStyle, textSize, getScale());
+				Font font = LegeditHelper.createFont(fontName, "Swiss 721 Light Condensed", fontStyle, textSize, getScale());
 
 				g2.setFont(font);
 	    		g2 = setGraphicsHints(g2);
 	    		
-				Font fontBold = LegeditHelper.createFont(fontNameBold != null ? fontNameBold : fontName, "Swiss 721", Font.BOLD, textSizeBold, getScale());
+				Font fontBold = LegeditHelper.createFont(fontNameBold != null ? fontNameBold : fontName, "Swiss 721 Black Condensed", Font.PLAIN, textSizeBold, getScale());
 				Font fontHeader = LegeditHelper.createFont(fontNameBold != null ? fontNameBold : fontName, "Percolator", Font.PLAIN, textSizeHeader, getScale());
 	    		
 	    		FontMetrics metrics = g2.getFontMetrics(font);
