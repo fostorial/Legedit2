@@ -17,7 +17,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import javafx.stage.Popup;
 import legedit2.card.Card;
 import legedit2.cardtype.CardType;
 import legedit2.gui.config.ConfigPanel;

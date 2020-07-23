@@ -79,7 +79,8 @@ public class ElementText extends CustomElement {
 	        
 	        LineMetrics lm = metrics.getLineMetrics(getValueForDraw(), g2);
 	        int yModified = LegeditHelper.getPercentage(y,getScale()) + (int)((lm.getAscent() - lm.getDescent()) / 2);
-	        
+	        yModified = LegeditHelper.getPercentage(y,getScale()) + (int)(LegeditHelper.getPercentage(textSize,getScale()) / 2.6);
+
 	        g2.drawString(getValueForDraw(), newx, yModified);
 	    	if (drawUnderlay)
 	    	{

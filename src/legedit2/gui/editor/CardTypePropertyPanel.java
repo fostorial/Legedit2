@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.text.BadLocationException;
 
-import javafx.scene.control.SplitPane;
 import legedit2.card.Card;
 import legedit2.cardgroup.CardGroup;
 import legedit2.cardgroup.CardGroupListCellRenderer;
