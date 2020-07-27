@@ -3,7 +3,7 @@
 
 <template
  name="wound_grevious"
- displayname="Wound (Grevious)"
+ displayname="Wound (Grievous)"
  deck="wound"
  defaultsindeck="false"
  />
@@ -96,7 +96,7 @@
 
 <cardname 
  name="Wound Card Type"
- defaultvalue="Grevious Wound"
+ defaultvalue="Grievous Wound"
  allowchange="false"
  includesubname="false"
  highlight="blur"

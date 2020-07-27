@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+
+<structure
+ name="sidekicks"
+ displayname="Sidekicks"
+ group="bystanders"
+ nameeditable="false"
+ />
+
+</xml>
+

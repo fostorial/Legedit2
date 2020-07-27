@@ -2,46 +2,13 @@
 <xml>
 
 <template
+ basetemplate="scheme_twist"
  name="scheme_twist_Custom"
  displayname="Custom Scheme Twist"
  group="misc"
  />
 
-<cardsize
- cardwidth="750"
- cardheight="1050"
- dpi="300"
- />
-
-<bgimage
- name="Background Image"
- path=""
- x="0"
- y="0"
- allowchange="true"
- zoomable="true"
- />
-
-<image
- name="text_overlay"
- templatefile="true"
- path="plot_twist.png"
- fullsize="true"
- x="0"
- y="0"
- maxwidth="750"
- maxheight="1050"
- allowchange="false"
- zoomable="false"
- />
-<styles>
-
-
-
- <style
-  name="Base Set">
-
- <cardname 
+<cardname 
  name="Card Name"
  defaultvalue="Card Name"
  allowchange="true"
@@ -60,9 +27,6 @@
  blurexpand="4"
  />
 
- </style>
-
-</styles>
 <textarea
  name="Custom Scheme Twsit Card Text"
  alignmenthorizontal="left"
@@ -74,12 +38,6 @@
  rectxarray="120,735,735,500,347,180"
  rectyarray="845,845,1040,1040,1000,909"
  debug="false"
- />
-
-<property
- name="Number in Deck"
- property="numberindeck"
- defaultvalue="1"
  />
 
 </xml>
