@@ -21,6 +21,18 @@ public class Style implements Cloneable {
 	public List<CustomElement> getElements() {
 		return elements;
 	}
+	
+	public CustomElement getElement(String name)
+	{
+		for (CustomElement e : elements)
+		{
+			if (e.name.equals(name))
+			{
+				return e;
+			}
+		}
+		return null;
+	}	
 
 	public void setElements(List<CustomElement> elements) {
 		this.elements = elements;

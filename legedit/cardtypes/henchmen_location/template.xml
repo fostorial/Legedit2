@@ -2,40 +2,10 @@
 <xml>
 
 <template
+ basetemplate="henchmen"
  name="henchmen_location"
  displayname="Location Henchman"
- deck="henchmen"
  defaultsindeck="false"
- />
-
-<cardsize
- cardwidth="750"
- cardheight="1050"
- dpi="300"
- />
-
-<bgimage
- name="Image"
- fullsize="false"
- x="0"
- y="0"
- maxwidth="750"
- maxheight="1050"
- allowchange="true"
- zoomable="true"
- />
-
-<image
- name="text_overlay"
- templatefile="true"
- path="back_underlay.png"
- fullsize="true"
- x="0"
- y="0"
- maxwidth="750"
- maxheight="1050"
- allowchange="false"
- zoomable="false"
  />
 
 <styles>
@@ -45,133 +15,22 @@
 
  <cardname 
  name="Card Name"
- defaultvalue="%DECKNAME%"
- allowchange="false"
- includesubname="true"
- subnameeditable="false"
- highlight="banner"
- highlightcolour="#000000"
- uppercase="true"
- alignment="center"
- x="375"
- y="40"
- colour="#FBD246"
- textsize="48"
  subnametext="Henchman Location"
- subnamesize="34"
- subnamegap="12"
- blurradius="15"
- bluedouble="false"
- blurexpand="4"
  />
 
  </style>
 
-</styles>
+ <style
+ name="Villains">
 
-<icon
- name="Victory"
- defaultvalue="victory"
- allowchange="false"
- optional="true"
- x="662"
- y="696"
- maxwidth="60"
- maxheight="60"
- drawunderlay="false"
- blurradius="1"
- bluedouble="false"
- blurexpand="0"
- blurcolour="#000000"
+<cardname 
+ name="Card Name"
+ subnametext="Henchman Location"
  />
 
-<text
- name="Victory Value"
- linkedelement="Victory"
- alignment="center"
- allowchange="true"
- defaultvalue="0"
- x="662"
- y="696"
- colour="#FFFFFF"
- textsize="40"
- uppercase="true"
- drawunderlay="true"
- blurradius="2"
- bluedouble="false"
- blurexpand="3"
- blurcolour="#000000"
- />
-
-<icon
- name="Villain Team"
- defaultvalue="none"
- icontype="team"
- allowchange="true"
- optional="true"
- x="720"
- y="696"
- maxwidth="50"
- maxheight="50"
- drawunderlay="false"
- blurradius="15"
- bluedouble="true"
- blurexpand="0"
- blurcolour="#FFFFFF"
- />
-
-<icon
- name="Attack"
- defaultvalue="attack"
- allowchange="false"
- optional="true"
- x="645"
- y="950"
- maxwidth="160"
- maxheight="160"
- drawunderlay="true"
- blurradius="3"
- bluedouble="false"
- blurexpand="0"
- blurcolour="#000000"
- />
-
-<text
- name="Attack Value"
- linkedelement="Attack"
- alignment="center"
- allowchange="true"
- defaultvalue="0"
- x="645"
- y="950"
- colour="#FFFFFF"
- textsize="110"
- uppercase="true"
- drawunderlay="true"
- blurradius="2"
- bluedouble="false"
- blurexpand="3"
- blurcolour="#000000"
- />
-
-<textarea
- name="Card Text"
- alignmenthorizontal="left"
- alignmentvertical="top"
- allowchange="true"
- defaultvalue="Card Text."
- colour="#000000"
- textsize="34"
- rectxarray="110,710,710,560,560,445,345,205"
- rectyarray="785,785,885,885,1030,1030,1000,909"
- debug="false"
- />
-
-<property
- name="Number in Deck"
- property="numberindeck"
- defaultvalue="10"
- />
+ </style>
+ 
+ </styles>
 
 </xml>
 

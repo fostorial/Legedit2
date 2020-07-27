@@ -52,4 +52,12 @@ public class ItemType {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	
+	public void Copy(ItemType itemType)
+	{
+		cardGroup = itemType.getCardGroup();
+		name = itemType.getName();
+		displayName = itemType.getDisplayName();
+	}	
+	
 }

@@ -2,137 +2,15 @@
 <xml>
 
 <template
+ basetemplate="scheme"
  name="operation"
  displayname="Operation"
- group="bystanders"
  />
-
-<cardsize
- cardwidth="750"
- cardheight="1050"
- dpi="300"
- />
-
-<bgimage
- name="Image"
- fullsize="false"
- x="0"
- y="0"
- maxwidth="750"
- maxheight="1050"
- allowchange="true"
- zoomable="true"
- />
-
-<image
- name="text_overlay"
- templatefile="true"
- path="back_underlay.png"
- fullsize="true"
- x="0"
- y="0"
- maxwidth="750"
- maxheight="1050"
- allowchange="false"
- zoomable="false"
- />
-
-
-<styles>
-
-<style
- name="Villains">
-
-<cardname 
- name="Card Name"
- defaultvalue="Card Name"
- allowchange="true"
- includesubname="false"
- subnameeditable="false"
- highlight="banner"
- highlightcolour="#111111"
- uppercase="true"
- alignment="center"
- x="375"
- y="40"
- colour="#e9dc98"
- textsize="48"
- subnametext=""
- subnameprefix=""
- subnamesize="34"
- subnamegap="12"
- blurradius="16"
- bluedouble="false"
- blurexpand="8"
- />
-
- </style>
-
- <style
-  name="Base Set">
-
- <cardname 
- name="Card Name"
- defaultvalue="Card Name"
- allowchange="false"
- includesubname="false"
- subnameeditable="false"
- highlight="blur"
- highlightcolour="#000000"
- uppercase="true"
- alignment="center"
- x="375"
- y="40"
- colour="#FBD246"
- textsize="48"
- subnametext="%DECKNAME%"
- subnameprefix="Trap - "
- subnamesize="34"
- subnamegap="12"
- blurradius="15"
- bluedouble="false"
- blurexpand="4"
- />
-
- </style>
-
-</styles>
-
 
 <scrollingtextarea
  name="Card Text"
- alignmenthorizontal="left"
- alignmentvertical="top"
- allowchange="true"
  headertext="OPERATION"
- headercolour="#60f788"
- defaultvalue="Card Text."
- colour="#000000"
- textsize="34"
- startx="50"
- endx="700"
- starty="120"
- endy="1025"
- direction="up"
- debug="false"
- imagetemplatefile="true"
- imagepath="backing.png"
- imagefullsize="true"
- imagex="0"
- imagey="0"
- imagemaxwidth="750"
- imagemaxheight="1050"
- imageallowchange="false"
- imagezoomable="false"
- spacebetweenlines="0.2"
- spacebetweenparagraphs="0.2"
 />
-
-<property
- name="Number in Deck"
- property="numberindeck"
- defaultvalue="1"
- />
 
 </xml>
 

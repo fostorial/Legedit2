@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -33,6 +34,7 @@ public class CardType extends ItemType implements Cloneable {
 	
 	public static List<CardType> cardTypes = null;	
 	public static List<CardType> failedTemplates = new ArrayList<>();
+	public static List<File> templatesInNeedOfResolving = new ArrayList<>();
 	private Exception exception;
 	
 	private boolean defaultsInDeck = false;
@@ -62,18 +64,27 @@ public class CardType extends ItemType implements Cloneable {
 	{
 		if (group != null)
 		{
-			group.getElements().add(element);
-			group.getElementsHash().put(element.name, element);
+			if (!group.getElements().contains(element))
+			{
+				group.getElements().add(element);
+				group.getElementsHash().put(element.name, element);
+			}
 		}
 		else if (s == null)
 		{
-			elementsHash.put(element.name, element);
-			elements.add(element);
+			if (!elements.contains(element))
+			{
+				elementsHash.put(element.name, element);
+				elements.add(element);
+			}
 		}
 		else
 		{
-			s.getElements().add(element);
-			s.getElementsHash().put(element.name, element);
+			if (!s.getElements().contains(element))
+			{
+				s.getElements().add(element);
+				s.getElementsHash().put(element.name, element);
+			}
 		}
 	}
 	
@@ -86,6 +97,7 @@ public class CardType extends ItemType implements Cloneable {
 		
 		cardTypes = new ArrayList<>();
 		failedTemplates = new ArrayList<>();
+		templatesInNeedOfResolving = new ArrayList<>();
 		
 		String templateFolder = "legedit" + File.separator + "cardtypes";
 		File dir = new File(templateFolder);
@@ -109,6 +121,36 @@ public class CardType extends ItemType implements Cloneable {
 				}
 			}
 		}
+		
+		while (!templatesInNeedOfResolving.isEmpty())
+		{
+			int beforeCount = templatesInNeedOfResolving.size();
+			
+			// Go through all templates that still need resolving
+			Iterator<File> i = templatesInNeedOfResolving.iterator();
+			while (i.hasNext())
+			{
+				File f = i.next();
+				CardType group = parseCardType(f);
+				if (group != null)
+				{
+					cardTypes.add(group);
+					i.remove();
+				}
+			}
+			
+			// check to see if any resolved. If none have resolved, then it means that something is wrong with the xml
+			// and that they'll never resolve. Fail them all and continue on.
+			if (beforeCount == templatesInNeedOfResolving.size())
+			{
+				for (File f : templatesInNeedOfResolving) {
+					CardType t = new CardType();
+					t.setName(f.getName().replace(".xml", ""));
+					t.setException(new RuntimeException("Template could not resolve it's base template: " + t.getTemplateName()));
+					failedTemplates.add(t);
+				}
+			}
+		};
 		
 		return cardTypes;
 	}
@@ -136,9 +178,11 @@ public class CardType extends ItemType implements Cloneable {
 			{
 				NodeList nodeList = doc.getChildNodes().item(0).getChildNodes();
 				for (int count = 0; count < nodeList.getLength(); count++) {
-					Node node = nodeList.item(count);
-					
-					parseNode(node, t, null, null);
+					Node node = nodeList.item(count);					
+					if (!parseNode(node, t, null, null)) {
+						templatesInNeedOfResolving.add(structureFile);
+						return null;
+					}
 				}
 				
 			}
@@ -182,6 +226,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				style.setName(node.getAttributes().getNamedItem("name").getNodeValue());
+
+				Style existingStyle = t.getStyle(style.getName());
+				if (existingStyle != null) {
+					style = existingStyle;
+				}
 			}
 		}
 		
@@ -192,13 +241,14 @@ public class CardType extends ItemType implements Cloneable {
 			parseNode(node2, t, style, null);
 		}
 		
-		t.getStyles().add(style);
+		t.addStyle(style);
 	}
 	
 	///////////////////////////////////////////////////////////
 	// This reads a card template from the provided xml node
+	// Will return false if the template needs to be resolved later (ie, template is using a base template)
 	///////////////////////////////////////////////////////////
-	public static void parseNode(Node node, CardType t, Style s, ElementGroup group) throws Exception
+	public static boolean parseNode(Node node, CardType t, Style s, ElementGroup group) throws Exception
 	{
 		if (node.getNodeName().equals("styles"))
 		{
@@ -207,6 +257,28 @@ public class CardType extends ItemType implements Cloneable {
 		
 		if (node.getNodeName().equals("template"))
 		{	
+			if (node.getAttributes().getNamedItem("basetemplate") != null)
+			{
+				// we first need to check if the base template was loaded, if so we can copy it over and finish reading this card's data
+				CardType baseTemplate = null;
+				
+				String baseTemplateName = node.getAttributes().getNamedItem("basetemplate").getNodeValue();
+				for (CardType t2 : getCardTypes()) {
+					if (t2.getTemplateName().equals(baseTemplateName)) {
+						baseTemplate = t2;
+						break;
+					}
+				}
+				
+				if (baseTemplate != null) {
+					t.Copy(baseTemplate);
+				}
+				else {
+					// if not, then we need to defer the loading until the base template is loaded
+					return false;
+				}
+			}
+
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				t.setTemplateName(node.getAttributes().getNamedItem("name").getNodeValue());
@@ -236,6 +308,7 @@ public class CardType extends ItemType implements Cloneable {
 			{
 				t.setDefaultsInDeck(Boolean.parseBoolean(node.getAttributes().getNamedItem("defaultsindeck").getNodeValue()));
 			}
+
 			if (node.getAttributes().getNamedItem("defaultcopies") != null)
 			{
 				t.setDefaultCopiesInDeck(Integer.parseInt(node.getAttributes().getNamedItem("defaultcopies").getNodeValue()));
@@ -274,6 +347,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+				
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementBackgroundImage)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("path") != null)
@@ -304,8 +382,7 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("maxheight") != null)
 			{
 				element.maxHeight = Integer.parseInt(node.getAttributes().getNamedItem("maxheight").getNodeValue());
-			}
-			
+			}			
 			
 			if (node.getAttributes().getNamedItem("zoomable") != null)
 			{
@@ -337,220 +414,228 @@ public class CardType extends ItemType implements Cloneable {
 		
 		if (node.getNodeName().equals("icon"))
 		{
-			ElementIcon elementIcon = new ElementIcon();
-			elementIcon.template = t;
+			ElementIcon element = new ElementIcon();
+			element.template = t;
 			
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
-				elementIcon.name = node.getAttributes().getNamedItem("name").getNodeValue();
+				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementIcon)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("defaultvalue") != null)
 			{
-				elementIcon.defaultValue = Icon.valueOf(node.getAttributes().getNamedItem("defaultvalue").getNodeValue().toUpperCase());
+				element.defaultValue = Icon.valueOf(node.getAttributes().getNamedItem("defaultvalue").getNodeValue().toUpperCase());
 			}
 			
 			if (node.getAttributes().getNamedItem("icontype") != null)
 			{
-				elementIcon.iconCategory = node.getAttributes().getNamedItem("icontype").getNodeValue().toUpperCase();
+				element.iconCategory = node.getAttributes().getNamedItem("icontype").getNodeValue().toUpperCase();
 			}
 			
 			if (node.getAttributes().getNamedItem("allowchange") != null)
 			{
-				elementIcon.allowChange = Boolean.parseBoolean(node.getAttributes().getNamedItem("allowchange").getNodeValue());
+				element.allowChange = Boolean.parseBoolean(node.getAttributes().getNamedItem("allowchange").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("optional") != null)
 			{
-				elementIcon.optional = Boolean.parseBoolean(node.getAttributes().getNamedItem("optional").getNodeValue());
+				element.optional = Boolean.parseBoolean(node.getAttributes().getNamedItem("optional").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("x") != null)
 			{
-				elementIcon.x = Integer.parseInt(node.getAttributes().getNamedItem("x").getNodeValue());
+				element.x = Integer.parseInt(node.getAttributes().getNamedItem("x").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("y") != null)
 			{
-				elementIcon.y = Integer.parseInt(node.getAttributes().getNamedItem("y").getNodeValue());
+				element.y = Integer.parseInt(node.getAttributes().getNamedItem("y").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("maxwidth") != null)
 			{
-				elementIcon.maxWidth = Integer.parseInt(node.getAttributes().getNamedItem("maxwidth").getNodeValue());
+				element.maxWidth = Integer.parseInt(node.getAttributes().getNamedItem("maxwidth").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("maxheight") != null)
 			{
-				elementIcon.maxHeight = Integer.parseInt(node.getAttributes().getNamedItem("maxheight").getNodeValue());
-			}
-			
+				element.maxHeight = Integer.parseInt(node.getAttributes().getNamedItem("maxheight").getNodeValue());
+			}			
 			
 			if (node.getAttributes().getNamedItem("drawunderlay") != null)
 			{
-				elementIcon.drawUnderlay = Boolean.parseBoolean(node.getAttributes().getNamedItem("drawunderlay").getNodeValue());
+				element.drawUnderlay = Boolean.parseBoolean(node.getAttributes().getNamedItem("drawunderlay").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("blurradius") != null)
 			{
-				elementIcon.blurRadius = Integer.parseInt(node.getAttributes().getNamedItem("blurradius").getNodeValue());
+				element.blurRadius = Integer.parseInt(node.getAttributes().getNamedItem("blurradius").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("bluedouble") != null)
 			{
-				elementIcon.blurDouble = Boolean.parseBoolean(node.getAttributes().getNamedItem("bluedouble").getNodeValue());
+				element.blurDouble = Boolean.parseBoolean(node.getAttributes().getNamedItem("bluedouble").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("blurexpand") != null)
 			{
-				elementIcon.blurExpand = Integer.parseInt(node.getAttributes().getNamedItem("blurexpand").getNodeValue());
+				element.blurExpand = Integer.parseInt(node.getAttributes().getNamedItem("blurexpand").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("blurcolour") != null)
 			{
-				elementIcon.blurColour = Color.decode(node.getAttributes().getNamedItem("blurcolour").getNodeValue());
+				element.blurColour = Color.decode(node.getAttributes().getNamedItem("blurcolour").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("visible") != null)
 			{
-				elementIcon.visible = Boolean.parseBoolean(node.getAttributes().getNamedItem("visible").getNodeValue());
+				element.visible = Boolean.parseBoolean(node.getAttributes().getNamedItem("visible").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("rotate") != null)
 			{
-				elementIcon.rotate = Integer.parseInt(node.getAttributes().getNamedItem("rotate").getNodeValue());
+				element.rotate = Integer.parseInt(node.getAttributes().getNamedItem("rotate").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("valuefrom") != null)
 			{
-				elementIcon.valueFrom = node.getAttributes().getNamedItem("valuefrom").getNodeValue();
+				element.valueFrom = node.getAttributes().getNamedItem("valuefrom").getNodeValue();
 			}
 			
-			t.addElement(elementIcon, s, group);
+			t.addElement(element, s, group);
 		}
 		
 		if (node.getNodeName().equals("iconbg"))
 		{
-			ElementIconImage elementIcon = new ElementIconImage();
-			elementIcon.template = t;
+			ElementIconImage element = new ElementIconImage();
+			element.template = t;
 			
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
-				elementIcon.name = node.getAttributes().getNamedItem("name").getNodeValue();
+				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementIconImage)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("defaultvalue") != null)
 			{
-				elementIcon.defaultValue = Icon.valueOf(node.getAttributes().getNamedItem("defaultvalue").getNodeValue().toUpperCase());
+				element.defaultValue = Icon.valueOf(node.getAttributes().getNamedItem("defaultvalue").getNodeValue().toUpperCase());
 			}
 			
 			if (node.getAttributes().getNamedItem("icontype") != null)
 			{
-				elementIcon.iconCategory = node.getAttributes().getNamedItem("icontype").getNodeValue().toUpperCase();
+				element.iconCategory = node.getAttributes().getNamedItem("icontype").getNodeValue().toUpperCase();
 			}
 			
 			if (node.getAttributes().getNamedItem("allowchange") != null)
 			{
-				elementIcon.allowChange = Boolean.parseBoolean(node.getAttributes().getNamedItem("allowchange").getNodeValue());
+				element.allowChange = Boolean.parseBoolean(node.getAttributes().getNamedItem("allowchange").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("optional") != null)
 			{
-				elementIcon.optional = Boolean.parseBoolean(node.getAttributes().getNamedItem("optional").getNodeValue());
+				element.optional = Boolean.parseBoolean(node.getAttributes().getNamedItem("optional").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("x") != null)
 			{
-				elementIcon.x = Integer.parseInt(node.getAttributes().getNamedItem("x").getNodeValue());
+				element.x = Integer.parseInt(node.getAttributes().getNamedItem("x").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("y") != null)
 			{
-				elementIcon.y = Integer.parseInt(node.getAttributes().getNamedItem("y").getNodeValue());
+				element.y = Integer.parseInt(node.getAttributes().getNamedItem("y").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("maxwidth") != null)
 			{
-				elementIcon.maxWidth = Integer.parseInt(node.getAttributes().getNamedItem("maxwidth").getNodeValue());
+				element.maxWidth = Integer.parseInt(node.getAttributes().getNamedItem("maxwidth").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("maxheight") != null)
 			{
-				elementIcon.maxHeight = Integer.parseInt(node.getAttributes().getNamedItem("maxheight").getNodeValue());
-			}
-			
+				element.maxHeight = Integer.parseInt(node.getAttributes().getNamedItem("maxheight").getNodeValue());
+			}			
 			
 			if (node.getAttributes().getNamedItem("drawunderlay") != null)
 			{
-				elementIcon.drawUnderlay = Boolean.parseBoolean(node.getAttributes().getNamedItem("drawunderlay").getNodeValue());
+				element.drawUnderlay = Boolean.parseBoolean(node.getAttributes().getNamedItem("drawunderlay").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("blurradius") != null)
 			{
-				elementIcon.blurRadius = Integer.parseInt(node.getAttributes().getNamedItem("blurradius").getNodeValue());
+				element.blurRadius = Integer.parseInt(node.getAttributes().getNamedItem("blurradius").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("bluedouble") != null)
 			{
-				elementIcon.blurDouble = Boolean.parseBoolean(node.getAttributes().getNamedItem("bluedouble").getNodeValue());
+				element.blurDouble = Boolean.parseBoolean(node.getAttributes().getNamedItem("bluedouble").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("blurexpand") != null)
 			{
-				elementIcon.blurExpand = Integer.parseInt(node.getAttributes().getNamedItem("blurexpand").getNodeValue());
+				element.blurExpand = Integer.parseInt(node.getAttributes().getNamedItem("blurexpand").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("blurcolour") != null)
 			{
-				elementIcon.blurColour = Color.decode(node.getAttributes().getNamedItem("blurcolour").getNodeValue());
+				element.blurColour = Color.decode(node.getAttributes().getNamedItem("blurcolour").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("visible") != null)
 			{
-				elementIcon.visible = Boolean.parseBoolean(node.getAttributes().getNamedItem("visible").getNodeValue());
+				element.visible = Boolean.parseBoolean(node.getAttributes().getNamedItem("visible").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("rotate") != null)
 			{
-				elementIcon.rotate = Integer.parseInt(node.getAttributes().getNamedItem("rotate").getNodeValue());
+				element.rotate = Integer.parseInt(node.getAttributes().getNamedItem("rotate").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("imagex") != null)
 			{
-				elementIcon.imageX = Integer.parseInt(node.getAttributes().getNamedItem("imagex").getNodeValue());
+				element.imageX = Integer.parseInt(node.getAttributes().getNamedItem("imagex").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("imagey") != null)
 			{
-				elementIcon.imageY = Integer.parseInt(node.getAttributes().getNamedItem("imagey").getNodeValue());
+				element.imageY = Integer.parseInt(node.getAttributes().getNamedItem("imagey").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("imagemaxwidth") != null)
 			{
-				elementIcon.imageMaxWidth = Integer.parseInt(node.getAttributes().getNamedItem("imagemaxwidth").getNodeValue());
+				element.imageMaxWidth = Integer.parseInt(node.getAttributes().getNamedItem("imagemaxwidth").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("imagemaxheight") != null)
 			{
-				elementIcon.imageMaxHeight = Integer.parseInt(node.getAttributes().getNamedItem("imagemaxheight").getNodeValue());
+				element.imageMaxHeight = Integer.parseInt(node.getAttributes().getNamedItem("imagemaxheight").getNodeValue());
 			}
 			
 			if (node.getAttributes().getNamedItem("imageprefix") != null)
 			{
-				elementIcon.imagePrefix = node.getAttributes().getNamedItem("imageprefix").getNodeValue();
+				element.imagePrefix = node.getAttributes().getNamedItem("imageprefix").getNodeValue();
 			}
 			
 			if (node.getAttributes().getNamedItem("imageextension") != null)
 			{
-				elementIcon.imageExtension = node.getAttributes().getNamedItem("imageextension").getNodeValue();
+				element.imageExtension = node.getAttributes().getNamedItem("imageextension").getNodeValue();
 			}
 			
 			if (node.getAttributes().getNamedItem("imagefilter") != null)
 			{
-				elementIcon.imageFilter = node.getAttributes().getNamedItem("imagefilter").getNodeValue();
+				element.imageFilter = node.getAttributes().getNamedItem("imagefilter").getNodeValue();
 			}
 			
-			t.addElement(elementIcon, s, group);
+			t.addElement(element, s, group);
 		}
 		
 		if (node.getNodeName().equals("image"))
@@ -561,6 +646,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementImage)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("path") != null)
@@ -591,8 +681,7 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("maxheight") != null)
 			{
 				element.maxHeight = Integer.parseInt(node.getAttributes().getNamedItem("maxheight").getNodeValue());
-			}
-			
+			}			
 			
 			if (node.getAttributes().getNamedItem("zoomable") != null)
 			{
@@ -630,6 +719,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementProperty)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("defaultvalue") != null)
@@ -658,6 +752,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementText)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("defaultvalue") != null)
@@ -770,6 +869,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementCardName)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("defaultvalue") != null)
@@ -928,6 +1032,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementTextArea)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("defaultvalue") != null)
@@ -1022,6 +1131,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementScrollingTextArea)existingElement;
+				}
 			}
 
 			if (node.getAttributes().getNamedItem("headertext") != null)
@@ -1139,6 +1253,10 @@ public class CardType extends ItemType implements Cloneable {
 			/* Attach a BG image */
 			ElementBackgroundImage bg = new ElementBackgroundImage();
 			bg.template = t;
+			
+			if (element.getBg() != null) {
+				bg = element.getBg();
+			}
 
 			if (node.getAttributes().getNamedItem("imagename") != null)
 			{
@@ -1216,6 +1334,11 @@ public class CardType extends ItemType implements Cloneable {
 			if (node.getAttributes().getNamedItem("name") != null)
 			{
 				element.name = node.getAttributes().getNamedItem("name").getNodeValue();
+
+				CustomElement existingElement = (s != null) ?  s.getElement(element.name) : t.getElement(element.name);
+				if (existingElement != null) {
+					element = (ElementGroup)existingElement;
+				}
 			}
 			
 			if (node.getAttributes().getNamedItem("visible") != null)
@@ -1235,6 +1358,8 @@ public class CardType extends ItemType implements Cloneable {
 			
 			t.addElement(element, s, group);
 		}
+		
+		return true;
 	}
 	
 	public CardType getCopy()
@@ -1278,15 +1403,61 @@ public class CardType extends ItemType implements Cloneable {
 				}
 				
 			}
-			template.styles = styleList;
-			
-			
+			template.styles = styleList;			
 			
 			return template;
-		} catch (CloneNotSupportedException e) {
+			} 
+		catch (CloneNotSupportedException e) {
 			return null;
 		}
 	}
+	
+	public void Copy(CardType copiedCard)
+	{
+		super.Copy(copiedCard);
+		setDeck(copiedCard.getDeck());
+		setDefaultsInDeck(copiedCard.isDefaultsInDeck());
+		setDefaultCopiesInDeck(copiedCard.getDefaultCopiesInDeck());
+
+		elements = new ArrayList<CustomElement>();
+		for (CustomElement e : copiedCard.elements)
+		{
+			elements.add(e.getCopy(this));
+		}
+		
+		for (CustomElement e : elements)
+		{
+			if (e.childElements != null && e.childElements.size() > 0)
+			{
+				List<CustomElement> newChildElements = new ArrayList<CustomElement>();
+				for (CustomElement ce : e.childElements)
+				{
+					for (CustomElement ne : elements)
+					{
+						if (ne.name.equals(ce.name))
+						{
+							newChildElements.add(ne);
+						}
+					}
+				}
+				e.childElements = newChildElements;
+			}
+		}
+		
+		styles = new ArrayList<>();
+		for (Style s : copiedCard.styles)
+		{
+			Style copy = s.getCopy(this);
+			styles.add(copy);
+			
+			Style copiedCardStyle = copiedCard.getStyle();
+			if (copiedCardStyle != null && s.getName() != null && s.getName().equals(copiedCardStyle.getName()))
+			{
+				setStyle(copy);
+			}
+			
+		}
+	}	
 	
 	public CustomElement getElement(String name)
 	{
@@ -1312,14 +1483,6 @@ public class CardType extends ItemType implements Cloneable {
 		return null;
 	}
 	
-	public String getTemplateDisplayName() {
-		return getDisplayName();
-	}
-
-	public void setTemplateDisplayName(String templateDisplayName) {
-		this.setDisplayName(templateDisplayName);
-	}
-
 	public String getTemplateName() {
 		return templateName;
 	}
@@ -1328,6 +1491,14 @@ public class CardType extends ItemType implements Cloneable {
 		this.templateName = templateName;
 	}
 	
+	public String getTemplateDisplayName() {
+		return getDisplayName();
+	}
+
+	public void setTemplateDisplayName(String templateDisplayName) {
+		this.setDisplayName(templateDisplayName);
+	}
+
 	public void setCardWidth(int width){
 		this.cardWidth = width;
 	}
@@ -1400,6 +1571,26 @@ public class CardType extends ItemType implements Cloneable {
 	public List<Style> getStyles() {
 		return styles;
 	}
+	
+	public Style getStyle(String name)
+	{
+		for (Style s : getStyles())
+		{
+			if (s.getName().equals(name))
+			{
+				return s;
+			}
+		}
+		return null;
+	}
+	
+	public void addStyle(Style s)
+	{
+		List<Style> styleList = getStyles(); 
+		if (!styleList.contains(s)) {
+			styleList.add(s);
+		}
+	}	
 
 	public void setStyles(List<Style> styles) {
 		this.styles = styles;
