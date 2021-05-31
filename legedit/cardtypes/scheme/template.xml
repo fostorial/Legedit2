@@ -105,7 +105,7 @@
  alignmentvertical="top"
  allowchange="true"
  headertext="SCHEME"
- headercolour="#60f788"
+ headercolour="#09ba7c"
  defaultvalue="Card Text."
  colour="#000000"
  textsize="34"
